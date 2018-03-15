@@ -14,6 +14,7 @@ public:
 	Resources();
 
 	const std::unique_ptr<ShaderResource>& GetShader(ShaderId id) const;
+	const int& ShaderProgram() const;
 
 private:
 	void LoadShaders();

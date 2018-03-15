@@ -10,6 +10,11 @@ const std::unique_ptr<ShaderResource>& Resources::GetShader(ShaderId id) const
 	return shaders[int(id)];
 }
 
+const int& Resources::ShaderProgram() const
+{
+	return shaderProgram;
+}
+
 void Resources::LoadShaders()
 {
 	shaders[int(ShaderId::MAIN_VERTEX)] = std::make_unique<ShaderResource>("vertex_shader.glsl", gl::GLenum::GL_VERTEX_SHADER);
@@ -28,7 +33,5 @@ void Resources::LoadShaders()
 		std::cout << "ERROR::SHADER_PROGRAM::LINKING_FAILED\n" << infoLog << std::endl;
 	}
 	else std::cout << "Shader program linked successfully\n";
-
-	gl::glUseProgram(shaderProgram);
 }
 
