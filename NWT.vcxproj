@@ -134,19 +134,20 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="Resources.cpp" />
     <ClCompile Include="src\Constants.cpp" />
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\Resources\Resources.cpp" />
     <ClCompile Include="src\Resources\ShaderResource.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="res\Shaders\fragment_shader.glsl" />
-    <None Include="Shaders\vertex_shader.glsl" />
+    <None Include="res\Shaders\vertex_shader.glsl" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Resources.h" />
-    <ClInclude Include="ShaderId.h" />
     <ClInclude Include="src\Constants.h" />
+    <ClInclude Include="src\glbinding.h" />
+    <ClInclude Include="src\Resources\Resources.h" />
+    <ClInclude Include="src\Resources\ShaderId.h" />
     <ClInclude Include="src\Resources\ShaderResource.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

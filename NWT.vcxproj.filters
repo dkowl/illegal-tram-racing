@@ -17,24 +17,24 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\Resources\ShaderResource.cpp">
       <Filter>Source Files\Resources</Filter>
     </ClCompile>
     <ClCompile Include="src\Constants.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Resources.cpp">
+    <ClCompile Include="src\Resources\Resources.cpp">
       <Filter>Source Files\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\main.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Shaders\vertex_shader.glsl">
+    <None Include="res\Shaders\fragment_shader.glsl">
       <Filter>Resource Files\Shaders</Filter>
     </None>
-    <None Include="res\Shaders\fragment_shader.glsl">
+    <None Include="res\Shaders\vertex_shader.glsl">
       <Filter>Resource Files\Shaders</Filter>
     </None>
   </ItemGroup>
@@ -45,10 +45,13 @@
     <ClInclude Include="src\Constants.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="Resources.h">
+    <ClInclude Include="src\Resources\Resources.h">
       <Filter>Source Files\Resources</Filter>
     </ClInclude>
-    <ClInclude Include="ShaderId.h">
+    <ClInclude Include="src\Resources\ShaderId.h">
+      <Filter>Source Files\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="src\glbinding.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,7 +1,9 @@
 #pragma once
 #include <memory>
 
-#include "src/Resources/ShaderResource.h"
+#include "../glbinding.h"
+
+#include "ShaderResource.h"
 #include "ShaderId.h"
 
 class Resources
