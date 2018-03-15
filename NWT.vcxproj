@@ -135,6 +135,18 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Resources.cpp" />
+    <ClCompile Include="src\Constants.cpp" />
+    <ClCompile Include="src\Resources\ShaderResource.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Shaders\vertex_shader.glsl" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Resources.h" />
+    <ClInclude Include="ShaderId.h" />
+    <ClInclude Include="src\Constants.h" />
+    <ClInclude Include="src\Resources\ShaderResource.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
