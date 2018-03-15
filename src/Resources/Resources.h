@@ -9,6 +9,7 @@
 class Resources
 {
 	std::unique_ptr<ShaderResource> shaders[int(ShaderId::COUNT)];
+	unsigned int shaderProgram;
 public:
 	Resources();
 
