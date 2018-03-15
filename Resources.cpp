@@ -12,6 +12,7 @@ const std::unique_ptr<ShaderResource>& Resources::GetShader(ShaderId id) const
 
 void Resources::LoadShaders()
 {
-	shaders[int(ShaderId::MAIN_VERTEX_SHADER)] = std::make_unique<ShaderResource>("vertex_shader.glsl");
+	shaders[int(ShaderId::MAIN_VERTEX)] = std::make_unique<ShaderResource>("vertex_shader.glsl");
+	shaders[int(ShaderId::MAIN_FRAGMENT)] = std::make_unique<ShaderResource>("fragment_shader.glsl");
 }
 

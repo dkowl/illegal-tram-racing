@@ -140,6 +140,7 @@
     <ClCompile Include="src\Resources\ShaderResource.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="res\Shaders\fragment_shader.glsl" />
     <None Include="Shaders\vertex_shader.glsl" />
   </ItemGroup>
   <ItemGroup>

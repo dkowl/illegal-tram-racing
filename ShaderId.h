@@ -2,6 +2,7 @@
 
 enum class ShaderId
 {
-	MAIN_VERTEX_SHADER,
+	MAIN_VERTEX,
+	MAIN_FRAGMENT,
 	COUNT
 };

@@ -34,6 +34,9 @@
     <None Include="Shaders\vertex_shader.glsl">
       <Filter>Resource Files\Shaders</Filter>
     </None>
+    <None Include="res\Shaders\fragment_shader.glsl">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Resources\ShaderResource.h">
