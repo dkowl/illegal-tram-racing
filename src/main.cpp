@@ -11,15 +11,19 @@
 #include "Engine/Transform.h"
 #include "Resources/Resources.h"
 #include "Resources/Mesh/Mesh.h"
-
+#include "Game/Game.h"
 
 
 int main()
 {
-	sf::Window window(sf::VideoMode(800, 600), "Illegal Tram Racing");
+	glbinding::Binding::initialize(false);
+
+	Game game;
+	game.Start();
+
+	/*sf::Window window(sf::VideoMode(800, 600), "Illegal Tram Racing");
 	window.setActive(true);
 
-	glbinding::Binding::initialize(false);
 
 	Resources res;
 
@@ -101,7 +105,7 @@ int main()
 	gl::glPolygonMode(gl::GLenum::GL_FRONT_AND_BACK, gl::GLenum::GL_LINE);
 	gl::glDrawElements(gl::GLenum::GL_TRIANGLES, 36, gl::GLenum::GL_UNSIGNED_INT, nullptr);
 
-	window.display();
+	window.display();*/
 	
 	system("PAUSE");
 

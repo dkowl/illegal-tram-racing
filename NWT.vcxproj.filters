@@ -24,6 +24,9 @@
     <Filter Include="Source Files\Resources\Mesh">
       <UniqueIdentifier>{6dd47915-5473-4140-822c-ee2bdc83fed6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Resources\LocalizedText">
+      <UniqueIdentifier>{b1710cdd-f702-4dea-ba08-fac215060b17}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Resources\ShaderResource.cpp">
@@ -49,6 +52,9 @@
     </ClCompile>
     <ClCompile Include="src\Engine\Transform.cpp">
       <Filter>Source Files\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Resources\LocalizedText\LocalizedText.cpp">
+      <Filter>Source Files\Resources\LocalizedText</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -86,6 +92,9 @@
     </ClInclude>
     <ClInclude Include="src\Engine\Transform.h">
       <Filter>Source Files\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Resources\LocalizedText\LocalizedText.h">
+      <Filter>Source Files\Resources\LocalizedText</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

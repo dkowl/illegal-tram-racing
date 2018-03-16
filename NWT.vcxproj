@@ -139,6 +139,7 @@
     <ClCompile Include="src\Engine\Transform.cpp" />
     <ClCompile Include="src\Game\Game.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\Resources\LocalizedText\LocalizedText.cpp" />
     <ClCompile Include="src\Resources\Mesh\Mesh.cpp" />
     <ClCompile Include="src\Resources\Resources.cpp" />
     <ClCompile Include="src\Resources\ShaderResource.cpp" />
@@ -153,6 +154,7 @@
     <ClInclude Include="src\Engine\Transform.h" />
     <ClInclude Include="src\Game\Game.h" />
     <ClInclude Include="src\glbinding.h" />
+    <ClInclude Include="src\Resources\LocalizedText\LocalizedText.h" />
     <ClInclude Include="src\Resources\Mesh\Mesh.h" />
     <ClInclude Include="src\Resources\Resources.h" />
     <ClInclude Include="src\Resources\ShaderId.h" />
