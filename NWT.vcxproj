@@ -136,6 +136,8 @@
   <ItemGroup>
     <ClCompile Include="src\Constants.cpp" />
     <ClCompile Include="src\Engine\GameObject.cpp" />
+    <ClCompile Include="src\Engine\Transform.cpp" />
+    <ClCompile Include="src\Game\Game.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Resources\Mesh\Mesh.cpp" />
     <ClCompile Include="src\Resources\Resources.cpp" />
@@ -148,6 +150,8 @@
   <ItemGroup>
     <ClInclude Include="src\Constants.h" />
     <ClInclude Include="src\Engine\GameObject.h" />
+    <ClInclude Include="src\Engine\Transform.h" />
+    <ClInclude Include="src\Game\Game.h" />
     <ClInclude Include="src\glbinding.h" />
     <ClInclude Include="src\Resources\Mesh\Mesh.h" />
     <ClInclude Include="src\Resources\Resources.h" />
