@@ -16,13 +16,15 @@
 #include "../Resources/Mesh/Mesh.h"
 #include "../Constants.h"
 #include "../Engine/GameObject.h"
+#include "../Utils.h"
 
 
 class Game
 {
 	Resources resources;
 	sf::Window window;
-	std::map<std::string, std::unique_ptr<GameObject>> objects;
+	std::map<std::string, int> objectIds;
+	std::vector<std::unique_ptr<GameObject>> objects;
 	
 public:
 	void Start();
@@ -32,4 +34,5 @@ public:
 
 private:
 	void AddObject(std::string name, std::string parentName, MeshId meshId);
+	void DrawObject(int objectId);
 };

@@ -42,3 +42,8 @@ const unsigned& Mesh::Vao() const
 {
 	return vao;
 }
+
+const unsigned& Mesh::ElementCount() const
+{
+	return elementBufferData.size();
+}

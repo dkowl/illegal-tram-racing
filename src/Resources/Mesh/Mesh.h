@@ -19,4 +19,5 @@ public:
 	Mesh(std::vector<float> &vertices, std::vector<unsigned int> &triangles, std::vector<float> &uvs);
 
 	const unsigned& Vao() const;
+	const unsigned& ElementCount() const;
 };

@@ -2,7 +2,9 @@
 
 Transform::Transform():
 	localPosition(0, 0, 0),
+	worldPosition(0, 0, 0),
 	localScale(1, 1, 1),
+	worldScale(1, 1, 1),
 	parent(nullptr),
 	siblingId(0)
 {
@@ -79,6 +81,7 @@ void Transform::SetParent(Transform* parent)
 	}
 	this->parent = parent;
 	siblingId = this->parent->AddChild(this);
+	Update();
 }
 
 int Transform::AddChild(Transform* child)

@@ -16,6 +16,7 @@ class Resources
 	std::unique_ptr<Mesh> meshes[int(MeshId::COUNT)];
 public:
 	Resources();
+	void Initialize();
 
 	const std::unique_ptr<ShaderResource>& GetShader(ShaderId id) const;
 	const int& ShaderProgram() const;

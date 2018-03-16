@@ -10,6 +10,11 @@ GameObject::GameObject(std::string name, Transform* parentTransform, MeshId mesh
 	}
 }
 
+MeshId GameObject::GetMeshId() const
+{
+	return meshId;
+}
+
 Transform* GameObject::GetTransform()
 {
 	return &transform;

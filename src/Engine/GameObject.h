@@ -15,5 +15,6 @@ public:
 	GameObject(std::string name, Transform* parentTransform, MeshId meshId);
 
 	Transform* GetTransform();
+	MeshId GetMeshId() const;
 	
 };

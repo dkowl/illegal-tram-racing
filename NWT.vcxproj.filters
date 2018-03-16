@@ -56,6 +56,9 @@
     <ClCompile Include="src\Resources\LocalizedText\LocalizedText.cpp">
       <Filter>Source Files\Resources\LocalizedText</Filter>
     </ClCompile>
+    <ClCompile Include="src\Utils.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\Shaders\fragment_shader.glsl">
@@ -98,6 +101,9 @@
     </ClInclude>
     <ClInclude Include="src\Resources\Mesh\MeshId.h">
       <Filter>Source Files\Resources\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Utils.h">
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -2,6 +2,10 @@
 
 Resources::Resources()
 {
+}
+
+void Resources::Initialize()
+{
 	LoadShaders();
 	LoadMeshes();
 }
