@@ -2,7 +2,9 @@
 
 Transform::Transform():
 	localPosition(0, 0, 0),
-	localScale(1, 1, 1)
+	localScale(1, 1, 1),
+	parent(nullptr),
+	siblingId(0)
 {
 }
 
@@ -69,14 +71,38 @@ void Transform::Scale(const glm::vec3& scale)
 	Update();
 }
 
+void Transform::SetParent(Transform* parent)
+{
+	if(this->parent != nullptr)
+	{
+		this->parent->RemoveChild(siblingId);
+	}
+	this->parent = parent;
+	siblingId = this->parent->AddChild(this);
+}
+
+int Transform::AddChild(Transform* child)
+{
+	children.push_back(child);
+	return children.size() - 1;
+}
+
+void Transform::RemoveChild(int id)
+{
+	children.erase(children.begin() + id);
+	for (int i = id; i < children.size(); i++)
+	{
+		children[i]->siblingId = i;
+	}
+}
+
 void Transform::Update()
 {
-	auto parentShared = parent.lock();
-	if(parentShared)
+	if(parent != nullptr)
 	{
-		worldPosition = parentShared->worldPosition + localPosition;
-		worldRotation = parentShared->worldRotation * localRotation;
-		worldScale = parentShared->worldScale * localScale;		
+		worldPosition = parent->worldPosition + localPosition;
+		worldRotation = parent->worldRotation * localRotation;
+		worldScale = parent->worldScale * localScale;		
 	}
 	else
 	{
@@ -87,8 +113,7 @@ void Transform::Update()
 
 	for(auto&& child: children)
 	{
-		auto childShared = child.lock();
-		if (childShared) childShared->Update();
+		if (child) child->Update();
 	}
 }
 

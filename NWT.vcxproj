@@ -156,6 +156,7 @@
     <ClInclude Include="src\glbinding.h" />
     <ClInclude Include="src\Resources\LocalizedText\LocalizedText.h" />
     <ClInclude Include="src\Resources\Mesh\Mesh.h" />
+    <ClInclude Include="src\Resources\Mesh\MeshId.h" />
     <ClInclude Include="src\Resources\Resources.h" />
     <ClInclude Include="src\Resources\ShaderId.h" />
     <ClInclude Include="src\Resources\ShaderResource.h" />

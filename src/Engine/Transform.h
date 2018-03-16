@@ -16,8 +16,10 @@ class Transform
 	glm::quat worldRotation;
 	glm::vec3 worldScale;
 
-	std::weak_ptr<Transform> parent;
-	std::vector<std::weak_ptr<Transform>> children;
+	Transform* parent;
+	std::vector<Transform*> children;
+
+	int siblingId;
 
 public:
 	Transform();
@@ -36,6 +38,12 @@ public:
 
 	void SetLocalScale(const glm::vec3 &scale);
 	void Scale(const glm::vec3 &scale);
+
+	void SetParent(Transform* parent);
+
+private:
+	int AddChild(Transform* child);
+	void RemoveChild(int id);
 
 
 
