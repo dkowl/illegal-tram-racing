@@ -135,7 +135,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\Constants.cpp" />
+    <ClCompile Include="src\Engine\GameObject.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\Resources\Mesh\Mesh.cpp" />
     <ClCompile Include="src\Resources\Resources.cpp" />
     <ClCompile Include="src\Resources\ShaderResource.cpp" />
   </ItemGroup>
@@ -145,7 +147,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Constants.h" />
+    <ClInclude Include="src\Engine\GameObject.h" />
     <ClInclude Include="src\glbinding.h" />
+    <ClInclude Include="src\Resources\Mesh\Mesh.h" />
     <ClInclude Include="src\Resources\Resources.h" />
     <ClInclude Include="src\Resources\ShaderId.h" />
     <ClInclude Include="src\Resources\ShaderResource.h" />

@@ -15,6 +15,15 @@
     <Filter Include="Source Files\Resources">
       <UniqueIdentifier>{5dd200fd-9c05-456e-a825-08ad02489202}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Engine">
+      <UniqueIdentifier>{12d28e84-1569-41c6-943e-a1d5a25c3cfb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game">
+      <UniqueIdentifier>{37174627-6845-4888-8052-dbeef7f34bfc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Resources\Mesh">
+      <UniqueIdentifier>{6dd47915-5473-4140-822c-ee2bdc83fed6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Resources\ShaderResource.cpp">
@@ -28,6 +37,12 @@
     </ClCompile>
     <ClCompile Include="src\main.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\GameObject.cpp">
+      <Filter>Source Files\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Resources\Mesh\Mesh.cpp">
+      <Filter>Source Files\Resources\Mesh</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -53,6 +68,12 @@
     </ClInclude>
     <ClInclude Include="src\glbinding.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\GameObject.h">
+      <Filter>Source Files\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Resources\Mesh\Mesh.h">
+      <Filter>Source Files\Resources\Mesh</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
