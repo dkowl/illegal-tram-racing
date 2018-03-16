@@ -17,12 +17,14 @@
 #include "../Constants.h"
 #include "../Engine/GameObject.h"
 #include "../Utils.h"
+#include "../Engine/Camera.h"
 
 
 class Game
 {
 	Resources resources;
 	sf::Window window;
+	Camera camera;
 	std::map<std::string, int> objectIds;
 	std::vector<std::unique_ptr<GameObject>> objects;
 	

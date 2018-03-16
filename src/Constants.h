@@ -14,10 +14,13 @@ namespace Constants
 
 	extern const int SCREEN_WIDTH;
 	extern const int SCREEN_HEIGHT;
+	float AspectRatio();
 	extern const Language LANGUAGE;
 	extern const LocalizedText TEXT_EN;
 	extern const LocalizedText TEXT_PL;
 	const LocalizedText& CurrentText();
+
+	extern const float MOUSE_WHEEL_ZOOM_SPEED;
 	
 }
 

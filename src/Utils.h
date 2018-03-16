@@ -9,4 +9,5 @@
 namespace Utils
 {
 	void DisplayMat4(glm::mat4 &m);
+	void DisplayVec3(glm::vec3 &v);
 }

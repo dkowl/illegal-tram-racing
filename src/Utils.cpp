@@ -11,4 +11,9 @@ namespace Utils
 			std::cout << std::endl;
 		}
 	}
+
+	void DisplayVec3(glm::vec3& v)
+	{
+		std::cout << "(" << v.x << ", " << v.y << ", " << v.z << ")" << std::endl;
+	}
 }

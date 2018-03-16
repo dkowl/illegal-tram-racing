@@ -10,6 +10,9 @@ void Game::Start()
 
 	resources.Initialize();
 
+	camera.SetPosition(glm::vec3(0.0f, 1.8f, 3.0f));
+	camera.SetTarget(glm::vec3(0, 0, 0));
+
 	AddObject("Cube", "", MeshId::CUBE);
 
 	MainLoop();
@@ -32,6 +35,11 @@ void Game::MainLoop()
 			{
 				gl::glViewport(0, 0, event.size.width, event.size.height);
 			}
+			else if(event.type == sf::Event::MouseWheelScrolled)
+			{
+				std::cout << event.mouseWheelScroll.delta << std::endl;
+				camera.Zoom(event.mouseWheelScroll.delta * -1.0f * Constants::MOUSE_WHEEL_ZOOM_SPEED);
+			}
 		}
 
 		Render();
@@ -45,6 +53,10 @@ void Game::Update()
 
 void Game::Render()
 {
+	Utils::DisplayVec3(camera.DirectionVector());
+	Utils::DisplayVec3(camera.UpVector());
+	Utils::DisplayVec3(camera.RightVector());
+
 	gl::glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 	gl::glClear(gl::ClearBufferMask::GL_COLOR_BUFFER_BIT | gl::ClearBufferMask::GL_DEPTH_BUFFER_BIT);
 
@@ -71,8 +83,15 @@ void Game::DrawObject(int objectId)
 {
 	unsigned int modelLocation = gl::glGetUniformLocation(resources.ShaderProgram(), "model");
 	glm::mat4 modelMatrix = objects[objectId]->GetTransform()->ModelMatrix();
-	//Utils::DisplayMat4(modelMatrix);
 	gl::glUniformMatrix4fv(modelLocation, 1, gl::GL_FALSE, glm::value_ptr(modelMatrix));
+
+	unsigned int viewLocation = gl::glGetUniformLocation(resources.ShaderProgram(), "view");
+	glm::mat4 viewMatrix = camera.ViewMatrix();
+	gl::glUniformMatrix4fv(viewLocation, 1, gl::GL_FALSE, glm::value_ptr(viewMatrix));
+
+	unsigned int projectionLocation = gl::glGetUniformLocation(resources.ShaderProgram(), "projection");
+	glm::mat4 projectionMatrix = camera.ProjectionMatrix();
+	gl::glUniformMatrix4fv(projectionLocation, 1, gl::GL_FALSE, glm::value_ptr(projectionMatrix));
 
 	auto& mesh = resources.GetMesh(objects[objectId]->GetMeshId());
 	gl::glBindVertexArray(mesh->Vao());
