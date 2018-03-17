@@ -27,6 +27,8 @@ class Game
 	Camera camera;
 	std::map<std::string, int> objectIds;
 	std::vector<std::unique_ptr<GameObject>> objects;
+
+	sf::Vector2i lastMousePos;
 	
 public:
 	void Start();

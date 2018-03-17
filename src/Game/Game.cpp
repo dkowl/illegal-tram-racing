@@ -9,10 +9,7 @@ void Game::Start()
 	window.setActive(true);
 
 	resources.Initialize();
-
-	camera.SetPosition(glm::vec3(0.0f, 1.8f, 3.0f));
-	camera.SetTarget(glm::vec3(0, 0, 0));
-
+	
 	AddObject("Cube", "", MeshId::CUBE);
 
 	MainLoop();
@@ -42,6 +39,7 @@ void Game::MainLoop()
 			}
 		}
 
+		Update();
 		Render();
 	}
 	window.close();
@@ -49,13 +47,20 @@ void Game::MainLoop()
 
 void Game::Update()
 {
+	sf::Vector2i mouseOffset = sf::Mouse::getPosition() - lastMousePos;
+	if(sf::Mouse::isButtonPressed(sf::Mouse::Button::Left) && (mouseOffset.x != 0 || mouseOffset.y != 0))
+	{
+		camera.RotateAround(mouseOffset.x, mouseOffset.y);
+	}
+	lastMousePos = sf::Mouse::getPosition();
+
 }
 
 void Game::Render()
 {
-	Utils::DisplayVec3(camera.DirectionVector());
-	Utils::DisplayVec3(camera.UpVector());
-	Utils::DisplayVec3(camera.RightVector());
+	//Utils::DisplayVec3(camera.DirectionVector());
+	//Utils::DisplayVec3(camera.UpVector());
+	//Utils::DisplayVec3(camera.RightVector());
 
 	gl::glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 	gl::glClear(gl::ClearBufferMask::GL_COLOR_BUFFER_BIT | gl::ClearBufferMask::GL_DEPTH_BUFFER_BIT);
@@ -95,6 +100,6 @@ void Game::DrawObject(int objectId)
 
 	auto& mesh = resources.GetMesh(objects[objectId]->GetMeshId());
 	gl::glBindVertexArray(mesh->Vao());
-	gl::glPolygonMode(gl::GLenum::GL_FRONT_AND_BACK, gl::GLenum::GL_LINE);
+	gl::glPolygonMode(gl::GLenum::GL_FRONT_AND_BACK, gl::GLenum::GL_FILL);
 	gl::glDrawElements(gl::GLenum::GL_TRIANGLES, mesh->ElementCount(), gl::GLenum::GL_UNSIGNED_INT, nullptr);
 }
