@@ -37,6 +37,6 @@ public:
 	void Render();
 
 private:
-	void AddObject(std::string name, std::string parentName, MeshId meshId);
+	void AddObject(std::string name, std::string parentName, MeshId meshId, ShaderProgramId shaderId, TextureId textureId);
 	void DrawObject(int objectId);
 };

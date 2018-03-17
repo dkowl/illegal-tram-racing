@@ -18,7 +18,7 @@ void Game::Start()
 
 	gl::glEnable(gl::GLenum::GL_DEPTH_TEST);
 	
-	AddObject("Cube", "", MeshId::CUBE);
+	AddObject("Cube", "", MeshId::CUBE, ShaderProgramId::MAIN, TextureId::CRATE);
 
 	MainLoop();
 }
@@ -69,8 +69,6 @@ void Game::Render()
 	gl::glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 	gl::glClear(gl::ClearBufferMask::GL_COLOR_BUFFER_BIT | gl::ClearBufferMask::GL_DEPTH_BUFFER_BIT);
 
-	gl::glUseProgram(resources.GetShaderProgram(ShaderProgramId::MAIN)->GlId());
-
 	const unsigned int mainTextureLocation = gl::glGetUniformLocation(resources.GetShaderProgram(ShaderProgramId::MAIN)->GlId(), "mainTexture");
 	gl::glUniform1i(mainTextureLocation, 0);
 
@@ -81,35 +79,41 @@ void Game::Render()
 	window.display();
 }
 
-void Game::AddObject(std::string name, std::string parentName, MeshId meshId)
+void Game::AddObject(std::string name, std::string parentName, MeshId meshId, ShaderProgramId shaderId, TextureId textureId)
 {
 	Transform* parentTransform = nullptr;
 	if(objectIds.find(parentName) != objectIds.end())
 	{
 		parentTransform = objects[objectIds[parentName]]->GetTransform();
 	}
-	objects.push_back(std::make_unique<GameObject>(name, parentTransform, meshId));
+	objects.push_back(std::make_unique<GameObject>(name, parentTransform, meshId, shaderId, textureId));
 	objectIds[name] = objects.size() - 1;
 }
 
 void Game::DrawObject(int objectId)
 {
-	const unsigned int modelLocation = gl::glGetUniformLocation(resources.GetShaderProgram(ShaderProgramId::MAIN)->GlId(), "model");
-	glm::mat4 modelMatrix = objects[objectId]->GetTransform()->ModelMatrix();
-	gl::glUniformMatrix4fv(modelLocation, 1, gl::GL_FALSE, glm::value_ptr(modelMatrix));
+	const auto& object = objects[objectId];
+	const auto& shaderProgram = resources.GetShaderProgram(object->GetShaderId())->GlId();
+	const auto& texture = resources.GetTexture(object->GetTextureId())->GlId();
+	const auto& mesh = resources.GetMesh(object->GetMeshId());
+
+	//shader
+	gl::glUseProgram(shaderProgram);
+
+	const unsigned int modelLocation = gl::glGetUniformLocation(shaderProgram, "model");
+	gl::glUniformMatrix4fv(modelLocation, 1, gl::GL_FALSE, glm::value_ptr(object->GetTransform()->ModelMatrix()));
 
 	const unsigned int viewLocation = gl::glGetUniformLocation(resources.GetShaderProgram(ShaderProgramId::MAIN)->GlId(), "view");
-	glm::mat4 viewMatrix = camera.ViewMatrix();
-	gl::glUniformMatrix4fv(viewLocation, 1, gl::GL_FALSE, glm::value_ptr(viewMatrix));
+	gl::glUniformMatrix4fv(viewLocation, 1, gl::GL_FALSE, glm::value_ptr(camera.ViewMatrix()));
 
 	const unsigned int projectionLocation = gl::glGetUniformLocation(resources.GetShaderProgram(ShaderProgramId::MAIN)->GlId(), "projection");
-	glm::mat4 projectionMatrix = camera.ProjectionMatrix();
-	gl::glUniformMatrix4fv(projectionLocation, 1, gl::GL_FALSE, glm::value_ptr(projectionMatrix));
+	gl::glUniformMatrix4fv(projectionLocation, 1, gl::GL_FALSE, glm::value_ptr(camera.ProjectionMatrix()));
 
+	//texture
 	gl::glActiveTexture(gl::GLenum::GL_TEXTURE0);
-	gl::glBindTexture(gl::GLenum::GL_TEXTURE_2D, resources.GetTexture(TextureId::CRATE)->GlId());
+	gl::glBindTexture(gl::GLenum::GL_TEXTURE_2D, texture);
 
-	auto& mesh = resources.GetMesh(objects[objectId]->GetMeshId());
+	//mesh
 	gl::glBindVertexArray(mesh->Vao());
 
 	gl::glPolygonMode(gl::GLenum::GL_FRONT_AND_BACK, gl::GLenum::GL_FILL);
