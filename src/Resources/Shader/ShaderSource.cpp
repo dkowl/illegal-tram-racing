@@ -1,6 +1,6 @@
-#include "ShaderResource.h"
+#include "ShaderSource.h"
 
-ShaderResource::ShaderResource(const std::string &filename, gl::GLenum type)
+ShaderSource::ShaderSource(const std::string &filename, gl::GLenum type)
 {
 	auto file = std::ifstream(SHADER_RESOURCE_PATH + filename);
 	
@@ -27,14 +27,14 @@ ShaderResource::ShaderResource(const std::string &filename, gl::GLenum type)
 	else std::cout << "Shader " << filename << " compiled successfully" << std::endl;
 }
 
-const std::string& ShaderResource::Source() const
+const std::string& ShaderSource::Source() const
 {
 	return source;
 }
 
-const unsigned& ShaderResource::GlId() const
+const unsigned& ShaderSource::GlId() const
 {
 	return glId;
 }
 
-const std::string ShaderResource::SHADER_RESOURCE_PATH = Constants::RESOURCE_PATH + "Shaders/";
+const std::string ShaderSource::SHADER_RESOURCE_PATH = Constants::RESOURCE_PATH + "Shaders/";

@@ -33,11 +33,11 @@
     <Filter Include="Source Files\Libraries">
       <UniqueIdentifier>{46e004dc-b7b8-48ff-ac3b-c0f6982bbdcd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Shader">
+      <UniqueIdentifier>{04ddf542-f267-424f-b4cb-9f69de3f43b8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Resources\ShaderResource.cpp">
-      <Filter>Source Files\Resources</Filter>
-    </ClCompile>
     <ClCompile Include="src\Constants.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -74,6 +74,12 @@
     <ClCompile Include="src\Libraries\stb_image.cpp">
       <Filter>Source Files\Libraries</Filter>
     </ClCompile>
+    <ClCompile Include="src\Resources\Shader\ShaderProgram.cpp">
+      <Filter>Source Files\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Resources\Shader\ShaderSource.cpp">
+      <Filter>Source Files\Shader</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\Shaders\fragment_shader.glsl">
@@ -84,16 +90,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Resources\ShaderResource.h">
-      <Filter>Source Files\Resources</Filter>
-    </ClInclude>
     <ClInclude Include="src\Constants.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Resources\Resources.h">
-      <Filter>Source Files\Resources</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Resources\ShaderId.h">
       <Filter>Source Files\Resources</Filter>
     </ClInclude>
     <ClInclude Include="src\glbinding.h">
@@ -131,6 +131,18 @@
     </ClInclude>
     <ClInclude Include="src\Libraries\stb_image.h">
       <Filter>Source Files\Libraries</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Resources\Shader\ShaderProgram.h">
+      <Filter>Source Files\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Resources\Shader\ShaderProgramId.h">
+      <Filter>Source Files\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Resources\Shader\ShaderSource.h">
+      <Filter>Source Files\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Resources\Shader\ShaderSourceId.h">
+      <Filter>Source Files\Shader</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -42,7 +42,6 @@ void Game::MainLoop()
 			}
 			else if(event.type == sf::Event::MouseWheelScrolled)
 			{
-				std::cout << event.mouseWheelScroll.delta << std::endl;
 				camera.Zoom(event.mouseWheelScroll.delta * -1.0f * Constants::MOUSE_WHEEL_ZOOM_SPEED);
 			}
 		}
@@ -70,9 +69,9 @@ void Game::Render()
 	gl::glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 	gl::glClear(gl::ClearBufferMask::GL_COLOR_BUFFER_BIT | gl::ClearBufferMask::GL_DEPTH_BUFFER_BIT);
 
-	gl::glUseProgram(resources.ShaderProgram());
+	gl::glUseProgram(resources.GetShaderProgram(ShaderProgramId::MAIN)->GlId());
 
-	const unsigned int mainTextureLocation = gl::glGetUniformLocation(resources.ShaderProgram(), "mainTexture");
+	const unsigned int mainTextureLocation = gl::glGetUniformLocation(resources.GetShaderProgram(ShaderProgramId::MAIN)->GlId(), "mainTexture");
 	gl::glUniform1i(mainTextureLocation, 0);
 
 	for (int i = 0; i < objects.size(); i++)
@@ -95,15 +94,15 @@ void Game::AddObject(std::string name, std::string parentName, MeshId meshId)
 
 void Game::DrawObject(int objectId)
 {
-	const unsigned int modelLocation = gl::glGetUniformLocation(resources.ShaderProgram(), "model");
+	const unsigned int modelLocation = gl::glGetUniformLocation(resources.GetShaderProgram(ShaderProgramId::MAIN)->GlId(), "model");
 	glm::mat4 modelMatrix = objects[objectId]->GetTransform()->ModelMatrix();
 	gl::glUniformMatrix4fv(modelLocation, 1, gl::GL_FALSE, glm::value_ptr(modelMatrix));
 
-	const unsigned int viewLocation = gl::glGetUniformLocation(resources.ShaderProgram(), "view");
+	const unsigned int viewLocation = gl::glGetUniformLocation(resources.GetShaderProgram(ShaderProgramId::MAIN)->GlId(), "view");
 	glm::mat4 viewMatrix = camera.ViewMatrix();
 	gl::glUniformMatrix4fv(viewLocation, 1, gl::GL_FALSE, glm::value_ptr(viewMatrix));
 
-	const unsigned int projectionLocation = gl::glGetUniformLocation(resources.ShaderProgram(), "projection");
+	const unsigned int projectionLocation = gl::glGetUniformLocation(resources.GetShaderProgram(ShaderProgramId::MAIN)->GlId(), "projection");
 	glm::mat4 projectionMatrix = camera.ProjectionMatrix();
 	gl::glUniformMatrix4fv(projectionLocation, 1, gl::GL_FALSE, glm::value_ptr(projectionMatrix));
 

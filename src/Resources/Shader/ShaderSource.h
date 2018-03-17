@@ -5,11 +5,11 @@
 #include <cassert>
 #include <iostream>
 
-#include "../glbinding.h"
+#include "../../glbinding.h"
 
-#include "../Constants.h"
+#include "../../Constants.h"
 
-class ShaderResource
+class ShaderSource
 {
 	static const std::string SHADER_RESOURCE_PATH;
 
@@ -18,7 +18,7 @@ class ShaderResource
 	gl::GLenum glType;
 
 public:
-	ShaderResource(const std::string &filename, gl::GLenum type);
+	ShaderSource(const std::string &filename, gl::GLenum type);
 
 	const std::string& Source() const;
 	const unsigned int& GlId() const;

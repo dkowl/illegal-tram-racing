@@ -144,7 +144,8 @@
     <ClCompile Include="src\Resources\LocalizedText\LocalizedText.cpp" />
     <ClCompile Include="src\Resources\Mesh\Mesh.cpp" />
     <ClCompile Include="src\Resources\Resources.cpp" />
-    <ClCompile Include="src\Resources\ShaderResource.cpp" />
+    <ClCompile Include="src\Resources\Shader\ShaderProgram.cpp" />
+    <ClCompile Include="src\Resources\Shader\ShaderSource.cpp" />
     <ClCompile Include="src\Resources\Texture\Texture.cpp" />
     <ClCompile Include="src\Utils.cpp" />
   </ItemGroup>
@@ -164,8 +165,10 @@
     <ClInclude Include="src\Resources\Mesh\Mesh.h" />
     <ClInclude Include="src\Resources\Mesh\MeshId.h" />
     <ClInclude Include="src\Resources\Resources.h" />
-    <ClInclude Include="src\Resources\ShaderId.h" />
-    <ClInclude Include="src\Resources\ShaderResource.h" />
+    <ClInclude Include="src\Resources\Shader\ShaderProgram.h" />
+    <ClInclude Include="src\Resources\Shader\ShaderProgramId.h" />
+    <ClInclude Include="src\Resources\Shader\ShaderSource.h" />
+    <ClInclude Include="src\Resources\Shader\ShaderSourceId.h" />
     <ClInclude Include="src\Resources\Texture\Texture.h" />
     <ClInclude Include="src\Resources\Texture\TextureId.h" />
     <ClInclude Include="src\Utils.h" />

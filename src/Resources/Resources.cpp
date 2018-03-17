@@ -6,19 +6,20 @@ Resources::Resources()
 
 void Resources::Initialize()
 {
-	LoadShaders();
+	CompileShaders();
+	LinkShaderPrograms();
 	LoadMeshes();
 	LoadTextures();
 }
 
-const std::unique_ptr<ShaderResource>& Resources::GetShader(ShaderId id) const
+const std::unique_ptr<ShaderSource>& Resources::GetShaderSource(ShaderSourceId id) const
 {
-	return shaders[int(id)];
+	return shaderSources[int(id)];
 }
 
-const int& Resources::ShaderProgram() const
+const std::unique_ptr<ShaderProgram>& Resources::GetShaderProgram(ShaderProgramId id) const
 {
-	return shaderProgram;
+	return shaderPrograms[int(id)];
 }
 
 const std::unique_ptr<Mesh>& Resources::GetMesh(MeshId id) const
@@ -31,24 +32,18 @@ const std::unique_ptr<Texture>& Resources::GetTexture(TextureId id) const
 	return textures[int(id)];
 }
 
-void Resources::LoadShaders()
+void Resources::CompileShaders()
 {
-	shaders[int(ShaderId::MAIN_VERTEX)] = std::make_unique<ShaderResource>("vertex_shader.glsl", gl::GLenum::GL_VERTEX_SHADER);
-	shaders[int(ShaderId::MAIN_FRAGMENT)] = std::make_unique<ShaderResource>("fragment_shader.glsl", gl::GLenum::GL_FRAGMENT_SHADER);
+	shaderSources[int(ShaderSourceId::MAIN_VERTEX)] = std::make_unique<ShaderSource>("vertex_shader.glsl", gl::GLenum::GL_VERTEX_SHADER);
+	shaderSources[int(ShaderSourceId::MAIN_FRAGMENT)] = std::make_unique<ShaderSource>("fragment_shader.glsl", gl::GLenum::GL_FRAGMENT_SHADER);
+}
 
-	shaderProgram = gl::glCreateProgram();
-	gl::glAttachShader(shaderProgram, GetShader(ShaderId::MAIN_VERTEX)->GlId());
-	gl::glAttachShader(shaderProgram, GetShader(ShaderId::MAIN_FRAGMENT)->GlId());
-	gl::glLinkProgram(shaderProgram);
-
-	int success;
-	glGetProgramiv(shaderProgram, gl::GLenum::GL_LINK_STATUS, &success);
-	if (!success) {
-		char infoLog[512];
-		gl::glGetProgramInfoLog(shaderProgram, 512, nullptr, infoLog);
-		std::cout << "ERROR::SHADER_PROGRAM::LINKING_FAILED\n" << infoLog << std::endl;
-	}
-	else std::cout << "Shader program linked successfully\n";
+void Resources::LinkShaderPrograms()
+{
+	shaderPrograms[int(ShaderProgramId::MAIN)] = std::make_unique<ShaderProgram>(
+		GetShaderSource(ShaderSourceId::MAIN_VERTEX)->GlId(),
+		GetShaderSource(ShaderSourceId::MAIN_FRAGMENT)->GlId()
+		);
 }
 
 void Resources::LoadMeshes()

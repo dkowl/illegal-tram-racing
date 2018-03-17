@@ -1,6 +1,6 @@
 #pragma once
 
-enum class ShaderId
+enum class ShaderSourceId
 {
 	MAIN_VERTEX,
 	MAIN_FRAGMENT,
