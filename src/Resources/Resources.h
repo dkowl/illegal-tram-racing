@@ -7,6 +7,8 @@
 #include "ShaderId.h"
 #include "Mesh/Mesh.h"
 #include "Mesh/MeshId.h"
+#include "Texture/Texture.h"
+#include "Texture/TextureId.h"
 
 class Resources
 {
@@ -14,6 +16,7 @@ class Resources
 	unsigned int shaderProgram;
 
 	std::unique_ptr<Mesh> meshes[int(MeshId::COUNT)];
+	std::unique_ptr<Texture> textures[int(TextureId::COUNT)];
 public:
 	Resources();
 	void Initialize();
@@ -25,5 +28,6 @@ public:
 private:
 	void LoadShaders();
 	void LoadMeshes();
+	void LoadTextures();
 };
 

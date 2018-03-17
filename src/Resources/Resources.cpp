@@ -8,6 +8,7 @@ void Resources::Initialize()
 {
 	LoadShaders();
 	LoadMeshes();
+	LoadTextures();
 }
 
 const std::unique_ptr<ShaderResource>& Resources::GetShader(ShaderId id) const
@@ -99,5 +100,10 @@ void Resources::LoadMeshes()
 	};
 
 	meshes[int(MeshId::CUBE)] = std::make_unique<Mesh>(vertices, indices);
+}
+
+void Resources::LoadTextures()
+{
+	textures[int(TextureId::CRATE)] = std::make_unique<Texture>("crate.jpg");
 }
 

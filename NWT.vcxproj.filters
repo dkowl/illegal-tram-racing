@@ -27,6 +27,12 @@
     <Filter Include="Source Files\Resources\LocalizedText">
       <UniqueIdentifier>{b1710cdd-f702-4dea-ba08-fac215060b17}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Resources\Texture">
+      <UniqueIdentifier>{e0ba6d8c-2916-453e-92b7-a33945d10d8b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Libraries">
+      <UniqueIdentifier>{46e004dc-b7b8-48ff-ac3b-c0f6982bbdcd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Resources\ShaderResource.cpp">
@@ -61,6 +67,12 @@
     </ClCompile>
     <ClCompile Include="src\Engine\Camera.cpp">
       <Filter>Source Files\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Resources\Texture\Texture.cpp">
+      <Filter>Source Files\Resources\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Libraries\stb_image.cpp">
+      <Filter>Source Files\Libraries</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -110,6 +122,15 @@
     </ClInclude>
     <ClInclude Include="src\Engine\Camera.h">
       <Filter>Source Files\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Resources\Texture\Texture.h">
+      <Filter>Source Files\Resources\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Resources\Texture\TextureId.h">
+      <Filter>Source Files\Resources\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Libraries\stb_image.h">
+      <Filter>Source Files\Libraries</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
