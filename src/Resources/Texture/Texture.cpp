@@ -22,5 +22,10 @@ Texture::Texture(const std::string& filename)
 	stbi_image_free(data);
 }
 
+const unsigned& Texture::GlId() const
+{
+	return glId;
+}
+
 const std::string Texture::TEXTURE_RESOURCE_PATH = Constants::RESOURCE_PATH + "Textures/";
 

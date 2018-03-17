@@ -18,8 +18,13 @@ Mesh::Mesh(std::vector<float>& vertices, std::vector<unsigned>& triangles) :
 	gl::glBindBuffer(gl::GLenum::GL_ELEMENT_ARRAY_BUFFER, ebo);
 	gl::glBufferData(gl::GLenum::GL_ELEMENT_ARRAY_BUFFER, elementBufferData.size() * sizeof(unsigned), elementBufferData.data(), gl::GLenum::GL_STATIC_DRAW);
 
-	gl::glVertexAttribPointer(0, 3, gl::GLenum::GL_FLOAT, gl::GL_FALSE, 3 * sizeof(float), nullptr);
+	//position attribute
+	gl::glVertexAttribPointer(0, 3, gl::GLenum::GL_FLOAT, gl::GL_FALSE, 5 * sizeof(float), nullptr);
 	gl::glEnableVertexAttribArray(0);
+
+	//uv attribute
+	gl::glVertexAttribPointer(1, 2, gl::GLenum::GL_FLOAT, gl::GL_FALSE, 5 * sizeof(float), reinterpret_cast<void*>(3 * sizeof(float)));
+	gl::glEnableVertexAttribArray(1);
 }
 
 Mesh::Mesh(std::vector<float> &vertices, std::vector<unsigned> &triangles, std::vector<float> &uvs):

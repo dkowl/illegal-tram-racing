@@ -26,6 +26,11 @@ const std::unique_ptr<Mesh>& Resources::GetMesh(MeshId id) const
 	return meshes[int(id)];
 }
 
+const std::unique_ptr<Texture>& Resources::GetTexture(TextureId id) const
+{
+	return textures[int(id)];
+}
+
 void Resources::LoadShaders()
 {
 	shaders[int(ShaderId::MAIN_VERTEX)] = std::make_unique<ShaderResource>("vertex_shader.glsl", gl::GLenum::GL_VERTEX_SHADER);
@@ -49,35 +54,35 @@ void Resources::LoadShaders()
 void Resources::LoadMeshes()
 {
 	std::vector<float> vertices = {
-		-0.5f, -0.5f, 0.5f, //0.0f, 0.0f,
-		-0.5f, 0.5f, 0.5f, //0.0f, 1.0f,
-		0.5f, 0.5f, 0.5f, //1.0f, 1.0f,
-		0.5f, -0.5f, 0.5f, //1.0f, 0.0f,
+		-0.5f, -0.5f, 0.5f, 0.0f, 0.0f,
+		-0.5f, 0.5f, 0.5f, 0.0f, 1.0f,
+		0.5f, 0.5f, 0.5f, 1.0f, 1.0f,
+		0.5f, -0.5f, 0.5f, 1.0f, 0.0f,
 
-		-0.5f, -0.5f, -0.5f, //0.0f, 0.0f,
-		-0.5f, 0.5f, -0.5f, //0.0f, 1.0f,
-		-0.5f, 0.5f, 0.5f, //1.0f, 1.0f,
-		-0.5f, -0.5f, 0.5f, //1.0f, 0.0f,
+		-0.5f, -0.5f, -0.5f, 0.0f, 0.0f,
+		-0.5f, 0.5f, -0.5f, 0.0f, 1.0f,
+		-0.5f, 0.5f, 0.5f, 1.0f, 1.0f,
+		-0.5f, -0.5f, 0.5f, 1.0f, 0.0f,
 
-		-0.5f, 0.5f, 0.5f, //0.0f, 0.0f,
-		-0.5f, 0.5f, -0.5f, //0.0f, 1.0f,
-		0.5f, 0.5f, -0.5f, //1.0f, 1.0f,
-		0.5f, 0.5f, 0.5f, //1.0f, 0.0f,
+		-0.5f, 0.5f, 0.5f, 0.0f, 0.0f,
+		-0.5f, 0.5f, -0.5f, 0.0f, 1.0f,
+		0.5f, 0.5f, -0.5f, 1.0f, 1.0f,
+		0.5f, 0.5f, 0.5f, 1.0f, 0.0f,
 
-		-0.5f, -0.5f, -0.5f, //0.0f, 0.0f,
-		-0.5f, 0.5f, -0.5f, //0.0f, 1.0f,
-		0.5f, 0.5f, -0.5f, //1.0f, 1.0f,
-		0.5f, -0.5f, -0.5f, //1.0f, 0.0f,
+		-0.5f, -0.5f, -0.5f, 0.0f, 0.0f,
+		-0.5f, 0.5f, -0.5f, 0.0f, 1.0f,
+		0.5f, 0.5f, -0.5f, 1.0f, 1.0f,
+		0.5f, -0.5f, -0.5f, 1.0f, 0.0f,
 
-		0.5f, -0.5f, -0.5f, //0.0f, 0.0f,
-		0.5f, 0.5f, -0.5f, //0.0f, 1.0f,
-		0.5f, 0.5f, 0.5f, //1.0f, 1.0f,
-		0.5f, -0.5f, 0.5f, //1.0f, 0.0f,
+		0.5f, -0.5f, -0.5f, 0.0f, 0.0f,
+		0.5f, 0.5f, -0.5f, 0.0f, 1.0f,
+		0.5f, 0.5f, 0.5f, 1.0f, 1.0f,
+		0.5f, -0.5f, 0.5f, 1.0f, 0.0f,
 
-		-0.5f, -0.5f, 0.5f, //0.0f, 0.0f,
-		-0.5f, -0.5f, -0.5f, //0.0f, 1.0f,
-		0.5f, -0.5f, -0.5f, //1.0f, 1.0f,
-		0.5f, -0.5f, 0.5f, //1.0f, 0.0f
+		-0.5f, -0.5f, 0.5f, 0.0f, 0.0f,
+		-0.5f, -0.5f, -0.5f, 0.0f, 1.0f,
+		0.5f, -0.5f, -0.5f, 1.0f, 1.0f,
+		0.5f, -0.5f, 0.5f, 1.0f, 0.0f
 	};
 	std::vector<unsigned int> indices = {
 		0, 1, 2,

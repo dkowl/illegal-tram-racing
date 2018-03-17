@@ -24,6 +24,7 @@ public:
 	const std::unique_ptr<ShaderResource>& GetShader(ShaderId id) const;
 	const int& ShaderProgram() const;
 	const std::unique_ptr<Mesh>& GetMesh(MeshId id) const;
+	const std::unique_ptr<Texture>& GetTexture(TextureId id) const;
 
 private:
 	void LoadShaders();

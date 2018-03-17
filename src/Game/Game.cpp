@@ -2,13 +2,21 @@
 
 void Game::Start()
 {
+	sf::ContextSettings settings;
+	settings.depthBits = 24;
+	settings.antialiasingLevel = 4;
+
 	window.create(
 		sf::VideoMode(Constants::SCREEN_WIDTH, Constants::SCREEN_HEIGHT),
-		Constants::CurrentText().GetText(LocalizedText::TextType::WINDOW_TITLE)
+		Constants::CurrentText().GetText(LocalizedText::TextType::WINDOW_TITLE),
+		sf::Style::Default,
+		settings
 		);
 	window.setActive(true);
 
 	resources.Initialize();
+
+	gl::glEnable(gl::GLenum::GL_DEPTH_TEST);
 	
 	AddObject("Cube", "", MeshId::CUBE);
 
@@ -58,14 +66,15 @@ void Game::Update()
 
 void Game::Render()
 {
-	//Utils::DisplayVec3(camera.DirectionVector());
-	//Utils::DisplayVec3(camera.UpVector());
-	//Utils::DisplayVec3(camera.RightVector());
 
 	gl::glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 	gl::glClear(gl::ClearBufferMask::GL_COLOR_BUFFER_BIT | gl::ClearBufferMask::GL_DEPTH_BUFFER_BIT);
 
 	gl::glUseProgram(resources.ShaderProgram());
+
+	const unsigned int mainTextureLocation = gl::glGetUniformLocation(resources.ShaderProgram(), "mainTexture");
+	gl::glUniform1i(mainTextureLocation, 0);
+
 	for (int i = 0; i < objects.size(); i++)
 	{
 		DrawObject(i);
@@ -86,20 +95,24 @@ void Game::AddObject(std::string name, std::string parentName, MeshId meshId)
 
 void Game::DrawObject(int objectId)
 {
-	unsigned int modelLocation = gl::glGetUniformLocation(resources.ShaderProgram(), "model");
+	const unsigned int modelLocation = gl::glGetUniformLocation(resources.ShaderProgram(), "model");
 	glm::mat4 modelMatrix = objects[objectId]->GetTransform()->ModelMatrix();
 	gl::glUniformMatrix4fv(modelLocation, 1, gl::GL_FALSE, glm::value_ptr(modelMatrix));
 
-	unsigned int viewLocation = gl::glGetUniformLocation(resources.ShaderProgram(), "view");
+	const unsigned int viewLocation = gl::glGetUniformLocation(resources.ShaderProgram(), "view");
 	glm::mat4 viewMatrix = camera.ViewMatrix();
 	gl::glUniformMatrix4fv(viewLocation, 1, gl::GL_FALSE, glm::value_ptr(viewMatrix));
 
-	unsigned int projectionLocation = gl::glGetUniformLocation(resources.ShaderProgram(), "projection");
+	const unsigned int projectionLocation = gl::glGetUniformLocation(resources.ShaderProgram(), "projection");
 	glm::mat4 projectionMatrix = camera.ProjectionMatrix();
 	gl::glUniformMatrix4fv(projectionLocation, 1, gl::GL_FALSE, glm::value_ptr(projectionMatrix));
 
+	gl::glActiveTexture(gl::GLenum::GL_TEXTURE0);
+	gl::glBindTexture(gl::GLenum::GL_TEXTURE_2D, resources.GetTexture(TextureId::CRATE)->GlId());
+
 	auto& mesh = resources.GetMesh(objects[objectId]->GetMeshId());
 	gl::glBindVertexArray(mesh->Vao());
+
 	gl::glPolygonMode(gl::GLenum::GL_FRONT_AND_BACK, gl::GLenum::GL_FILL);
 	gl::glDrawElements(gl::GLenum::GL_TRIANGLES, mesh->ElementCount(), gl::GLenum::GL_UNSIGNED_INT, nullptr);
 }

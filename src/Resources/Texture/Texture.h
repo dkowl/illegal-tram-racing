@@ -20,4 +20,6 @@ class Texture
 	
 public:
 	Texture(const std::string &filename);
+
+	const unsigned int& GlId() const;
 };
