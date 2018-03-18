@@ -3,6 +3,10 @@
 
 #include "../../glbinding.h"
 
+#include <assimp/Importer.hpp>
+#include <assimp/scene.h>
+#include <assimp/postprocess.h>
+
 class Mesh
 {
 	unsigned int vertCount;
@@ -17,7 +21,11 @@ class Mesh
 public:
 	Mesh(std::vector<float> &vertices, std::vector<unsigned int> &triangles);
 	Mesh(std::vector<float> &vertices, std::vector<unsigned int> &triangles, std::vector<float> &uvs);
+	explicit Mesh(aiMesh *aiMesh);
 
 	const unsigned& Vao() const;
 	const unsigned& ElementCount() const;
+
+private:
+	void GenerateGlBuffers();
 };

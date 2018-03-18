@@ -27,7 +27,7 @@ TextureId GameObject::GetTextureId() const
 	return textureId;
 }
 
-Transform* GameObject::GetTransform()
+Transform& GameObject::GetTransform()
 {
-	return &transform;
+	return transform;
 }

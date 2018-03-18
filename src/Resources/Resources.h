@@ -3,6 +3,10 @@
 
 #include "../glbinding.h"
 
+#include <assimp/Importer.hpp>
+#include <assimp/scene.h>
+#include <assimp/postprocess.h>
+
 #include "Mesh/Mesh.h"
 #include "Mesh/MeshId.h"
 #include "Texture/Texture.h"

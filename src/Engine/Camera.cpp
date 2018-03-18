@@ -3,17 +3,17 @@
 Camera::Camera() :
 	mode(Mode::PITCH_YAW),
 	target(0, 0, 0),
-	position(0, 2, 3),
+	position(0, 20, 20),
 	yaw(0),
 	pitch(30),
 	minPitch(0),
 	maxPitch(89),
-	distance(4),
+	distance(40),
 	minDistance(0.1f),
 	maxDistance(100),
 	fov(80),
 	nearClipPlane(0.1f),
-	farClipPlane(100)
+	farClipPlane(1000)
 {
 }
 
@@ -32,9 +32,13 @@ glm::mat4 Camera::ViewMatrix() const
 		glm::vec3 rightVector = yawMat * glm::vec4(1, 0, 0, 1);
 
 		glm::mat4 pitchMat;
-		pitchMat = glm::rotate(pitchMat, glm::radians(pitch), rightVector);
+		pitchMat = glm::rotate(pitchMat, glm::radians(-pitch), rightVector);
+
+		//glm::mat4 rollMat;
+		//rollMat = glm::rotate(rollMat, glm::radians(180.f), glm::vec3(0, 0, -1));
 
 		glm::vec3 newPosition = pitchMat * yawMat * trans * glm::vec4(target, 1);
+		Utils::DisplayVec3(newPosition);
 		return glm::lookAt(newPosition, target, glm::vec3(0, 1, 0));
 	}
 	}
@@ -42,7 +46,7 @@ glm::mat4 Camera::ViewMatrix() const
 
 glm::mat4 Camera::ProjectionMatrix() const
 {
-	return glm::perspective(fov, Constants::AspectRatio(), nearClipPlane, farClipPlane);
+	return glm::perspective(glm::radians(fov), Constants::AspectRatio(), nearClipPlane, farClipPlane);
 }
 
 glm::vec3 Camera::UpVector() const

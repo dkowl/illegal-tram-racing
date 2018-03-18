@@ -27,5 +27,5 @@ namespace Constants
 			return TEXT_PL;
 		}
 	}
-	extern const float MOUSE_WHEEL_ZOOM_SPEED = 0.05f;
+	extern const float MOUSE_WHEEL_ZOOM_SPEED = 0.1f;
 }

@@ -110,6 +110,57 @@ void Resources::LoadCube()
 
 void Resources::LoadTram()
 {
+	Assimp::Importer importer;
+
+	const unsigned int rvcFlags =
+		aiComponent_TANGENTS_AND_BITANGENTS |
+		aiComponent_COLORS |
+		aiComponent_BONEWEIGHTS |
+		aiComponent_ANIMATIONS |
+		aiComponent_LIGHTS |
+		aiComponent_CAMERAS |
+		aiComponent_MATERIALS;
+	importer.SetPropertyInteger(AI_CONFIG_PP_RVC_FLAGS, rvcFlags);
+
+	const unsigned int sbpRemoveFlags =
+		aiPrimitiveType_POINT |
+		aiPrimitiveType_LINE;
+	importer.SetPropertyInteger(AI_CONFIG_PP_SBP_REMOVE, sbpRemoveFlags);
+
+	const aiScene *scene = importer.ReadFile(
+		Constants::RESOURCE_PATH + "Models/Tramwaj.fbx",
+		aiProcess_JoinIdenticalVertices |
+		aiProcess_Triangulate |
+		aiProcess_RemoveComponent |
+		aiProcess_GenNormals |
+		aiProcess_PreTransformVertices |
+		aiProcess_ValidateDataStructure |
+		aiProcess_SortByPType |
+		aiProcess_FindDegenerates |
+		aiProcess_OptimizeMeshes |
+		aiProcess_OptimizeGraph
+		);
+
+	std::string errorString = importer.GetErrorString();
+	if(!errorString.empty())
+	{
+		std::cout << "Asset import error: " << errorString << std::endl;
+	}
+	else
+	{
+		std::cout << "Asset import successfull\n";
+	}
+
+	std::cout << "Imported scene has " << scene->mNumMeshes <<" meshes\n";
+	std::cout << "Root node name: " << scene->mRootNode->mName.C_Str() << std::endl;
+	const unsigned int meshId = scene->mRootNode->mMeshes[0];
+	std::cout << "Mesh id: " << meshId << std::endl;
+	aiMesh *mesh = scene->mMeshes[meshId];
+	std::cout << "Vertices: " << mesh->mNumVertices << std::endl;
+	std::cout << "Triangles: " << mesh->mNumFaces << std::endl;
+
+	meshes[int(MeshId::TRAM)] = std::make_unique<Mesh>(mesh);
+
 }
 
 void Resources::LoadTextures()

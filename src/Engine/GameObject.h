@@ -18,7 +18,7 @@ class GameObject
 public:
 	GameObject(std::string name, Transform* parentTransform, MeshId meshId, ShaderProgramId shaderId, TextureId textureId);
 
-	Transform* GetTransform();
+	Transform& GetTransform();
 	MeshId GetMeshId() const;
 	ShaderProgramId GetShaderId() const;
 	TextureId GetTextureId() const;

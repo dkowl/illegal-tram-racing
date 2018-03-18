@@ -18,7 +18,8 @@ void Game::Start()
 
 	gl::glEnable(gl::GLenum::GL_DEPTH_TEST);
 	
-	AddObject("Cube", "", MeshId::CUBE, ShaderProgramId::MAIN, TextureId::CRATE);
+	std::unique_ptr<GameObject>& tram = AddObject("Tram", "", MeshId::TRAM, ShaderProgramId::MAIN, TextureId::CRATE);
+	tram->GetTransform().SetLocalScale(glm::vec3(0.04f));
 
 	MainLoop();
 }
@@ -79,15 +80,16 @@ void Game::Render()
 	window.display();
 }
 
-void Game::AddObject(std::string name, std::string parentName, MeshId meshId, ShaderProgramId shaderId, TextureId textureId)
+std::unique_ptr<GameObject>& Game::AddObject(std::string name, std::string parentName, MeshId meshId, ShaderProgramId shaderId, TextureId textureId)
 {
 	Transform* parentTransform = nullptr;
 	if(objectIds.find(parentName) != objectIds.end())
 	{
-		parentTransform = objects[objectIds[parentName]]->GetTransform();
+		parentTransform = &objects[objectIds[parentName]]->GetTransform();
 	}
 	objects.push_back(std::make_unique<GameObject>(name, parentTransform, meshId, shaderId, textureId));
 	objectIds[name] = objects.size() - 1;
+	return objects.back();
 }
 
 void Game::DrawObject(int objectId)
@@ -101,7 +103,7 @@ void Game::DrawObject(int objectId)
 	gl::glUseProgram(shaderProgram);
 
 	const unsigned int modelLocation = gl::glGetUniformLocation(shaderProgram, "model");
-	gl::glUniformMatrix4fv(modelLocation, 1, gl::GL_FALSE, glm::value_ptr(object->GetTransform()->ModelMatrix()));
+	gl::glUniformMatrix4fv(modelLocation, 1, gl::GL_FALSE, glm::value_ptr(object->GetTransform().ModelMatrix()));
 
 	const unsigned int viewLocation = gl::glGetUniformLocation(resources.GetShaderProgram(ShaderProgramId::MAIN)->GlId(), "view");
 	gl::glUniformMatrix4fv(viewLocation, 1, gl::GL_FALSE, glm::value_ptr(camera.ViewMatrix()));
