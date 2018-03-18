@@ -32,6 +32,8 @@ private:
 	void CompileShaders();
 	void LinkShaderPrograms();
 	void LoadMeshes();
+	void LoadCube();
+	void LoadTram();
 	void LoadTextures();
 };
 

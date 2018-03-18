@@ -3,5 +3,6 @@
 enum class MeshId
 {
 	CUBE,
+	TRAM,
 	COUNT
 };

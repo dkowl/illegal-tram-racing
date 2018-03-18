@@ -48,6 +48,12 @@ void Resources::LinkShaderPrograms()
 
 void Resources::LoadMeshes()
 {
+	LoadCube();
+	LoadTram();
+}
+
+void Resources::LoadCube()
+{
 	std::vector<float> vertices = {
 		-0.5f, -0.5f, 0.5f, 0.0f, 0.0f,
 		-0.5f, 0.5f, 0.5f, 0.0f, 1.0f,
@@ -100,6 +106,10 @@ void Resources::LoadMeshes()
 	};
 
 	meshes[int(MeshId::CUBE)] = std::make_unique<Mesh>(vertices, indices);
+}
+
+void Resources::LoadTram()
+{
 }
 
 void Resources::LoadTextures()

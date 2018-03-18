@@ -2,21 +2,19 @@
 
 #include "glbinding.h"
 
-#include <SFML/Window.hpp>
-
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/type_ptr.hpp>
-
-#include "Engine/Transform.h"
-#include "Resources/Resources.h"
-#include "Resources/Mesh/Mesh.h"
 #include "Game/Game.h"
+
+#include <assimp/Importer.hpp>
+#include <assimp/scene.h>
+#include <assimp/postprocess.h>
+
 
 
 int main()
 {
 	glbinding::Binding::initialize(false);
+
+	Assimp::Importer importer;
 
 	Game game;
 	game.Start();
