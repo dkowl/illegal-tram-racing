@@ -52,6 +52,26 @@ Mesh::Mesh(aiMesh* aiMesh):
 	GenerateGlBuffers();
 }
 
+Mesh::Mesh(const Track& track):
+	vertCount(track.SegmentCount() * 3),
+	arrayBufferData(vertCount * 5),
+	elementBufferData((track.SegmentCount() - 1) * 12)
+{
+	for (int i = 0; i < vertCount; i++)
+	{
+		AddSingleVertexData(
+			i,
+			glm::vec3(
+
+				),
+			glm::vec2(
+
+				)
+			);
+	}
+}
+
+
 const unsigned& Mesh::Vao() const
 {
 	return vao;
@@ -60,6 +80,15 @@ const unsigned& Mesh::Vao() const
 const unsigned& Mesh::ElementCount() const
 {
 	return elementBufferData.size();
+}
+
+void Mesh::AddSingleVertexData(const int &&vertexId, const glm::vec3 &&position, const glm::vec2 &&uv)
+{
+	elementBufferData[vertexId * 5] = position.x;
+	elementBufferData[vertexId * 5 + 1] = position.y;
+	elementBufferData[vertexId * 5 + 2] = position.z;
+	elementBufferData[vertexId * 5 + 3] = uv.x;
+	elementBufferData[vertexId * 5 + 4] = uv.y;
 }
 
 void Mesh::GenerateGlBuffers()

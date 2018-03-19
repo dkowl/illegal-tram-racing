@@ -8,7 +8,7 @@ Camera::Camera() :
 	pitch(30),
 	minPitch(0),
 	maxPitch(89),
-	distance(40),
+	distance(9),
 	minDistance(0.1f),
 	maxDistance(100),
 	fov(80),
@@ -34,11 +34,8 @@ glm::mat4 Camera::ViewMatrix() const
 		glm::mat4 pitchMat;
 		pitchMat = glm::rotate(pitchMat, glm::radians(-pitch), rightVector);
 
-		//glm::mat4 rollMat;
-		//rollMat = glm::rotate(rollMat, glm::radians(180.f), glm::vec3(0, 0, -1));
-
 		glm::vec3 newPosition = pitchMat * yawMat * trans * glm::vec4(target, 1);
-		Utils::DisplayVec3(newPosition);
+		//Utils::DisplayVec3(newPosition);
 		return glm::lookAt(newPosition, target, glm::vec3(0, 1, 0));
 	}
 	}

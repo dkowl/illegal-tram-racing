@@ -3,5 +3,6 @@
 enum class TextureId
 {
 	CRATE,
+	TRAM,
 	COUNT
 };

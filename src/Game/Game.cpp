@@ -18,8 +18,11 @@ void Game::Start()
 
 	gl::glEnable(gl::GLenum::GL_DEPTH_TEST);
 	
-	std::unique_ptr<GameObject>& tram = AddObject("Tram", "", MeshId::TRAM, ShaderProgramId::MAIN, TextureId::CRATE);
-	tram->GetTransform().SetLocalScale(glm::vec3(0.04f));
+	auto& tram = AddObject("Tram", "", MeshId::TRAM, ShaderProgramId::MAIN, TextureId::TRAM);
+	tram->GetTransform().SetLocalScale(glm::vec3(0.06f));
+
+	auto& tram2 = AddObject("Tram2", "", MeshId::TRAM, ShaderProgramId::MAIN, TextureId::CRATE);
+	tram2->GetTransform().SetLocalScale(glm::vec3(0.01f));
 
 	MainLoop();
 }

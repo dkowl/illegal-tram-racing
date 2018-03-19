@@ -80,6 +80,9 @@
     <ClCompile Include="src\Resources\Shader\ShaderSource.cpp">
       <Filter>Source Files\Shader</Filter>
     </ClCompile>
+    <ClCompile Include="src\Game\Track.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\Shaders\fragment_shader.glsl">
@@ -143,6 +146,9 @@
     </ClInclude>
     <ClInclude Include="src\Resources\Shader\ShaderSourceId.h">
       <Filter>Source Files\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Game\Track.h">
+      <Filter>Source Files\Game</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -138,7 +138,8 @@ void Resources::LoadTram()
 		aiProcess_SortByPType |
 		aiProcess_FindDegenerates |
 		aiProcess_OptimizeMeshes |
-		aiProcess_OptimizeGraph
+		aiProcess_OptimizeGraph |
+		aiProcess_FlipUVs
 		);
 
 	std::string errorString = importer.GetErrorString();
@@ -166,5 +167,6 @@ void Resources::LoadTram()
 void Resources::LoadTextures()
 {
 	textures[int(TextureId::CRATE)] = std::make_unique<Texture>("crate.jpg");
+	textures[int(TextureId::TRAM)] = std::make_unique<Texture>("tram.png");
 }
 
