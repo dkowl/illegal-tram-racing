@@ -9,11 +9,16 @@
 
 class GameObject
 {
+public:
+	enum class PolygonMode;
+
+private:
 	std::string name;
 	Transform transform;
 	MeshId meshId;
 	ShaderProgramId shaderId;
 	TextureId textureId;
+	PolygonMode polygonMode;
 
 public:
 	GameObject(std::string name, Transform* parentTransform, MeshId meshId, ShaderProgramId shaderId, TextureId textureId);
@@ -23,5 +28,12 @@ public:
 	ShaderProgramId GetShaderId() const;
 	TextureId GetTextureId() const;
 
-	
+	void SetPolygonMode(const PolygonMode &mode);
+	gl::GLenum GetPolygonMode() const;
+
+	enum class PolygonMode
+	{
+		FILL,
+		LINE
+	};	
 };

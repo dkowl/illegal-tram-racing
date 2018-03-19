@@ -16,4 +16,14 @@ namespace Utils
 	{
 		std::cout << "(" << v.x << ", " << v.y << ", " << v.z << ")" << std::endl;
 	}
+
+	float GetYRotation(glm::vec3 v)
+	{
+		v.y = 0;
+		v = glm::normalize(v);
+		float dot = glm::dot(v, glm::vec3(0, 0, -1));
+		float angle = glm::acos(dot);
+		if (v.x < 0) angle = 2*glm::pi<float>() - angle;
+		return angle;
+	}
 }

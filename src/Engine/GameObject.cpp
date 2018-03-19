@@ -4,7 +4,8 @@ GameObject::GameObject(std::string name, Transform* parentTransform, MeshId mesh
 	name(name),
 	meshId(meshId),
 	shaderId(shaderId),
-	textureId(textureId)
+	textureId(textureId),
+	polygonMode(PolygonMode::FILL)
 {
 	if(parentTransform != nullptr)
 	{
@@ -25,6 +26,22 @@ ShaderProgramId GameObject::GetShaderId() const
 TextureId GameObject::GetTextureId() const
 {
 	return textureId;
+}
+
+void GameObject::SetPolygonMode(const PolygonMode &mode)
+{
+	polygonMode = mode;
+}
+
+gl::GLenum GameObject::GetPolygonMode() const
+{
+	switch (polygonMode)
+	{
+	case PolygonMode::FILL:
+		return gl::GLenum::GL_FILL;
+	case PolygonMode::LINE:
+		return gl::GLenum::GL_LINE;
+	}
 }
 
 Transform& GameObject::GetTransform()

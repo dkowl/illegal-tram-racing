@@ -83,6 +83,9 @@
     <ClCompile Include="src\Game\Track.cpp">
       <Filter>Source Files\Game</Filter>
     </ClCompile>
+    <ClCompile Include="src\Game\Tram.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\Shaders\fragment_shader.glsl">
@@ -148,6 +151,9 @@
       <Filter>Source Files\Shader</Filter>
     </ClInclude>
     <ClInclude Include="src\Game\Track.h">
+      <Filter>Source Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Game\Tram.h">
       <Filter>Source Files\Game</Filter>
     </ClInclude>
   </ItemGroup>

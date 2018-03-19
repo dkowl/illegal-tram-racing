@@ -23,6 +23,8 @@ class Resources
 
 	std::unique_ptr<Mesh> meshes[int(MeshId::COUNT)];
 	std::unique_ptr<Texture> textures[int(TextureId::COUNT)];
+
+	std::unique_ptr<Track> track;
 public:
 	Resources();
 	void Initialize();
@@ -32,9 +34,14 @@ public:
 	const std::unique_ptr<Mesh>& GetMesh(MeshId id) const;
 	const std::unique_ptr<Texture>& GetTexture(TextureId id) const;
 
+	const std::unique_ptr<Track>& GetTrack() const;
+
 private:
 	void CompileShaders();
 	void LinkShaderPrograms();
+
+	void LoadTracks();
+
 	void LoadMeshes();
 	void LoadCube();
 	void LoadTram();

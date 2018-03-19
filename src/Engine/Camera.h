@@ -13,7 +13,8 @@ public:
 	enum class Mode
 	{
 		POSITION,
-		PITCH_YAW
+		PITCH_YAW,
+		PITCH
 	};
 
 private:

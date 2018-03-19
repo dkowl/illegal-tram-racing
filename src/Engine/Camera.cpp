@@ -1,12 +1,12 @@
 #include "Camera.h"
 
 Camera::Camera() :
-	mode(Mode::PITCH_YAW),
+	mode(Mode::PITCH),
 	target(0, 0, 0),
-	position(0, 20, 20),
+	position(0, 0, 0),
 	yaw(0),
 	pitch(30),
-	minPitch(0),
+	minPitch(1),
 	maxPitch(89),
 	distance(9),
 	minDistance(0.1f),
@@ -22,6 +22,7 @@ glm::mat4 Camera::ViewMatrix() const
 	switch (mode) {
 	case Mode::POSITION:
 		return glm::lookAt(position, target, glm::vec3(0.0f, 1.0f, 0.0f));
+	case Mode::PITCH:
 	case Mode::PITCH_YAW:
 	{
 		glm::mat4 trans;
@@ -34,7 +35,8 @@ glm::mat4 Camera::ViewMatrix() const
 		glm::mat4 pitchMat;
 		pitchMat = glm::rotate(pitchMat, glm::radians(-pitch), rightVector);
 
-		glm::vec3 newPosition = pitchMat * yawMat * trans * glm::vec4(target, 1);
+		glm::vec3 newPosition = pitchMat * yawMat * trans * glm::vec4(0, 0, 0, 1);
+		newPosition += target;
 		//Utils::DisplayVec3(newPosition);
 		return glm::lookAt(newPosition, target, glm::vec3(0, 1, 0));
 	}
@@ -123,6 +125,7 @@ void Camera::Zoom(float deltaDistance)
 		position = target + distanceV;
 	}
 		break;
+	case Mode::PITCH:
 	case Mode::PITCH_YAW:
 		SetDistance(this->distance + deltaDistance);
 		break;
@@ -134,19 +137,14 @@ void Camera::RotateAround(float deltaYaw, float deltaPitch)
 	switch (mode) {
 	case Mode::POSITION: 
 	{
-		glm::vec3 distanceV = position - target;
-		glm::mat4 transformMatrix;
-		//transformMatrix = glm::translate(transformMatrix, distanceV);
-		transformMatrix = glm::rotate(transformMatrix, glm::radians(deltaYaw), glm::vec3(0, 1, 0));
-		transformMatrix = glm::rotate(transformMatrix, glm::radians(deltaPitch), glm::vec3(1, 0, 0));
-		Utils::DisplayVec3(position);
-		position = transformMatrix * glm::vec4(distanceV, 0) + glm::vec4(target, 0);
-		Utils::DisplayVec3(position);
+		return;
 	}
 		break;
 	case Mode::PITCH_YAW:
 		SetYaw(yaw + deltaYaw);
 		SetPitch(pitch + deltaPitch);
 		break;
+	case Mode::PITCH:
+		SetPitch(pitch + deltaPitch);
 	}
 }

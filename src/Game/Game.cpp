@@ -6,10 +6,22 @@ void Game::Start()
 	settings.depthBits = 24;
 	settings.antialiasingLevel = 4;
 
+	const auto& videoModes = sf::VideoMode::getFullscreenModes();
+	int bestIndex = 0;
+	int maxPixels = 0;
+	for (int i = 0; i < videoModes.size(); i++)
+	{
+		int pixels = videoModes[i].width * videoModes[i].height * videoModes[i].bitsPerPixel;
+		if(pixels > maxPixels)
+		{
+			maxPixels = pixels;
+			bestIndex = i;
+		}
+	}
 	window.create(
-		sf::VideoMode(Constants::SCREEN_WIDTH, Constants::SCREEN_HEIGHT),
+		videoModes[bestIndex],
 		Constants::CurrentText().GetText(LocalizedText::TextType::WINDOW_TITLE),
-		sf::Style::Default,
+		sf::Style::Fullscreen,
 		settings
 		);
 	window.setActive(true);
@@ -19,24 +31,27 @@ void Game::Start()
 	gl::glEnable(gl::GLenum::GL_DEPTH_TEST);
 	
 	auto& tram = AddObject("Tram", "", MeshId::TRAM, ShaderProgramId::MAIN, TextureId::TRAM);
-	tram->GetTransform().SetLocalScale(glm::vec3(0.06f));
+	tram->GetTransform().SetLocalScale(glm::vec3(0.05f));
 
-	auto& tram2 = AddObject("Tram2", "", MeshId::TRAM, ShaderProgramId::MAIN, TextureId::CRATE);
-	tram2->GetTransform().SetLocalScale(glm::vec3(0.01f));
+	//auto& tram2 = AddObject("Tram2", "", MeshId::TRAM, ShaderProgramId::MAIN, TextureId::CRATE);
+	//tram2->GetTransform().SetLocalScale(glm::vec3(0.01f));
+
+	auto& track = AddObject("Track", "", MeshId::TRACK, ShaderProgramId::MAIN, TextureId::TRACK);
+	//track->SetPolygonMode(GameObject::PolygonMode::LINE);
 
 	MainLoop();
 }
 
 void Game::MainLoop()
 {
-
+	clock.restart();
 	bool running = true;
 	while(running)
 	{
 		sf::Event event;
 		while(window.pollEvent(event))
 		{
-			if(event.type == sf::Event::Closed)
+			if(event.type == sf::Event::Closed || event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)
 			{
 				running = false;
 			}
@@ -65,6 +80,22 @@ void Game::Update()
 	}
 	lastMousePos = sf::Mouse::getPosition();
 
+	tram.Update(deltaTime);
+
+	auto& track = resources.GetTrack();
+	auto& tramObject = GetObject("Tram");
+	auto tramAxisPositions = track->GetTramAxisPositions(tram.DistanceTraveled(), Tram::AXIS_DISTANCE);
+	glm::vec3 tramPosition = glm::mix(tramAxisPositions[0], tramAxisPositions[1], 0.5f);
+	float tramYRotation = glm::degrees(Utils::GetYRotation(tramAxisPositions[0] - tramAxisPositions[1]));
+	std::cout << "tram Y rotation: " << tramYRotation << std::endl;
+	tramObject->GetTransform().SetLocalPosition(tramPosition);
+	tramObject->GetTransform().SetLocalRotation(180 - tramYRotation, glm::vec3(0, 1, 0));
+	camera.SetYaw(-tramYRotation);
+	camera.SetTarget(tramObject->GetTransform().Position());
+
+	deltaTime = clock.getElapsedTime().asSeconds();
+	totalTime += deltaTime;
+	clock.restart();
 }
 
 void Game::Render()
@@ -95,6 +126,16 @@ std::unique_ptr<GameObject>& Game::AddObject(std::string name, std::string paren
 	return objects.back();
 }
 
+std::unique_ptr<GameObject>& Game::GetObject(std::string name)
+{
+	if(objectIds.find(name) == objectIds.end())
+	{
+		std::cout << "Object " << name << " not found";
+		return objects[0];
+	}
+	return objects[objectIds[name]];
+}
+
 void Game::DrawObject(int objectId)
 {
 	const auto& object = objects[objectId];
@@ -121,6 +162,6 @@ void Game::DrawObject(int objectId)
 	//mesh
 	gl::glBindVertexArray(mesh->Vao());
 
-	gl::glPolygonMode(gl::GLenum::GL_FRONT_AND_BACK, gl::GLenum::GL_FILL);
+	gl::glPolygonMode(gl::GLenum::GL_FRONT_AND_BACK, object->GetPolygonMode());
 	gl::glDrawElements(gl::GLenum::GL_TRIANGLES, mesh->ElementCount(), gl::GLenum::GL_UNSIGNED_INT, nullptr);
 }

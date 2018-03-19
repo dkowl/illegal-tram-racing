@@ -30,7 +30,7 @@ public:
 	const unsigned& ElementCount() const;
 
 private:
-	void AddSingleVertexData(const int &vertexId, const glm::vec3 &&position, const glm::vec2 &&uv);
+	void AddSingleVertexData(const int &vertexId, const glm::vec3 &position, const glm::vec2 &uv);
 
 	void GenerateGlBuffers();
 };

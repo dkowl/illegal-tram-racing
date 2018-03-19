@@ -14,6 +14,7 @@
 #include "../Engine/GameObject.h"
 #include "../Utils.h"
 #include "../Engine/Camera.h"
+#include "Tram.h"
 
 
 class Game
@@ -25,6 +26,12 @@ class Game
 	std::vector<std::unique_ptr<GameObject>> objects;
 
 	sf::Vector2i lastMousePos;
+
+	Tram tram;
+
+	sf::Clock clock;
+	float totalTime;
+	float deltaTime;
 	
 public:
 	void Start();
@@ -34,5 +41,6 @@ public:
 
 private:
 	std::unique_ptr<GameObject>& AddObject(std::string name, std::string parentName, MeshId meshId, ShaderProgramId shaderId, TextureId textureId);
+	std::unique_ptr<GameObject>& GetObject(std::string name);
 	void DrawObject(int objectId);
 };

@@ -1,5 +1,6 @@
 #include "Mesh.h"
 #include <iostream>
+#include "../../Engine/Camera.h"
 
 Mesh::Mesh(std::vector<float>& vertices, std::vector<unsigned>& triangles) :
 	vertCount(vertices.size() / 3)
@@ -57,18 +58,51 @@ Mesh::Mesh(const Track& track):
 	arrayBufferData(vertCount * 5),
 	elementBufferData((track.SegmentCount() - 1) * 12)
 {
-	for (int i = 0; i < vertCount; i++)
+	for (int i = 0; i < track.SegmentCount(); i++)
 	{
-		AddSingleVertexData(
-			i,
-			glm::vec3(
+		auto positions = track.SegmentVertexPositions(i);
+		auto uvs = track.SegmentVertexUvs(i);
+		
+		if(i<5)
+		{
+			std::cout << "\nSegment " << i << std::endl;
+			std::cout << "positions:\n";
+			for(auto&& position: positions)
+			{
+				Utils::DisplayVec3(position);
+			}
+			std::cout << "uvs:\n";
+			for(auto&& uv: uvs)
+			{
+				std::cout << uv.x << ", " << uv.y << "\n";
+			}
+		}
 
-				),
-			glm::vec2(
+		for (int j = 0; j < 3; j++)
+		{
+			AddSingleVertexData(i * 3 + j, positions[j], uvs[j]);
+		}
+		if(i > 0)
+		{
+			elementBufferData[(i - 1) * 12] = (i - 1) * 3;
+			elementBufferData[(i - 1) * 12 + 1] = (i - 1) * 3 + 1;
+			elementBufferData[(i - 1) * 12 + 2] = i * 3 + 1;
 
-				)
-			);
+			elementBufferData[(i - 1) * 12 + 3] = (i - 1) * 3;
+			elementBufferData[(i - 1) * 12 + 4] = i * 3 + 1;
+			elementBufferData[(i - 1) * 12 + 5] = i * 3;
+
+			elementBufferData[(i - 1) * 12 + 6] = (i - 1) * 3 + 1;
+			elementBufferData[(i - 1) * 12 + 7] = (i - 1) * 3 + 2;
+			elementBufferData[(i - 1) * 12 + 8] = i * 3 + 2;
+
+			elementBufferData[(i - 1) * 12 + 9] = (i - 1) * 3 + 1;
+			elementBufferData[(i - 1) * 12 + 10] = i * 3 + 1;
+			elementBufferData[(i - 1) * 12 + 11] = i * 3 + 2;
+		}
 	}
+
+	GenerateGlBuffers();
 }
 
 
@@ -82,13 +116,13 @@ const unsigned& Mesh::ElementCount() const
 	return elementBufferData.size();
 }
 
-void Mesh::AddSingleVertexData(const int &&vertexId, const glm::vec3 &&position, const glm::vec2 &&uv)
+void Mesh::AddSingleVertexData(const int &vertexId, const glm::vec3 &position, const glm::vec2 &uv)
 {
-	elementBufferData[vertexId * 5] = position.x;
-	elementBufferData[vertexId * 5 + 1] = position.y;
-	elementBufferData[vertexId * 5 + 2] = position.z;
-	elementBufferData[vertexId * 5 + 3] = uv.x;
-	elementBufferData[vertexId * 5 + 4] = uv.y;
+	arrayBufferData[vertexId * 5] = position.x;
+	arrayBufferData[vertexId * 5 + 1] = position.y;
+	arrayBufferData[vertexId * 5 + 2] = position.z;
+	arrayBufferData[vertexId * 5 + 3] = uv.x;
+	arrayBufferData[vertexId * 5 + 4] = uv.y;
 }
 
 void Mesh::GenerateGlBuffers()

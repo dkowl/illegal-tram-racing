@@ -8,6 +8,9 @@ void Resources::Initialize()
 {
 	CompileShaders();
 	LinkShaderPrograms();
+
+	LoadTracks();
+
 	LoadMeshes();
 	LoadTextures();
 }
@@ -32,6 +35,11 @@ const std::unique_ptr<Texture>& Resources::GetTexture(TextureId id) const
 	return textures[int(id)];
 }
 
+const std::unique_ptr<Track>& Resources::GetTrack() const
+{
+	return track;
+}
+
 void Resources::CompileShaders()
 {
 	shaderSources[int(ShaderSourceId::MAIN_VERTEX)] = std::make_unique<ShaderSource>("vertex_shader.glsl", gl::GLenum::GL_VERTEX_SHADER);
@@ -46,10 +54,16 @@ void Resources::LinkShaderPrograms()
 		);
 }
 
+void Resources::LoadTracks()
+{
+	track = std::make_unique<Track>(1000);
+}
+
 void Resources::LoadMeshes()
 {
 	LoadCube();
 	LoadTram();
+	meshes[int(MeshId::TRACK)] = std::make_unique<Mesh>(*track);
 }
 
 void Resources::LoadCube()
@@ -168,5 +182,6 @@ void Resources::LoadTextures()
 {
 	textures[int(TextureId::CRATE)] = std::make_unique<Texture>("crate.jpg");
 	textures[int(TextureId::TRAM)] = std::make_unique<Texture>("tram.png");
+	textures[int(TextureId::TRACK)] = std::make_unique<Texture>("track.jpg");
 }
 
