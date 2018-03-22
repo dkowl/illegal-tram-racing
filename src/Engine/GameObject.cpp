@@ -1,17 +1,22 @@
 #include "GameObject.h"
 
-GameObject::GameObject(std::string name, Transform* parentTransform, MeshId meshId, ShaderProgramId shaderId, TextureId textureId, Camera* camera):
-	name(name),
-	meshId(meshId),
-	shaderId(shaderId),
-	textureId(textureId),
+GameObject::GameObject(const BuildParams &params):
+	name(params.name),
+	meshId(params.meshId),
+	shaderId(params.shaderId),
+	textureId(params.textureId),
 	polygonMode(PolygonMode::FILL),
-	camera(camera)
+	camera(params.camera)
 {
-	if(parentTransform != nullptr)
+	if(params.parentTransform != nullptr)
 	{
-		transform.SetParent(parentTransform);
+		transform.SetParent(params.parentTransform);
 	}
+}
+
+void GameObject::Update()
+{
+	std::cout << "Updating " << name << std::endl;
 }
 
 MeshId GameObject::GetMeshId() const
@@ -48,6 +53,16 @@ gl::GLenum GameObject::GetPolygonMode() const
 Camera* GameObject::GetCamera() const
 {
 	return camera;
+}
+
+GameObject::BuildParams::BuildParams():
+	name("New object"),
+	parentTransform(nullptr),
+	meshId(MeshId::CUBE),
+	shaderId(ShaderProgramId::MAIN),
+	textureId(TextureId::CRATE),
+	camera(nullptr)
+{
 }
 
 Transform& GameObject::GetTransform()

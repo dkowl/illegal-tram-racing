@@ -7,8 +7,10 @@
 #include <glm/gtc/type_ptr.hpp>
 
 #include <SFML/Window/Keyboard.hpp>
+#include "../Engine/GameObject.h"
+#include "Game.h"
 
-class Tram
+class Tram : public GameObject
 {
 public:
 	static const float AXIS_DISTANCE;
@@ -22,9 +24,9 @@ private:
 	float distanceTraveled;
 
 public:
-	Tram();
+	explicit Tram(const GameObject::BuildParams &params);
 
-	void Update(float deltaTime);
+	void Update() override;
 
 	float DistanceTraveled() const;
 

@@ -248,6 +248,7 @@ float Track::LerpRatio(float distance) const
 
 glm::vec3 Track::GetPosition(float segmentsTraveled) const
 {
+	segmentsTraveled = glm::clamp(segmentsTraveled, 0.f, float(SegmentCount()));
 	int indexBefore = glm::floor(segmentsTraveled);
 	int indexAfter = glm::ceil(segmentsTraveled);
 	float lerpRatio = glm::fract(segmentsTraveled);

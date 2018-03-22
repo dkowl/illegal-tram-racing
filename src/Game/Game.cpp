@@ -13,6 +13,21 @@ Game& Game::I()
 	return *instance;
 }
 
+const Resources& Game::Resources()
+{
+	return I().resources;
+}
+
+float Game::DeltaTime()
+{
+	return I().deltaTime;
+}
+
+Camera* Game::MainCamera()
+{
+	return &I().mainCamera;
+}
+
 void Game::Start()
 {
 	if (isRunning) return;
@@ -51,24 +66,17 @@ void Game::MainLoop()
 
 void Game::Update()
 {
+	for(auto&& object: objects)
+	{
+		object->Update();
+	}
+	
 	sf::Vector2i mouseOffset = sf::Mouse::getPosition() - lastMousePos;
 	if(sf::Mouse::isButtonPressed(sf::Mouse::Button::Left) && (mouseOffset.x != 0 || mouseOffset.y != 0))
 	{
 		mainCamera.RotateAround(mouseOffset.x, mouseOffset.y);
 	}
-	lastMousePos = sf::Mouse::getPosition();
-
-	tram.Update(deltaTime);
-
-	auto& track = resources.GetTrack();
-	auto& tramObject = GetObject("Tram");
-	auto tramAxisPositions = track->GetTramAxisPositions(tram.DistanceTraveled(), Tram::AXIS_DISTANCE);
-	const glm::vec3 tramPosition = glm::mix(tramAxisPositions[0], tramAxisPositions[1], 0.5f);
-	const float tramYRotation = glm::degrees(Utils::GetYRotation(tramAxisPositions[0] - tramAxisPositions[1]));
-	tramObject->GetTransform().SetLocalPosition(tramPosition);
-	tramObject->GetTransform().SetLocalRotation(180 - tramYRotation, glm::vec3(0, 1, 0));
-	mainCamera.SetYaw(-tramYRotation);
-	mainCamera.SetTarget(tramObject->GetTransform().Position());
+	lastMousePos = sf::Mouse::getPosition();	
 
 	deltaTime = clock.getElapsedTime().asSeconds();
 	totalTime += deltaTime;
@@ -130,10 +138,20 @@ void Game::OpenWindow()
 
 void Game::InitializeObjects()
 {
-	auto& tram = AddObject("Tram", "", MeshId::TRAM, ShaderProgramId::MAIN, TextureId::TRAM, &mainCamera);
-	tram->GetTransform().SetLocalScale(glm::vec3(0.05f));
+	GameObject::BuildParams tram;
+	tram.name = "Tram";
+	tram.meshId = MeshId::TRAM;
+	tram.textureId = TextureId::TRAM;
 
-	auto& track = AddObject("Track", "", MeshId::TRACK, ShaderProgramId::MAIN, TextureId::TRACK, &mainCamera);
+	auto& tramObject = AddObject<Tram>(tram);
+	tramObject->GetTransform().SetLocalScale(glm::vec3(0.05f));
+
+	GameObject::BuildParams track;
+	track.name = "Track";
+	track.meshId = MeshId::TRACK;
+	track.textureId = TextureId::TRACK;
+
+	auto& trackObject = AddObject<GameObject>(track);
 }
 
 void Game::HandleEvent(sf::Event event)
@@ -152,15 +170,12 @@ void Game::HandleEvent(sf::Event event)
 	}
 }
 
-std::unique_ptr<GameObject>& Game::AddObject(std::string name, std::string parentName, MeshId meshId, ShaderProgramId shaderId, TextureId textureId, Camera* camera)
+template <class T>
+std::unique_ptr<GameObject>& Game::AddObject(GameObject::BuildParams &buildParams)
 {
-	Transform* parentTransform = nullptr;
-	if(objectIds.find(parentName) != objectIds.end())
-	{
-		parentTransform = &objects[objectIds[parentName]]->GetTransform();
-	}
-	objects.push_back(std::make_unique<GameObject>(name, parentTransform, meshId, shaderId, textureId, camera));
-	objectIds[name] = objects.size() - 1;
+	if (buildParams.camera == nullptr) buildParams.camera = &mainCamera;
+	objects.push_back(std::make_unique<T>(buildParams));
+	objectIds[buildParams.name] = objects.size() - 1;
 	return objects.back();
 }
 

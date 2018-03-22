@@ -8,13 +8,13 @@
 #include "../Resources/Shader/ShaderProgramId.h"
 #include "../Resources/Texture/TextureId.h"
 
-
 class GameObject
 {
 public:
 	enum class PolygonMode;
+	struct BuildParams;
 
-private:
+protected:
 	std::string name;
 	Transform transform;
 	MeshId meshId;
@@ -24,7 +24,9 @@ private:
 	Camera *camera;
 
 public:
-	GameObject(std::string name, Transform* parentTransform, MeshId meshId, ShaderProgramId shaderId, TextureId textureId, Camera* camera);
+	explicit GameObject(const BuildParams &params);
+
+	virtual void Update();
 
 	Transform& GetTransform();
 	MeshId GetMeshId() const;
@@ -41,4 +43,16 @@ public:
 		FILL,
 		LINE
 	};	
+
+	struct BuildParams
+	{
+		std::string name;
+		Transform* parentTransform;
+		MeshId meshId;
+		ShaderProgramId shaderId;
+		TextureId textureId;
+		Camera* camera;
+
+		BuildParams();
+	};
 };

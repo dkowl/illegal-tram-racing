@@ -7,14 +7,16 @@ const float Tram::FRICTION_DECELERATION = 1;
 const float Tram::AXIS_DISTANCE = 8;
 
 
-Tram::Tram():
+Tram::Tram(const GameObject::BuildParams &params):
+	GameObject(params),
 	speed(0),
 	distanceTraveled(20)
 {
 }
 
-void Tram::Update(float deltaTime)
+void Tram::Update()
 {
+	const float deltaTime = Game::DeltaTime();
 	if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up))
 	{
 		speed += Acceleration() * deltaTime;
@@ -27,8 +29,17 @@ void Tram::Update(float deltaTime)
 	speed = glm::max(speed, 0.f);
 
 	distanceTraveled += speed * deltaTime;
-
 	std::cout << "distance traveled: " << distanceTraveled << " speed: " << speed << std::endl;
+
+	auto& track = Game::Resources().GetTrack();
+	auto tramAxisPositions = track->GetTramAxisPositions(distanceTraveled, AXIS_DISTANCE);
+	const glm::vec3 tramPosition = glm::mix(tramAxisPositions[0], tramAxisPositions[1], 0.5f);
+	const float tramYRotation = glm::degrees(Utils::GetYRotation(tramAxisPositions[0] - tramAxisPositions[1]));
+	transform.SetLocalPosition(tramPosition);
+	transform.SetLocalRotation(180 - tramYRotation, glm::vec3(0, 1, 0));
+	CameraPerspective* mainCamera = dynamic_cast<CameraPerspective*>(Game::MainCamera());
+	mainCamera->SetYaw(-tramYRotation);
+	mainCamera->SetTarget(transform.Position());
 }
 
 float Tram::DistanceTraveled() const

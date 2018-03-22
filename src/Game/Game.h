@@ -30,8 +30,6 @@ class Game
 
 	sf::Vector2i lastMousePos;
 
-	Tram tram;
-
 	sf::Clock clock;
 	float totalTime;
 	float deltaTime;
@@ -41,9 +39,16 @@ class Game
 public:
 	static void Initialize();
 	static Game& I();
+	static const Resources& Resources();
+	static float DeltaTime();
+	static Camera* MainCamera();
 
 	void Start();
 	void Stop();
+
+	template <class T>
+	std::unique_ptr<GameObject>& AddObject(GameObject::BuildParams &buildParams);
+	std::unique_ptr<GameObject>& GetObject(std::string name);
 
 private:
 	Game();
@@ -56,8 +61,5 @@ private:
 	void InitializeObjects();
 
 	void HandleEvent(sf::Event event);
-
-	std::unique_ptr<GameObject>& AddObject(std::string name, std::string parentName, MeshId meshId, ShaderProgramId shaderId, TextureId textureId, Camera* camera);
-	std::unique_ptr<GameObject>& GetObject(std::string name);
 	void DrawObject(int objectId);
 };
