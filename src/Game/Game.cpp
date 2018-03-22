@@ -1,5 +1,6 @@
 #include "Game.h"
 #include "../Engine/UI/Sprite.h"
+#include "Tram.h"
 
 Game* Game::instance = nullptr;
 
@@ -81,6 +82,7 @@ void Game::Update()
 	}
 
 	UpdateSpeedometer();
+	mainCamera.Update();
 	
 	sf::Vector2i mouseOffset = sf::Mouse::getPosition() - lastMousePos;
 	if(sf::Mouse::isButtonPressed(sf::Mouse::Button::Left) && (mouseOffset.x != 0 || mouseOffset.y != 0))

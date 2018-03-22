@@ -18,5 +18,5 @@ glm::mat4 CameraUi::ProjectionMatrix() const
 
 void CameraUi::SetAspectRatio(float aspectRatio)
 {
-	aspectRatio = aspectRatio;
+	this->aspectRatio = aspectRatio;
 }

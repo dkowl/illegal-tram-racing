@@ -16,7 +16,6 @@ GameObject::GameObject(const BuildParams &params):
 
 void GameObject::Update()
 {
-	std::cout << "Updating " << name << std::endl;
 }
 
 MeshId GameObject::GetMeshId() const

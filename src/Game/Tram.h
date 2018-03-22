@@ -1,14 +1,6 @@
 #pragma once
 
-#include <iostream>
-
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/type_ptr.hpp>
-
-#include <SFML/Window/Keyboard.hpp>
 #include "../Engine/GameObject.h"
-#include "Game.h"
 
 class Tram : public GameObject
 {
@@ -20,6 +12,7 @@ private:
 	static const float STATIC_FRICTION_DECELERATION;
 	static const float FRICTION_DECELERATION;
 	static const float BRAKING_DECELERATION;
+	static const float SPEED_MULTIPLIER;
 
 	float speed;
 	float distanceTraveled;

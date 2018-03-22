@@ -12,4 +12,9 @@ namespace Utils
 	void DisplayVec3(glm::vec3 &v);
 
 	float GetYRotation(glm::vec3 v);
+
+	float SmoothStep(float a, float b, float smoothness, float deltaTime);
+	glm::vec3 SmoothStep(glm::vec3 a, glm::vec3 b, float smoothness, float deltaTime);
+
+	float NormalizeAngle(float x, float base);
 }

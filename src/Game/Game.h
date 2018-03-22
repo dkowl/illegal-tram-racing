@@ -1,5 +1,4 @@
 #pragma once
-#include <iostream>
 #include <string>
 #include <map>
 
@@ -9,12 +8,8 @@
 
 #include "../Engine/Transform.h"
 #include "../Resources/Resources.h"
-#include "../Resources/Mesh/Mesh.h"
-#include "../Constants.h"
 #include "../Engine/GameObject.h"
 #include "../Engine/Camera/CameraPerspective.h"
-#include "../Utils.h"
-#include "Tram.h"
 #include "../Engine/Camera/CameraUi.h"
 
 

@@ -4,8 +4,6 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-#include "../../Constants.h"
-#include "../../Utils.h"
 #include "Camera.h"
 
 class CameraPerspective : public Camera
@@ -22,11 +20,14 @@ private:
 	Mode mode;
 
 	glm::vec3 target;
+	glm::vec3 targetTarget;
 
 	glm::vec3 position;
 
 	float yaw;
+	float targetYaw;
 	float pitch;
+	float targetPitch;
 	float minPitch;
 	float maxPitch;
 	float distance;
@@ -37,8 +38,14 @@ private:
 	float nearClipPlane;
 	float farClipPlane;
 
+	float targetSmoothness;
+	float yawSmoothness;
+	float pitchSmoothness;
+
 public:
 	CameraPerspective();
+
+	void Update();
 
 	glm::mat4 ViewMatrix() const override;
 	glm::mat4 ProjectionMatrix() const override;

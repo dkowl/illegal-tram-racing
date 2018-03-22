@@ -26,4 +26,31 @@ namespace Utils
 		if (v.x < 0) angle = 2*glm::pi<float>() - angle;
 		return angle;
 	}
+
+	float SmoothStep(float a, float b, float smoothness, float deltaTime)
+	{
+		//std::cout << "a: " << a << "    b: " << b << "    deltaTime: " << deltaTime << std::endl;
+		//std::cout << "smoothstep: " << glm::smoothstep(0.f, 1.f, 1.f - glm::pow(smoothness, deltaTime)) << std::endl;
+		//std::cout << "mix: " << glm::mix(a, b, glm::smoothstep(0.f, 1.f, 1.f - glm::pow(smoothness, deltaTime))) << std::endl;
+		return glm::mix(a, b, 1.f - glm::pow(smoothness, deltaTime));
+	}
+
+	glm::vec3 SmoothStep(glm::vec3 a, glm::vec3 b, float smoothness, float deltaTime)
+	{
+		return glm::vec3(
+			SmoothStep(a.x, b.x, smoothness, deltaTime),
+			SmoothStep(a.y, b.y, smoothness, deltaTime),
+			SmoothStep(a.z, b.z, smoothness, deltaTime)
+			);
+	}
+
+	float NormalizeAngle(float base, float x)
+	{
+		while(glm::abs(x-base) > 180)
+		{
+			if (x < base) x += 360;
+			else x -= 360;
+		}
+		return x;
+	}
 }

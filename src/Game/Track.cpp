@@ -113,10 +113,10 @@ std::vector<glm::vec3> Track::GetTramAxisPositions(float distance, float axisDis
 				result[0] = GetPosition(frontIndex + lerpRatio);
 				result[1] = GetPosition(backIndex + lerpRatio);
 			}
-			std::cout << "lerpRatio: " << lerpRatio << " front: ";
-			Utils::DisplayVec3(result[0]);
-			std::cout << " back: ";
-			Utils::DisplayVec3(result[1]);
+			//std::cout << "lerpRatio: " << lerpRatio << " front: ";
+			//Utils::DisplayVec3(result[0]);
+			//std::cout << " back: ";
+			//Utils::DisplayVec3(result[1]);
 			return result;
 		}
 		
@@ -245,7 +245,7 @@ float Track::LerpRatio(float distance) const
 
 glm::vec3 Track::GetPosition(float segmentsTraveled) const
 {
-	segmentsTraveled = glm::clamp(segmentsTraveled, 0.f, float(SegmentCount()));
+	segmentsTraveled = glm::clamp(segmentsTraveled, 0.f, float(SegmentCount() - 1));
 	int indexBefore = glm::floor(segmentsTraveled);
 	int indexAfter = glm::ceil(segmentsTraveled);
 	float lerpRatio = glm::fract(segmentsTraveled);

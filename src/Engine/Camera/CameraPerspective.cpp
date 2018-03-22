@@ -1,11 +1,16 @@
 #include "CameraPerspective.h"
+#include "../../Game/Game.h"
+#include "../../Utils.h"
 
 CameraPerspective::CameraPerspective() :
 	mode(Mode::PITCH),
 	target(0, 0, 0),
+	targetTarget(target),
 	position(0, 0, 0),
 	yaw(0),
+	targetYaw(yaw),
 	pitch(30),
+	targetPitch(pitch),
 	minPitch(1),
 	maxPitch(89),
 	distance(9),
@@ -13,8 +18,18 @@ CameraPerspective::CameraPerspective() :
 	maxDistance(100),
 	fov(80),
 	nearClipPlane(0.1f),
-	farClipPlane(1000)
+	farClipPlane(1000),
+	targetSmoothness(0.002),
+	yawSmoothness(0.125),
+	pitchSmoothness(0.0005)
 {
+}
+
+void CameraPerspective::Update()
+{
+	target = Utils::SmoothStep(target, targetTarget, targetSmoothness, Game::DeltaTime());
+	yaw = Utils::SmoothStep(yaw, targetYaw, yawSmoothness, Game::DeltaTime());
+	pitch = Utils::SmoothStep(pitch, targetPitch, pitchSmoothness, Game::DeltaTime());
 }
 
 glm::mat4 CameraPerspective::ViewMatrix() const
@@ -45,7 +60,7 @@ glm::mat4 CameraPerspective::ViewMatrix() const
 
 glm::mat4 CameraPerspective::ProjectionMatrix() const
 {
-	return glm::perspective(glm::radians(fov), Constants::AspectRatio(), nearClipPlane, farClipPlane);
+	return glm::perspective(glm::radians(fov), Game::AspectRatio(), nearClipPlane, farClipPlane);
 }
 
 glm::vec3 CameraPerspective::UpVector() const
@@ -75,12 +90,13 @@ void CameraPerspective::SetPosition(glm::vec3&& position)
 
 void CameraPerspective::SetYaw(float yawDegrees)
 {
-	yaw = yawDegrees;
+	targetYaw = Utils::NormalizeAngle(targetYaw, yawDegrees);
+	std::cout << "targetYaw: " << targetYaw << std::endl;
 }
 
 void CameraPerspective::SetPitch(float pitchDegrees)
 {
-	pitch = glm::clamp(pitchDegrees, minPitch, maxPitch);
+	targetPitch = glm::clamp(pitchDegrees, minPitch, maxPitch);
 }
 
 void CameraPerspective::SetMinPitch(float minPitch)
@@ -95,7 +111,7 @@ void CameraPerspective::SetMaxPitch(float maxPitch)
 
 void CameraPerspective::SetTarget(glm::vec3&& target)
 {
-	this->target = target;
+	this->targetTarget = target;
 }
 
 void CameraPerspective::SetDistance(float distance)
