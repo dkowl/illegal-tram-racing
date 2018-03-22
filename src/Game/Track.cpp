@@ -1,5 +1,4 @@
 #include "Track.h"
-#include "../Engine/Camera.h"
 
 const float Track::SEGMENT_LENGTH = 1.f; //meters
 

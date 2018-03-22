@@ -1,6 +1,5 @@
 #include "Mesh.h"
 #include <iostream>
-#include "../../Engine/Camera.h"
 
 Mesh::Mesh(std::vector<float>& vertices, std::vector<unsigned>& triangles) :
 	vertCount(vertices.size() / 3)

@@ -4,10 +4,11 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-#include "../Constants.h"
-#include "../Utils.h"
+#include "../../Constants.h"
+#include "../../Utils.h"
+#include "Camera.h"
 
-class Camera
+class CameraPerspective : public Camera
 {
 public:
 	enum class Mode
@@ -37,10 +38,10 @@ private:
 	float farClipPlane;
 
 public:
-	Camera();
+	CameraPerspective();
 
-	glm::mat4 ViewMatrix() const;
-	glm::mat4 ProjectionMatrix() const;
+	glm::mat4 ViewMatrix() const override;
+	glm::mat4 ProjectionMatrix() const override;
 
 	glm::vec3 UpVector() const;
 	glm::vec3 RightVector() const;

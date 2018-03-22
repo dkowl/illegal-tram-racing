@@ -135,7 +135,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\Constants.cpp" />
-    <ClCompile Include="src\Engine\Camera.cpp" />
+    <ClCompile Include="src\Engine\Camera\CameraPerspective.cpp" />
+    <ClCompile Include="src\Engine\Camera\CameraUi.cpp" />
     <ClCompile Include="src\Engine\GameObject.cpp" />
     <ClCompile Include="src\Engine\Transform.cpp" />
     <ClCompile Include="src\Game\Game.cpp" />
@@ -157,7 +158,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Constants.h" />
-    <ClInclude Include="src\Engine\Camera.h" />
+    <ClInclude Include="src\Engine\Camera\Camera.h" />
+    <ClInclude Include="src\Engine\Camera\CameraPerspective.h" />
+    <ClInclude Include="src\Engine\Camera\CameraUi.h" />
     <ClInclude Include="src\Engine\GameObject.h" />
     <ClInclude Include="src\Engine\Transform.h" />
     <ClInclude Include="src\Game\Game.h" />

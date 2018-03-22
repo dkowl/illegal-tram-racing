@@ -36,6 +36,9 @@
     <Filter Include="Source Files\Shader">
       <UniqueIdentifier>{04ddf542-f267-424f-b4cb-9f69de3f43b8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Engine\Camera">
+      <UniqueIdentifier>{fe8001dc-e455-4d40-87b8-9cfc89c6539d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Constants.cpp">
@@ -65,9 +68,6 @@
     <ClCompile Include="src\Utils.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Engine\Camera.cpp">
-      <Filter>Source Files\Engine</Filter>
-    </ClCompile>
     <ClCompile Include="src\Resources\Texture\Texture.cpp">
       <Filter>Source Files\Resources\Texture</Filter>
     </ClCompile>
@@ -85,6 +85,12 @@
     </ClCompile>
     <ClCompile Include="src\Game\Tram.cpp">
       <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Camera\CameraPerspective.cpp">
+      <Filter>Source Files\Engine\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Camera\CameraUi.cpp">
+      <Filter>Source Files\Engine\Camera</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -126,9 +132,6 @@
     <ClInclude Include="src\Utils.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Engine\Camera.h">
-      <Filter>Source Files\Engine</Filter>
-    </ClInclude>
     <ClInclude Include="src\Resources\Texture\Texture.h">
       <Filter>Source Files\Resources\Texture</Filter>
     </ClInclude>
@@ -155,6 +158,15 @@
     </ClInclude>
     <ClInclude Include="src\Game\Tram.h">
       <Filter>Source Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Camera\Camera.h">
+      <Filter>Source Files\Engine\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Camera\CameraPerspective.h">
+      <Filter>Source Files\Engine\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Camera\CameraUi.h">
+      <Filter>Source Files\Engine\Camera</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

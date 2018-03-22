@@ -12,8 +12,8 @@
 #include "../Resources/Mesh/Mesh.h"
 #include "../Constants.h"
 #include "../Engine/GameObject.h"
+#include "../Engine/Camera/CameraPerspective.h"
 #include "../Utils.h"
-#include "../Engine/Camera.h"
 #include "Tram.h"
 
 
@@ -21,8 +21,8 @@ class Game
 {
 	Resources resources;
 	sf::Window window;
-	Camera mainCamera;
-	Camera uiCamera;
+	CameraPerspective mainCamera;
+	//CameraPerspective uiCamera;
 	std::map<std::string, int> objectIds;
 	std::vector<std::unique_ptr<GameObject>> objects;
 

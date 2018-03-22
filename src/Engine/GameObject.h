@@ -2,7 +2,7 @@
 #include <memory>
 #include <string>
 #include "Transform.h"
-#include "Camera.h"
+#include "Camera/Camera.h"
 #include "../Resources/Mesh/Mesh.h"
 #include "../Resources/Mesh/MeshId.h"
 #include "../Resources/Shader/ShaderProgramId.h"
