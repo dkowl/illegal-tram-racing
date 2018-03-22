@@ -10,8 +10,8 @@
 int main()
 {
 	glbinding::Binding::initialize(false);
-	Game game;
-	game.Start();
+	Game::I().Start();
+
 
 	//Track track(1000);
 	//std::cout << "Track generated, segmentCount: " << track.SegmentCount() << std::endl;

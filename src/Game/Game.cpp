@@ -1,7 +1,22 @@
 #include "Game.h"
 
+Game* Game::instance = nullptr;
+
+void Game::Initialize()
+{
+	instance = new Game();
+}
+
+Game& Game::I()
+{
+	if (instance == nullptr) Initialize();
+	return *instance;
+}
+
 void Game::Start()
 {
+	if (isRunning) return;
+
 	OpenWindow();
 
 	resources.Initialize();
@@ -79,6 +94,11 @@ void Game::Render()
 void Game::Stop()
 {
 	isRunning = false;
+}
+
+Game::Game():
+	isRunning(false)
+{
 }
 
 void Game::OpenWindow()

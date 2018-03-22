@@ -19,6 +19,8 @@
 
 class Game
 {
+	static Game *instance;
+
 	Resources resources;
 	sf::Window window;
 	CameraPerspective mainCamera;
@@ -37,13 +39,19 @@ class Game
 	bool isRunning;
 	
 public:
+	static void Initialize();
+	static Game& I();
+
 	void Start();
-	void MainLoop();
-	void Update();
-	void Render();
 	void Stop();
 
 private:
+	Game();
+
+	void MainLoop();
+	void Update();
+	void Render();
+
 	void OpenWindow();
 	void InitializeObjects();
 
