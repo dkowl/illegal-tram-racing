@@ -6,6 +6,8 @@ void Game::Start()
 
 	resources.Initialize();
 
+	InitializeObjects();
+
 	gl::glEnable(gl::GLenum::GL_DEPTH_TEST);
 
 	clock.restart();

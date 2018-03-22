@@ -1,11 +1,12 @@
 #include "GameObject.h"
 
-GameObject::GameObject(std::string name, Transform* parentTransform, MeshId meshId, ShaderProgramId shaderId, TextureId textureId):
+GameObject::GameObject(std::string name, Transform* parentTransform, MeshId meshId, ShaderProgramId shaderId, TextureId textureId, Camera* camera):
 	name(name),
 	meshId(meshId),
 	shaderId(shaderId),
 	textureId(textureId),
-	polygonMode(PolygonMode::FILL)
+	polygonMode(PolygonMode::FILL),
+	camera(camera)
 {
 	if(parentTransform != nullptr)
 	{
