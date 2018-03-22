@@ -62,12 +62,12 @@ void Resources::LoadTracks()
 
 void Resources::LoadMeshes()
 {
-	LoadCube();
+	LoadPrimitiveMeshes();
 	LoadTram();
 	meshes[int(MeshId::TRACK)] = std::make_unique<Mesh>(*track);
 }
 
-void Resources::LoadCube()
+void Resources::LoadPrimitiveMeshes()
 {
 	std::vector<float> vertices = {
 		-0.5f, -0.5f, 0.5f, 0.0f, 0.0f,
@@ -121,6 +121,20 @@ void Resources::LoadCube()
 	};
 
 	meshes[int(MeshId::CUBE)] = std::make_unique<Mesh>(vertices, indices);
+
+	vertices = std::vector<float>{
+		-1, -1, 0,	0, 0,
+		-1, 1, 0,	0, 1,
+		1, 1, 0,	1, 1,
+		1, -1, 0,	1, 0
+	};
+
+	indices = std::vector<unsigned int>{
+		0, 1, 2,
+		0, 2, 3
+	};
+
+	meshes[int(MeshId::PLANE)] = std::make_unique<Mesh>(vertices, indices);
 }
 
 void Resources::LoadTram()

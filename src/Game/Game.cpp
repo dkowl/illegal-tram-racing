@@ -138,20 +138,26 @@ void Game::OpenWindow()
 
 void Game::InitializeObjects()
 {
-	GameObject::BuildParams tram;
-	tram.name = "Tram";
-	tram.meshId = MeshId::TRAM;
-	tram.textureId = TextureId::TRAM;
-
-	auto& tramObject = AddObject<Tram>(tram);
+	GameObject::BuildParams p;
+	//Tram
+	p.name = "Tram";
+	p.meshId = MeshId::TRAM;
+	p.textureId = TextureId::TRAM;
+	auto& tramObject = AddObject<Tram>(p);
 	tramObject->GetTransform().SetLocalScale(glm::vec3(0.05f));
 
-	GameObject::BuildParams track;
-	track.name = "Track";
-	track.meshId = MeshId::TRACK;
-	track.textureId = TextureId::TRACK;
+	//Track
+	p.name = "Track";
+	p.meshId = MeshId::TRACK;
+	p.textureId = TextureId::TRACK;
+	auto& trackObject = AddObject<GameObject>(p);
 
-	auto& trackObject = AddObject<GameObject>(track);
+	//Speedometer
+	p.name = "Speedometer";
+	p.meshId = MeshId::PLANE;
+	p.textureId = TextureId::CRATE;
+	p.camera = &uiCamera;
+	AddObject<GameObject>(p);
 }
 
 void Game::HandleEvent(sf::Event event)

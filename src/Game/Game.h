@@ -15,6 +15,7 @@
 #include "../Engine/Camera/CameraPerspective.h"
 #include "../Utils.h"
 #include "Tram.h"
+#include "../Engine/Camera/CameraUi.h"
 
 
 class Game
@@ -24,7 +25,7 @@ class Game
 	Resources resources;
 	sf::Window window;
 	CameraPerspective mainCamera;
-	//CameraPerspective uiCamera;
+	CameraUi uiCamera;
 	std::map<std::string, int> objectIds;
 	std::vector<std::unique_ptr<GameObject>> objects;
 

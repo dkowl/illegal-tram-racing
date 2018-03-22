@@ -43,8 +43,9 @@ private:
 	void LoadTracks();
 
 	void LoadMeshes();
-	void LoadCube();
+	void LoadPrimitiveMeshes();
 	void LoadTram();
+
 	void LoadTextures();
 };
 
