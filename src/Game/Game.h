@@ -21,7 +21,8 @@ class Game
 {
 	Resources resources;
 	sf::Window window;
-	Camera camera;
+	Camera mainCamera;
+	Camera uiCamera;
 	std::map<std::string, int> objectIds;
 	std::vector<std::unique_ptr<GameObject>> objects;
 
@@ -32,15 +33,23 @@ class Game
 	sf::Clock clock;
 	float totalTime;
 	float deltaTime;
+
+	bool isRunning;
 	
 public:
 	void Start();
 	void MainLoop();
 	void Update();
 	void Render();
+	void Stop();
 
 private:
-	std::unique_ptr<GameObject>& AddObject(std::string name, std::string parentName, MeshId meshId, ShaderProgramId shaderId, TextureId textureId);
+	void OpenWindow();
+	void InitializeObjects();
+
+	void HandleEvent(sf::Event event);
+
+	std::unique_ptr<GameObject>& AddObject(std::string name, std::string parentName, MeshId meshId, ShaderProgramId shaderId, TextureId textureId, Camera* camera);
 	std::unique_ptr<GameObject>& GetObject(std::string name);
 	void DrawObject(int objectId);
 };

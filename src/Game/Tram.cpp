@@ -1,7 +1,7 @@
 #include "Tram.h"
 
 const float Tram::ACCELERATION = 2;
-const float Tram::MAX_SPEED = 30;
+const float Tram::MAX_SPEED = 50;
 const float Tram::BRAKING_DECELERATION = 5;
 const float Tram::FRICTION_DECELERATION = 1;
 const float Tram::AXIS_DISTANCE = 8;

@@ -56,7 +56,8 @@ void Resources::LinkShaderPrograms()
 
 void Resources::LoadTracks()
 {
-	track = std::make_unique<Track>(1000);
+	track = std::make_unique<Track>(5000);
+	std::cout << "Track generated, segmentCount: " << track->SegmentCount() << std::endl;
 }
 
 void Resources::LoadMeshes()

@@ -1,7 +1,7 @@
 #include "Track.h"
 #include "../Engine/Camera.h"
 
-const float Track::SEGMENT_LENGTH = 0.1f; //meters
+const float Track::SEGMENT_LENGTH = 1.f; //meters
 
 const float Track::MIN_TURN_TOTAL_ANGLE = 10; //degrees
 const float Track::MAX_TURN_TOTAL_ANGLE = 90;
@@ -204,11 +204,11 @@ void Track::GenerateTurnSegment(float totalAngle, float angularSpeed)
 		deltaVector4 = rotationMatrix * deltaVector4;
 		AddSegment(deltaVector4);
 	}
-	std::cout << "Turn segment generated!\n	length: " << TurnLength(totalAngle, angularSpeed)
+	/*std::cout << "Turn segment generated!\n	length: " << TurnLength(totalAngle, angularSpeed)
 		<< "\n	segmentCount: " << segmentCount
 		<< "\n	totalAngle: " << totalAngle
 		<< "\n	angularSpeed: " << angularSpeed
-		<< "\n\n";
+		<< "\n\n";*/
 }
 
 void Track::AddSegment(glm::vec3 deltaVector)

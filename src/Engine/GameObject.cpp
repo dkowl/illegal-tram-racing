@@ -44,6 +44,11 @@ gl::GLenum GameObject::GetPolygonMode() const
 	}
 }
 
+Camera* GameObject::GetCamera() const
+{
+	return camera;
+}
+
 Transform& GameObject::GetTransform()
 {
 	return transform;
