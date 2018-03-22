@@ -29,11 +29,17 @@ Camera* Game::MainCamera()
 	return &I().mainCamera;
 }
 
+float Game::AspectRatio()
+{
+	return float(I().videoMode.width) / I().videoMode.height;
+}
+
 void Game::Start()
 {
 	if (isRunning) return;
 
 	OpenWindow();
+	uiCamera.SetAspectRatio(AspectRatio());
 
 	resources.Initialize();
 
@@ -73,6 +79,8 @@ void Game::Update()
 	{
 		object->Update();
 	}
+
+	UpdateSpeedometer();
 	
 	sf::Vector2i mouseOffset = sf::Mouse::getPosition() - lastMousePos;
 	if(sf::Mouse::isButtonPressed(sf::Mouse::Button::Left) && (mouseOffset.x != 0 || mouseOffset.y != 0))
@@ -130,8 +138,9 @@ void Game::OpenWindow()
 			bestIndex = i;
 		}
 	}
+	videoMode = videoModes[bestIndex];
 	window.create(
-		videoModes[bestIndex],
+		videoMode,
 		Constants::CurrentText().GetText(LocalizedText::TextType::WINDOW_TITLE),
 		sf::Style::Fullscreen,
 		settings
@@ -160,14 +169,15 @@ void Game::InitializeObjects()
 	spriteP.name = "Speedometer";
 	spriteP.textureId = TextureId::SPEEDOMETER;
 	auto& speedometer = AddObject<Sprite>(spriteP);
-	speedometer->GetTransform().SetLocalPosition(glm::vec3(-0.8, -0.8, 0));
-	speedometer->GetTransform().SetLocalScale(glm::vec3(0.16, 0.16, 1));
+	speedometer->GetTransform().SetLocalPosition(glm::vec3(1*AspectRatio()-0.4, -1+0.4, 0));
+	speedometer->GetTransform().SetLocalScale(glm::vec3(0.33, 0.33, 1));
+	spriteP.zDepth = 0.1;
 
 	//Speedometer tip
 	spriteP.name = "Speedometer_tip";
 	spriteP.parentTransform = &speedometer->GetTransform();
 	spriteP.textureId = TextureId::SPEEDOMETER_TIP;
-	spriteP.zDepth = -1;
+	spriteP.zDepth = 0.05;
 	AddObject<Sprite>(spriteP);
 }
 
@@ -233,6 +243,14 @@ void Game::DrawObject(int objectId)
 
 	gl::glPolygonMode(gl::GLenum::GL_FRONT_AND_BACK, object->GetPolygonMode());
 	gl::glDrawElements(gl::GLenum::GL_TRIANGLES, mesh->ElementCount(), gl::GLenum::GL_UNSIGNED_INT, nullptr);
+}
+
+void Game::UpdateSpeedometer()
+{
+	auto& speedometerTip = GetObject("Speedometer_tip");
+	auto& tram = dynamic_cast<Tram&>(*GetObject("Tram"));
+
+	speedometerTip->GetTransform().SetLocalRotation(246 * 3.6 * tram.Speed() / 90, glm::vec3(0, 0, -1));
 }
 
 Camera* Game::GetCamera(CameraType type)

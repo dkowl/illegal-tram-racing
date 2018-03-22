@@ -1,6 +1,7 @@
 #include "CameraUi.h"
 
-CameraUi::CameraUi()
+CameraUi::CameraUi():
+	aspectRatio(16.f/9)
 {
 }
 
@@ -12,5 +13,10 @@ glm::mat4 CameraUi::ViewMatrix() const
 
 glm::mat4 CameraUi::ProjectionMatrix() const
 {
-	return glm::ortho(-1, 1, -1, 1);
+	return glm::ortho(-1.f*aspectRatio, 1.f*aspectRatio, -1.f, 1.f);
+}
+
+void CameraUi::SetAspectRatio(float aspectRatio)
+{
+	aspectRatio = aspectRatio;
 }

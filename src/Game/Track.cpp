@@ -50,7 +50,7 @@ std::vector<glm::vec3> Track::SegmentVertexPositions(int i) const
 
 std::vector<glm::vec2> Track::SegmentVertexUvs(int i) const
 {
-	float v = (SEGMENT_LENGTH * i) / TRACK_WIDTH;
+	float v = glm::fract((SEGMENT_LENGTH * i) / TRACK_WIDTH);
 
 	std::vector<glm::vec2> result{
 		glm::vec2(1, v),
@@ -85,7 +85,6 @@ std::vector<glm::vec3> Track::GetTramAxisPositions(float distance, float axisDis
 
 	int resultIndex = 0;
 	int lastModifiedResultIndex = -1;
-	float previousDistance = 0;
 	int backIndex = mainSegmentIndex;
 	int frontIndex = mainSegmentIndex;
 	while(true)
@@ -104,16 +103,15 @@ std::vector<glm::vec3> Track::GetTramAxisPositions(float distance, float axisDis
 		float currentDistance = glm::length(segments[frontIndex].position - segments[backIndex].position);
 		if(currentDistance > axisDistance)
 		{
-			float lerpRatio2 = (axisDistance - previousDistance) / (currentDistance - previousDistance);
 			if(lastModifiedResultIndex == 0)
 			{
-				result[0] = GetPosition(frontIndex - 1 + lerpRatio + lerpRatio2);
+				result[0] = GetPosition(frontIndex - 1 + lerpRatio);
 				result[1] = GetPosition(backIndex + lerpRatio);
 			}
 			else 
 			{
 				result[0] = GetPosition(frontIndex + lerpRatio);
-				result[1] = GetPosition(backIndex + lerpRatio - lerpRatio2);
+				result[1] = GetPosition(backIndex + lerpRatio);
 			}
 			std::cout << "lerpRatio: " << lerpRatio << " front: ";
 			Utils::DisplayVec3(result[0]);
@@ -122,7 +120,6 @@ std::vector<glm::vec3> Track::GetTramAxisPositions(float distance, float axisDis
 			return result;
 		}
 		
-		previousDistance = currentDistance;
 		resultIndex++;
 		resultIndex %= 2;
 	}

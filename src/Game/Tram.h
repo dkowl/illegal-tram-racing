@@ -17,6 +17,7 @@ public:
 private:
 	static const float ACCELERATION; //		m/s^2
 	static const float MAX_SPEED; //		m/s
+	static const float STATIC_FRICTION_DECELERATION;
 	static const float FRICTION_DECELERATION;
 	static const float BRAKING_DECELERATION;
 
@@ -28,8 +29,9 @@ public:
 
 	void Update() override;
 
+	float Speed() const;
 	float DistanceTraveled() const;
-
+	
 private:
 	float Acceleration();
 

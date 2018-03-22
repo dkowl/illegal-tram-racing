@@ -23,6 +23,7 @@ class Game
 	static Game *instance;
 
 	Resources resources;
+	sf::VideoMode videoMode;
 	sf::Window window;
 	CameraPerspective mainCamera;
 	CameraUi uiCamera;
@@ -43,6 +44,7 @@ public:
 	static const Resources& Resources();
 	static float DeltaTime();
 	static Camera* MainCamera();
+	static float AspectRatio();
 
 	void Start();
 	void Stop();
@@ -63,6 +65,8 @@ private:
 
 	void HandleEvent(sf::Event event);
 	void DrawObject(int objectId);
+
+	void UpdateSpeedometer();
 
 	Camera* GetCamera(CameraType type);
 };

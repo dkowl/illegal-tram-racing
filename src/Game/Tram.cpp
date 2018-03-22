@@ -1,9 +1,10 @@
 #include "Tram.h"
 
-const float Tram::ACCELERATION = 2;
+const float Tram::ACCELERATION = 5;
 const float Tram::MAX_SPEED = 50;
-const float Tram::BRAKING_DECELERATION = 5;
-const float Tram::FRICTION_DECELERATION = 1;
+const float Tram::BRAKING_DECELERATION = 8;
+const float Tram::STATIC_FRICTION_DECELERATION = 3;
+const float Tram::FRICTION_DECELERATION = 2;
 const float Tram::AXIS_DISTANCE = 8;
 
 
@@ -25,7 +26,8 @@ void Tram::Update()
 	{
 		speed -= BRAKING_DECELERATION * deltaTime;
 	}
-	speed -= FRICTION_DECELERATION * (speed / MAX_SPEED)*(speed / MAX_SPEED) * deltaTime;
+	speed -= STATIC_FRICTION_DECELERATION * deltaTime;
+	speed -= FRICTION_DECELERATION * (speed / MAX_SPEED) * deltaTime;
 	speed = glm::max(speed, 0.f);
 
 	distanceTraveled += speed * deltaTime;
@@ -40,6 +42,11 @@ void Tram::Update()
 	CameraPerspective* mainCamera = dynamic_cast<CameraPerspective*>(Game::MainCamera());
 	mainCamera->SetYaw(-tramYRotation);
 	mainCamera->SetTarget(transform.Position());
+}
+
+float Tram::Speed() const
+{
+	return speed;
 }
 
 float Tram::DistanceTraveled() const
