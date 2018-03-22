@@ -39,6 +39,9 @@
     <Filter Include="Source Files\Engine\Camera">
       <UniqueIdentifier>{fe8001dc-e455-4d40-87b8-9cfc89c6539d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Engine\UI">
+      <UniqueIdentifier>{6b59698d-3b80-4c4d-a1a9-4dafcf1f1a3a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Constants.cpp">
@@ -91,6 +94,9 @@
     </ClCompile>
     <ClCompile Include="src\Engine\Camera\CameraUi.cpp">
       <Filter>Source Files\Engine\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\UI\Sprite.cpp">
+      <Filter>Source Files\Engine\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -167,6 +173,12 @@
     </ClInclude>
     <ClInclude Include="src\Engine\Camera\CameraUi.h">
       <Filter>Source Files\Engine\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\UI\Sprite.h">
+      <Filter>Source Files\Engine\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Game\CameraType.h">
+      <Filter>Source Files\Game</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

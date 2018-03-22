@@ -7,6 +7,7 @@
 #include "../Resources/Mesh/MeshId.h"
 #include "../Resources/Shader/ShaderProgramId.h"
 #include "../Resources/Texture/TextureId.h"
+#include "../Game/CameraType.h"
 
 class GameObject
 {
@@ -21,7 +22,7 @@ protected:
 	ShaderProgramId shaderId;
 	TextureId textureId;
 	PolygonMode polygonMode;
-	Camera *camera;
+	CameraType cameraType;
 
 public:
 	explicit GameObject(const BuildParams &params);
@@ -36,7 +37,7 @@ public:
 	void SetPolygonMode(const PolygonMode &mode);
 	gl::GLenum GetPolygonMode() const;
 
-	Camera* GetCamera() const;
+	CameraType Camera() const;
 
 	enum class PolygonMode
 	{
@@ -51,7 +52,7 @@ public:
 		MeshId meshId;
 		ShaderProgramId shaderId;
 		TextureId textureId;
-		Camera* camera;
+		CameraType camera;
 
 		BuildParams();
 	};

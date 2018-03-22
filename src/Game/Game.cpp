@@ -1,4 +1,5 @@
 #include "Game.h"
+#include "../Engine/UI/Sprite.h"
 
 Game* Game::instance = nullptr;
 
@@ -39,6 +40,8 @@ void Game::Start()
 	InitializeObjects();
 
 	gl::glEnable(gl::GLenum::GL_DEPTH_TEST);
+	gl::glEnable(gl::GLenum::GL_BLEND);
+	gl::glBlendFunc(gl::GLenum::GL_SRC_ALPHA, gl::GLenum::GL_ONE_MINUS_SRC_ALPHA);
 
 	clock.restart();
 	totalTime = 0;
@@ -153,11 +156,19 @@ void Game::InitializeObjects()
 	auto& trackObject = AddObject<GameObject>(p);
 
 	//Speedometer
-	p.name = "Speedometer";
-	p.meshId = MeshId::PLANE;
-	p.textureId = TextureId::CRATE;
-	p.camera = &uiCamera;
-	AddObject<GameObject>(p);
+	Sprite::BuildParams spriteP;
+	spriteP.name = "Speedometer";
+	spriteP.textureId = TextureId::SPEEDOMETER;
+	auto& speedometer = AddObject<Sprite>(spriteP);
+	speedometer->GetTransform().SetLocalPosition(glm::vec3(-0.8, -0.8, 0));
+	speedometer->GetTransform().SetLocalScale(glm::vec3(0.16, 0.16, 1));
+
+	//Speedometer tip
+	spriteP.name = "Speedometer_tip";
+	spriteP.parentTransform = &speedometer->GetTransform();
+	spriteP.textureId = TextureId::SPEEDOMETER_TIP;
+	spriteP.zDepth = -1;
+	AddObject<Sprite>(spriteP);
 }
 
 void Game::HandleEvent(sf::Event event)
@@ -176,10 +187,9 @@ void Game::HandleEvent(sf::Event event)
 	}
 }
 
-template <class T>
-std::unique_ptr<GameObject>& Game::AddObject(GameObject::BuildParams &buildParams)
+template <class T, class P>
+std::unique_ptr<GameObject>& Game::AddObject(P &buildParams)
 {
-	if (buildParams.camera == nullptr) buildParams.camera = &mainCamera;
 	objects.push_back(std::make_unique<T>(buildParams));
 	objectIds[buildParams.name] = objects.size() - 1;
 	return objects.back();
@@ -209,10 +219,10 @@ void Game::DrawObject(int objectId)
 	gl::glUniformMatrix4fv(modelLocation, 1, gl::GL_FALSE, glm::value_ptr(object->GetTransform().ModelMatrix()));
 
 	const unsigned int viewLocation = gl::glGetUniformLocation(resources.GetShaderProgram(ShaderProgramId::MAIN)->GlId(), "view");
-	gl::glUniformMatrix4fv(viewLocation, 1, gl::GL_FALSE, glm::value_ptr(object->GetCamera()->ViewMatrix()));
+	gl::glUniformMatrix4fv(viewLocation, 1, gl::GL_FALSE, glm::value_ptr(GetCamera(object->Camera())->ViewMatrix()));
 
 	const unsigned int projectionLocation = gl::glGetUniformLocation(resources.GetShaderProgram(ShaderProgramId::MAIN)->GlId(), "projection");
-	gl::glUniformMatrix4fv(projectionLocation, 1, gl::GL_FALSE, glm::value_ptr(object->GetCamera()->ProjectionMatrix()));
+	gl::glUniformMatrix4fv(projectionLocation, 1, gl::GL_FALSE, glm::value_ptr(GetCamera(object->Camera())->ProjectionMatrix()));
 
 	//texture
 	gl::glActiveTexture(gl::GLenum::GL_TEXTURE0);
@@ -223,6 +233,19 @@ void Game::DrawObject(int objectId)
 
 	gl::glPolygonMode(gl::GLenum::GL_FRONT_AND_BACK, object->GetPolygonMode());
 	gl::glDrawElements(gl::GLenum::GL_TRIANGLES, mesh->ElementCount(), gl::GLenum::GL_UNSIGNED_INT, nullptr);
+}
+
+Camera* Game::GetCamera(CameraType type)
+{
+	switch(type)
+	{
+	case CameraType::MAIN:
+		return &mainCamera;
+	case CameraType::UI:
+		return &uiCamera;
+	default:
+		return &mainCamera;
+	}
 }
 
 

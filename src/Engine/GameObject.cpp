@@ -6,7 +6,7 @@ GameObject::GameObject(const BuildParams &params):
 	shaderId(params.shaderId),
 	textureId(params.textureId),
 	polygonMode(PolygonMode::FILL),
-	camera(params.camera)
+	cameraType(params.camera)
 {
 	if(params.parentTransform != nullptr)
 	{
@@ -50,9 +50,9 @@ gl::GLenum GameObject::GetPolygonMode() const
 	}
 }
 
-Camera* GameObject::GetCamera() const
+CameraType GameObject::Camera() const
 {
-	return camera;
+	return cameraType;
 }
 
 GameObject::BuildParams::BuildParams():
@@ -61,7 +61,7 @@ GameObject::BuildParams::BuildParams():
 	meshId(MeshId::CUBE),
 	shaderId(ShaderProgramId::MAIN),
 	textureId(TextureId::CRATE),
-	camera(nullptr)
+	camera(CameraType::MAIN)
 {
 }
 

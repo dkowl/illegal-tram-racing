@@ -2,6 +2,7 @@
 
 Texture::Texture(const std::string& filename)
 {
+	stbi_set_flip_vertically_on_load(true);
 	unsigned char *data = stbi_load((TEXTURE_RESOURCE_PATH + filename).c_str(), &width, &height, &channelCount, 0);
 	if(data)
 	{

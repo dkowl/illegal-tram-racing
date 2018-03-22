@@ -47,8 +47,8 @@ public:
 	void Start();
 	void Stop();
 
-	template <class T>
-	std::unique_ptr<GameObject>& AddObject(GameObject::BuildParams &buildParams);
+	template <class T, class P>
+	std::unique_ptr<GameObject>& AddObject(P &buildParams);
 	std::unique_ptr<GameObject>& GetObject(std::string name);
 
 private:
@@ -63,4 +63,6 @@ private:
 
 	void HandleEvent(sf::Event event);
 	void DrawObject(int objectId);
+
+	Camera* GetCamera(CameraType type);
 };
