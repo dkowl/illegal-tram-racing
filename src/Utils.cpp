@@ -17,6 +17,12 @@ namespace Utils
 		std::cout << "(" << v.x << ", " << v.y << ", " << v.z << ")" << std::endl;
 	}
 
+	void DisplayVec3(glm::vec3& v, const std::string &name)
+	{
+		std::cout << name << ": ";
+		DisplayVec3(v);
+	}
+
 	float GetYRotation(glm::vec3 v)
 	{
 		v.y = 0;
@@ -25,6 +31,16 @@ namespace Utils
 		float angle = glm::acos(dot);
 		if (v.x < 0) angle = 2*glm::pi<float>() - angle;
 		return angle;
+	}
+
+	float GetYRotationAngleBetweenVectors(glm::vec3 a, glm::vec3 b)
+	{
+		a.y = 0;
+		a = glm::normalize(a);
+		b.y = 0;
+		b = glm::normalize(b);
+		float dot = glm::dot(a, b);
+		return glm::acos(dot);
 	}
 
 	float SmoothStep(float a, float b, float smoothness, float deltaTime)

@@ -45,6 +45,7 @@ void Game::Start()
 	resources.Initialize();
 
 	InitializeObjects();
+	screenshake.Initialize();
 
 	gl::glEnable(gl::GLenum::GL_DEPTH_TEST);
 	gl::glEnable(gl::GLenum::GL_BLEND);
@@ -83,6 +84,7 @@ void Game::Update()
 
 	UpdateSpeedometer();
 	mainCamera.Update();
+	//screenshake.Update();
 	
 	sf::Vector2i mouseOffset = sf::Mouse::getPosition() - lastMousePos;
 	if(sf::Mouse::isButtonPressed(sf::Mouse::Button::Left) && (mouseOffset.x != 0 || mouseOffset.y != 0))
@@ -157,20 +159,21 @@ void Game::InitializeObjects()
 	p.name = "Tram";
 	p.meshId = MeshId::TRAM;
 	p.textureId = TextureId::TRAM;
-	auto& tramObject = AddObject<Tram>(p);
+	auto tramObject = AddObject<Tram>(p);
 	tramObject->GetTransform().SetLocalScale(glm::vec3(0.05f));
+	tramObject->Initialize();
 
 	//Track
 	p.name = "Track";
 	p.meshId = MeshId::TRACK;
 	p.textureId = TextureId::TRACK;
-	auto& trackObject = AddObject<GameObject>(p);
+	auto trackObject = AddObject<GameObject>(p);
 
 	//Speedometer
 	Sprite::BuildParams spriteP;
 	spriteP.name = "Speedometer";
 	spriteP.textureId = TextureId::SPEEDOMETER;
-	auto& speedometer = AddObject<Sprite>(spriteP);
+	auto speedometer = AddObject<Sprite>(spriteP);
 	speedometer->GetTransform().SetLocalPosition(glm::vec3(1*AspectRatio()-0.4, -1+0.4, 0));
 	speedometer->GetTransform().SetLocalScale(glm::vec3(0.33, 0.33, 1));
 	spriteP.zDepth = 0.1;
@@ -197,14 +200,6 @@ void Game::HandleEvent(sf::Event event)
 	{
 		mainCamera.Zoom(event.mouseWheelScroll.delta * -1.0f * Constants::MOUSE_WHEEL_ZOOM_SPEED);
 	}
-}
-
-template <class T, class P>
-std::unique_ptr<GameObject>& Game::AddObject(P &buildParams)
-{
-	objects.push_back(std::make_unique<T>(buildParams));
-	objectIds[buildParams.name] = objects.size() - 1;
-	return objects.back();
 }
 
 std::unique_ptr<GameObject>& Game::GetObject(std::string name)

@@ -13,14 +13,8 @@
 class Track
 {
 public:
-	struct Segment
-	{
-		glm::vec3 position;
-		glm::vec3 deltaVector;
-
-		explicit Segment(const glm::vec3 &position);
-		glm::vec3 NextPosition() const;
-	};
+	struct Segment;
+	struct SegmentMix;
 
 	static const float SEGMENT_LENGTH; //meters
 
@@ -50,6 +44,7 @@ public:
 
 	glm::vec3 GetPositionAtDistance(float distance) const;
 	std::vector<glm::vec3> GetTramAxisPositions(float distance, float axisDistance) const;
+	float GetAngularVelocityAtDistance(float distance) const;
 
 private:
 	void GenerateSegments(float length);
@@ -64,7 +59,27 @@ private:
 	float LerpRatio(float distance) const;
 
 	glm::vec3 GetPosition(float segmentsTraveled) const;
+	float GetAngularVelocity(unsigned int segmentId) const;
 
 	static float TurnLength(float totalAngle, float angularSpeed);
 	static float MinTurnLength();
+};
+
+struct Track::Segment
+{
+	glm::vec3 position;
+	glm::vec3 deltaVector;
+
+	explicit Segment(const glm::vec3 &position);
+	glm::vec3 NextPosition() const;
+};
+
+struct Track::SegmentMix
+{
+	unsigned int segmentIdA;
+	unsigned int segmentIdB;
+	float lerpRatio;
+
+	SegmentMix(unsigned int segmentIdA, unsigned int segmentIdB, float lerpRatio);
+	explicit SegmentMix(const Track * track, float distance);
 };

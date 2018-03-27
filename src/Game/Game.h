@@ -11,6 +11,7 @@
 #include "../Engine/GameObject.h"
 #include "../Engine/Camera/CameraPerspective.h"
 #include "../Engine/Camera/CameraUi.h"
+#include "../Engine/Camera/Screenshake.h"
 
 
 class Game
@@ -22,6 +23,7 @@ class Game
 	sf::Window window;
 	CameraPerspective mainCamera;
 	CameraUi uiCamera;
+	Screenshake screenshake;
 	std::map<std::string, int> objectIds;
 	std::vector<std::unique_ptr<GameObject>> objects;
 
@@ -45,8 +47,10 @@ public:
 	void Stop();
 
 	template <class T, class P>
-	std::unique_ptr<GameObject>& AddObject(P &buildParams);
+	T* AddObject(P &buildParams);
 	std::unique_ptr<GameObject>& GetObject(std::string name);
+	template<typename T>
+	T* GetObject(std::string name);
 
 private:
 	Game();
@@ -65,3 +69,18 @@ private:
 
 	Camera* GetCamera(CameraType type);
 };
+
+template <class T, class P>
+T* Game::AddObject(P &buildParams)
+{
+	objects.push_back(std::make_unique<T>(buildParams));
+	objectIds[buildParams.name] = objects.size() - 1;
+	return static_cast<T*>(objects.back().get());
+}
+
+template <class T>
+T* Game::GetObject(std::string name)
+{
+	auto& object = GetObject(name);
+	return static_cast<T*>(object.get());
+}

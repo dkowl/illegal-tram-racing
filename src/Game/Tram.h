@@ -2,6 +2,8 @@
 
 #include "../Engine/GameObject.h"
 
+class Track;
+
 class Tram : public GameObject
 {
 public:
@@ -14,18 +16,27 @@ private:
 	static const float BRAKING_DECELERATION;
 	static const float SPEED_MULTIPLIER;
 
+	Track* track;
+
 	float speed;
 	float distanceTraveled;
+	float yRotation;
+	float yRotationPrev;
+	float centrifugalForce;
 
 public:
 	explicit Tram(const GameObject::BuildParams &params);
 
+	void Initialize();
 	void Update() override;
 
 	float Speed() const;
 	float DistanceTraveled() const;
 	
 private:
-	float Acceleration();
+	float Acceleration() const;
+	float CentrifugalForce() const;
+
+	void UpdateSpeed(const float &deltaTime);
 
 };

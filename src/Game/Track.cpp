@@ -68,12 +68,11 @@ glm::vec3 Track::SegmentDirection(int i) const
 
 glm::vec3 Track::GetPositionAtDistance(float distance) const
 {
-	float segmentsTraveled = distance / SEGMENT_LENGTH;
-	segmentsTraveled = glm::clamp(float(segmentsTraveled), 0.f, float(SegmentCount() - 1));
-	int indexBefore = glm::floor(segmentsTraveled);
-	int indexAfter = glm::ceil(segmentsTraveled);
-	float lerpRatio = glm::fract(segmentsTraveled);
-	return glm::mix(segments[indexBefore].position, segments[indexAfter].position, lerpRatio);
+	SegmentMix segmentMix(this, distance);
+	return glm::mix(
+		segments[segmentMix.segmentIdA].position, 
+		segments[segmentMix.segmentIdB].position, 
+		segmentMix.lerpRatio);
 }
 
 std::vector<glm::vec3> Track::GetTramAxisPositions(float distance, float axisDistance) const
@@ -123,6 +122,15 @@ std::vector<glm::vec3> Track::GetTramAxisPositions(float distance, float axisDis
 		resultIndex++;
 		resultIndex %= 2;
 	}
+}
+
+float Track::GetAngularVelocityAtDistance(float distance) const
+{
+	SegmentMix segmentMix(this, distance);
+	return glm::mix(
+		GetAngularVelocity(segmentMix.segmentIdA), 
+		GetAngularVelocity(segmentMix.segmentIdB), 
+		segmentMix.lerpRatio);
 }
 
 void Track::GenerateSegments(float length)
@@ -252,6 +260,15 @@ glm::vec3 Track::GetPosition(float segmentsTraveled) const
 	return glm::mix(segments[indexBefore].position, segments[indexAfter].position, lerpRatio);
 }
 
+float Track::GetAngularVelocity(unsigned segmentId) const
+{
+	if (segmentId == 0 || segmentId >= SegmentCount()) return 0;
+	else
+	{
+		return glm::degrees(Utils::GetYRotationAngleBetweenVectors(segments[segmentId].deltaVector, segments[segmentId - 1].deltaVector)) / SEGMENT_LENGTH;
+	}
+}
+
 float Track::TurnLength(float totalAngle, float angularSpeed)
 {
 	return totalAngle / angularSpeed;
@@ -260,4 +277,13 @@ float Track::TurnLength(float totalAngle, float angularSpeed)
 float Track::MinTurnLength()
 {
 	return TurnLength(MIN_TURN_TOTAL_ANGLE, MAX_TURN_ANGULAR_SPEED);
+}
+
+Track::SegmentMix::SegmentMix(const Track* track, float distance)
+{
+	float segmentsTraveled = distance / SEGMENT_LENGTH;
+	segmentsTraveled = glm::clamp(float(segmentsTraveled), 0.f, float(track->SegmentCount() - 1));
+	segmentIdA = glm::floor(segmentsTraveled);
+	segmentIdB = glm::ceil(segmentsTraveled);
+	lerpRatio = glm::fract(segmentsTraveled);
 }

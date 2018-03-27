@@ -34,28 +34,31 @@ void CameraPerspective::Update()
 
 glm::mat4 CameraPerspective::ViewMatrix() const
 {
+	glm::vec3 newPosition;
 	switch (mode) {
-	case Mode::POSITION:
-		return glm::lookAt(position, target, glm::vec3(0.0f, 1.0f, 0.0f));
-	case Mode::PITCH:
-	case Mode::PITCH_YAW:
-	{
-		glm::mat4 trans;
-		trans = glm::translate(trans, glm::vec3(0, 0, distance));
+		case Mode::POSITION:
+			newPosition = position;
+			break;
+		case Mode::PITCH:
+		case Mode::PITCH_YAW:
+		{
+			glm::mat4 trans;
+			trans = glm::translate(trans, glm::vec3(0, 0, distance));
 
-		glm::mat4 yawMat;
-		yawMat = glm::rotate(yawMat, glm::radians(yaw), glm::vec3(0, 1, 0));
-		glm::vec3 rightVector = yawMat * glm::vec4(1, 0, 0, 1);
+			glm::mat4 yawMat;
+			yawMat = glm::rotate(yawMat, glm::radians(yaw), glm::vec3(0, 1, 0));
+			glm::vec3 rightVector = yawMat * glm::vec4(1, 0, 0, 1);
 
-		glm::mat4 pitchMat;
-		pitchMat = glm::rotate(pitchMat, glm::radians(-pitch), rightVector);
+			glm::mat4 pitchMat;
+			pitchMat = glm::rotate(pitchMat, glm::radians(-pitch), rightVector);
 
-		glm::vec3 newPosition = pitchMat * yawMat * trans * glm::vec4(0, 0, 0, 1);
-		newPosition += target;
-		//Utils::DisplayVec3(newPosition);
-		return glm::lookAt(newPosition, target, glm::vec3(0, 1, 0));
+			newPosition = pitchMat * yawMat * trans * glm::vec4(0, 0, 0, 1);
+			newPosition += target;
+			//Utils::DisplayVec3(newPosition);		
+		}
 	}
-	}
+	newPosition += screenshakeOffset;
+	return glm::lookAt(newPosition, target, glm::vec3(0, 1, 0));
 }
 
 glm::mat4 CameraPerspective::ProjectionMatrix() const
@@ -91,7 +94,7 @@ void CameraPerspective::SetPosition(glm::vec3&& position)
 void CameraPerspective::SetYaw(float yawDegrees)
 {
 	targetYaw = Utils::NormalizeAngle(targetYaw, yawDegrees);
-	std::cout << "targetYaw: " << targetYaw << std::endl;
+	//std::cout << "targetYaw: " << targetYaw << std::endl;
 }
 
 void CameraPerspective::SetPitch(float pitchDegrees)

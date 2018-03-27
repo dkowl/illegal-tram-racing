@@ -98,6 +98,12 @@
     <ClCompile Include="src\Engine\UI\Sprite.cpp">
       <Filter>Source Files\Engine\UI</Filter>
     </ClCompile>
+    <ClCompile Include="src\Engine\Camera\Screenshake.cpp">
+      <Filter>Source Files\Engine\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Camera\Camera.cpp">
+      <Filter>Source Files\Engine\Camera</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\Shaders\fragment_shader.glsl">
@@ -179,6 +185,9 @@
     </ClInclude>
     <ClInclude Include="src\Game\CameraType.h">
       <Filter>Source Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Camera\Screenshake.h">
+      <Filter>Source Files\Engine\Camera</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
