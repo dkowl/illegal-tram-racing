@@ -15,14 +15,23 @@ private:
 	static const float FRICTION_DECELERATION;
 	static const float BRAKING_DECELERATION;
 	static const float SPEED_MULTIPLIER;
+	static const float TURN_FRICTION_COEFF;
+	static const float GRAVITY_CENTER_ANGLE;
+	static const float MOMENT_OF_INERTIA;
+	static const float MASS;
+	static const float GRAVITY;
+	static const float ANGULAR_DRAG;
 
 	Track* track;
 
 	float speed;
 	float distanceTraveled;
-	float yRotation;
-	float yRotationPrev;
 	float centrifugalForce;
+	float superAngle;
+	float angularVelocity;
+	float angularAcceleration;
+	float rolloverTorque;
+
 
 public:
 	explicit Tram(const GameObject::BuildParams &params);

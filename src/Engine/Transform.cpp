@@ -56,8 +56,9 @@ void Transform::SetLocalRotation(const float &degrees, const glm::vec3 &axis)
 
 void Transform::Rotate(const float& degrees, const glm::vec3& axis)
 {
-	glm::mat4 rotationMatrix = glm::rotate(glm::mat4_cast(localRotation), glm::radians(degrees), axis);
-	localRotation = glm::quat_cast(rotationMatrix);
+	glm::mat4 rotationMatrix;
+	rotationMatrix = glm::rotate(rotationMatrix, glm::radians(degrees), axis);
+	localRotation = glm::quat_cast(rotationMatrix * glm::mat4_cast(localRotation));
 	Update();
 }
 

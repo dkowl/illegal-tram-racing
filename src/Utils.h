@@ -20,4 +20,5 @@ namespace Utils
 	glm::vec3 SmoothStep(glm::vec3 a, glm::vec3 b, float smoothness, float deltaTime);
 
 	float NormalizeAngle(float x, float base);
+	bool IsOnTheLeft(glm::vec3 a, glm::vec3 b);
 }

@@ -1,12 +1,13 @@
 #include "Track.h"
+#include <chrono>
 
 const float Track::SEGMENT_LENGTH = 1.f; //meters
 
 const float Track::MIN_TURN_TOTAL_ANGLE = 10; //degrees
-const float Track::MAX_TURN_TOTAL_ANGLE = 90;
+const float Track::MAX_TURN_TOTAL_ANGLE = 150;
 
-const float Track::MIN_TURN_ANGULAR_SPEED = 0.2f; //degrees per meter
-const float Track::MAX_TURN_ANGULAR_SPEED = 2;
+const float Track::MIN_TURN_ANGULAR_SPEED = 0.4f; //degrees per meter
+const float Track::MAX_TURN_ANGULAR_SPEED = 8;
 
 const float Track::MIN_STRAIGHT_SEGMENT_LENGTH = 10; //meters
 const float Track::MAX_STRAIGHT_SEGMENT_LENGTH = 50;
@@ -127,6 +128,9 @@ std::vector<glm::vec3> Track::GetTramAxisPositions(float distance, float axisDis
 float Track::GetAngularVelocityAtDistance(float distance) const
 {
 	SegmentMix segmentMix(this, distance);
+	float angularVelocityA = GetAngularVelocity(segmentMix.segmentIdA);
+	float angularVelocityB = GetAngularVelocity(segmentMix.segmentIdB);
+	if (angularVelocityA == 0 && angularVelocityB == 0) return 0;
 	return glm::mix(
 		GetAngularVelocity(segmentMix.segmentIdA), 
 		GetAngularVelocity(segmentMix.segmentIdB), 
@@ -135,7 +139,8 @@ float Track::GetAngularVelocityAtDistance(float distance) const
 
 void Track::GenerateSegments(float length)
 {
-	std::default_random_engine randomEngine;
+	int seed = std::chrono::system_clock::now().time_since_epoch().count();
+	std::default_random_engine randomEngine(seed);
 	const std::uniform_real_distribution<float> turnTotalAngleDist(MIN_TURN_TOTAL_ANGLE, MAX_TURN_TOTAL_ANGLE);
 	const std::uniform_real_distribution<float> turnAngularSpeedDist(MIN_TURN_ANGULAR_SPEED, MAX_TURN_ANGULAR_SPEED);
 	const std::uniform_int_distribution<int> turnDirectionDist(0, 1); //1 = left, 0 = right;
@@ -265,7 +270,12 @@ float Track::GetAngularVelocity(unsigned segmentId) const
 	if (segmentId == 0 || segmentId >= SegmentCount()) return 0;
 	else
 	{
-		return glm::degrees(Utils::GetYRotationAngleBetweenVectors(segments[segmentId].deltaVector, segments[segmentId - 1].deltaVector)) / SEGMENT_LENGTH;
+		glm::vec3 a = segments[segmentId].deltaVector;
+		glm::vec3 b = segments[segmentId - 1].deltaVector;
+
+		float degrees = glm::degrees(Utils::GetYRotationAngleBetweenVectors(segments[segmentId].deltaVector, segments[segmentId - 1].deltaVector)) / SEGMENT_LENGTH;
+		if (!Utils::IsOnTheLeft(a, b)) degrees *= -1.f;
+		return degrees;
 	}
 }
 

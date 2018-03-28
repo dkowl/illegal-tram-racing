@@ -40,6 +40,7 @@ namespace Utils
 		b.y = 0;
 		b = glm::normalize(b);
 		float dot = glm::dot(a, b);
+		dot = glm::clamp(dot, -1.0f, 1.0f);
 		return glm::acos(dot);
 	}
 
@@ -68,5 +69,11 @@ namespace Utils
 			else x -= 360;
 		}
 		return x;
+	}
+
+	bool IsOnTheLeft(glm::vec3 a, glm::vec3 b)
+	{
+		glm::vec3 cross = glm::cross(a, b);
+		return cross.y >= 0;
 	}
 }
