@@ -1,5 +1,12 @@
 #include "Mesh.h"
+
 #include <iostream>
+#include <assimp/postprocess.h>
+
+#include "../../glbinding.h"
+
+#include "../../Game/Track.h"
+#include "MeshLayout.h"
 
 Mesh::Mesh(std::vector<float>& vertices, std::vector<unsigned>& triangles) :
 	vertCount(vertices.size() / 3)
@@ -102,6 +109,10 @@ Mesh::Mesh(const Track& track):
 	}
 
 	GenerateGlBuffers();
+}
+
+Mesh::Mesh(aiMesh* aiMesh, MeshLayout layout)
+{
 }
 
 

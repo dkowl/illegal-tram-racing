@@ -1,13 +1,10 @@
 #pragma once
 #include <vector>
-
-#include "../../glbinding.h"
-
-#include <assimp/Importer.hpp>
 #include <assimp/scene.h>
-#include <assimp/postprocess.h>
+#include <glm/detail/type_vec3.hpp>
 
-#include "../../Game/Track.h"
+class Track;
+class MeshLayout;
 
 class Mesh
 {
@@ -25,6 +22,7 @@ public:
 	Mesh(std::vector<float> &vertices, std::vector<unsigned int> &triangles, std::vector<float> &uvs);
 	explicit Mesh(aiMesh *aiMesh);
 	explicit Mesh(const Track &track);
+	Mesh(aiMesh *aiMesh, MeshLayout layout);
 
 	const unsigned& Vao() const;
 	const unsigned& ElementCount() const;
