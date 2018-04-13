@@ -11,13 +11,9 @@ void Resources::Initialize()
 
 	LoadTracks();
 
+	LoadMeshLayouts();
 	LoadMeshes();
 	LoadTextures();
-}
-
-const std::unique_ptr<ShaderSource>& Resources::GetShaderSource(ShaderSourceId id) const
-{
-	return shaderSources[int(id)];
 }
 
 const std::unique_ptr<ShaderProgram>& Resources::GetShaderProgram(ShaderProgramId id) const
@@ -42,15 +38,15 @@ const std::unique_ptr<Track>& Resources::GetTrack() const
 
 void Resources::CompileShaders()
 {
-	shaderSources[int(ShaderSourceId::MAIN_VERTEX)] = std::make_unique<ShaderSource>("vertex_shader.glsl", gl::GLenum::GL_VERTEX_SHADER);
-	shaderSources[int(ShaderSourceId::MAIN_FRAGMENT)] = std::make_unique<ShaderSource>("fragment_shader.glsl", gl::GLenum::GL_FRAGMENT_SHADER);
+	Set(ShaderSourceId::MAIN_VERTEX, std::make_unique<ShaderSource>("vertex_shader.glsl", gl::GLenum::GL_VERTEX_SHADER));
+	Set(ShaderSourceId::MAIN_FRAGMENT, std::make_unique<ShaderSource>("fragment_shader.glsl", gl::GLenum::GL_FRAGMENT_SHADER));
 }
 
 void Resources::LinkShaderPrograms()
 {
 	shaderPrograms[int(ShaderProgramId::MAIN)] = std::make_unique<ShaderProgram>(
-		GetShaderSource(ShaderSourceId::MAIN_VERTEX)->GlId(),
-		GetShaderSource(ShaderSourceId::MAIN_FRAGMENT)->GlId()
+		Get(ShaderSourceId::MAIN_VERTEX)->GlId(),
+		Get(ShaderSourceId::MAIN_FRAGMENT)->GlId()
 		);
 }
 

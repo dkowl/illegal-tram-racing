@@ -1,10 +1,10 @@
 #pragma once
 #include <memory>
 
-template <typename T, typename TEnum, unsigned int TCount>
+template <typename T, typename TEnum>
 class Resource
 {
-	std::unique_ptr<T> instances[TCount];
+	std::unique_ptr<T> instances[unsigned int(TEnum::COUNT)];
 
 public:
 	const std::unique_ptr<T>& Get(TEnum id)

@@ -6,10 +6,14 @@
 class MeshLayout
 {
 	std::vector<std::reference_wrapper<const VertexAttribute>> attributes;
+	size_t stride;
 
 public:
 	MeshLayout(std::initializer_list<const VertexAttribute> initList);
 
-	static const MeshLayout SIMPLE_TEXTURED;
+	size_t Stride() const;
+
+private:
+	void CalculateStride();
 
 };

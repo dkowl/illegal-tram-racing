@@ -37,6 +37,7 @@ float Game::AspectRatio()
 
 void Game::Start()
 {
+
 	if (isRunning) return;
 
 	OpenWindow();
