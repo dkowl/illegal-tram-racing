@@ -16,11 +16,6 @@ void Resources::Initialize()
 	LoadTextures();
 }
 
-const std::unique_ptr<ShaderProgram>& Resources::GetShaderProgram(ShaderProgramId id) const
-{
-	return shaderPrograms[int(id)];
-}
-
 const std::unique_ptr<Mesh>& Resources::GetMesh(MeshId id) const
 {
 	return meshes[int(id)];
@@ -44,10 +39,11 @@ void Resources::CompileShaders()
 
 void Resources::LinkShaderPrograms()
 {
-	shaderPrograms[int(ShaderProgramId::MAIN)] = std::make_unique<ShaderProgram>(
-		Get(ShaderSourceId::MAIN_VERTEX)->GlId(),
-		Get(ShaderSourceId::MAIN_FRAGMENT)->GlId()
-		);
+	Set(ShaderProgramId::MAIN, 
+		std::make_unique<ShaderProgram>(
+			Get(ShaderSourceId::MAIN_VERTEX)->GlId(),
+			Get(ShaderSourceId::MAIN_FRAGMENT)->GlId()
+		));
 }
 
 void Resources::LoadTracks()

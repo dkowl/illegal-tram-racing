@@ -20,19 +20,23 @@
 #include "../Game/Track.h"
 #include "Resource.h"
 
+#define RESOURCE_BASE(T) Resource< T , T ## Id>
+
 #define USING_RESOURCE(T) \
-	using Resource< T , T ## Id>::Get;\
-	using Resource< T , T ## Id>::Set;
+	using RESOURCE_BASE(T)::Get;\
+	using RESOURCE_BASE(T)::Set;
 
 class Resources : 
-	public Resource<MeshLayout, MeshLayoutId>,
-	public Resource<ShaderSource, ShaderSourceId>
+	public RESOURCE_BASE(ShaderSource),
+	public RESOURCE_BASE(MeshLayout),
+	public RESOURCE_BASE(ShaderProgram)
 {
+public:
 	USING_RESOURCE(ShaderSource)
 	USING_RESOURCE(MeshLayout)
+	USING_RESOURCE(ShaderProgram)
 
-	std::unique_ptr<ShaderProgram> shaderPrograms[int(ShaderProgramId::COUNT)];
-
+private:
 	std::unique_ptr<Mesh> meshes[int(MeshId::COUNT)];
 	std::unique_ptr<Texture> textures[int(TextureId::COUNT)];
 
@@ -41,7 +45,6 @@ public:
 	Resources();
 	void Initialize();
 
-	const std::unique_ptr<ShaderProgram>& GetShaderProgram(ShaderProgramId id) const;
 	const std::unique_ptr<Mesh>& GetMesh(MeshId id) const;
 	const std::unique_ptr<Texture>& GetTexture(TextureId id) const;
 

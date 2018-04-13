@@ -105,7 +105,7 @@ void Game::Render()
 	gl::glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 	gl::glClear(gl::ClearBufferMask::GL_COLOR_BUFFER_BIT | gl::ClearBufferMask::GL_DEPTH_BUFFER_BIT);
 
-	const unsigned int mainTextureLocation = gl::glGetUniformLocation(resources.GetShaderProgram(ShaderProgramId::MAIN)->GlId(), "mainTexture");
+	const unsigned int mainTextureLocation = gl::glGetUniformLocation(resources.Get(ShaderProgramId::MAIN)->GlId(), "mainTexture");
 	gl::glUniform1i(mainTextureLocation, 0);
 
 	for (int i = 0; i < objects.size(); i++)
@@ -216,7 +216,7 @@ std::unique_ptr<GameObject>& Game::GetObject(std::string name)
 void Game::DrawObject(int objectId)
 {
 	const auto& object = objects[objectId];
-	const auto& shaderProgram = resources.GetShaderProgram(object->GetShaderId())->GlId();
+	const auto& shaderProgram = resources.Get(object->GetShaderId())->GlId();
 	const auto& texture = resources.GetTexture(object->GetTextureId())->GlId();
 	const auto& mesh = resources.GetMesh(object->GetMeshId());
 
@@ -226,10 +226,10 @@ void Game::DrawObject(int objectId)
 	const unsigned int modelLocation = gl::glGetUniformLocation(shaderProgram, "model");
 	gl::glUniformMatrix4fv(modelLocation, 1, gl::GL_FALSE, glm::value_ptr(object->GetTransform().ModelMatrix()));
 
-	const unsigned int viewLocation = gl::glGetUniformLocation(resources.GetShaderProgram(ShaderProgramId::MAIN)->GlId(), "view");
+	const unsigned int viewLocation = gl::glGetUniformLocation(resources.Get(ShaderProgramId::MAIN)->GlId(), "view");
 	gl::glUniformMatrix4fv(viewLocation, 1, gl::GL_FALSE, glm::value_ptr(GetCamera(object->Camera())->ViewMatrix()));
 
-	const unsigned int projectionLocation = gl::glGetUniformLocation(resources.GetShaderProgram(ShaderProgramId::MAIN)->GlId(), "projection");
+	const unsigned int projectionLocation = gl::glGetUniformLocation(resources.Get(ShaderProgramId::MAIN)->GlId(), "projection");
 	gl::glUniformMatrix4fv(projectionLocation, 1, gl::GL_FALSE, glm::value_ptr(GetCamera(object->Camera())->ProjectionMatrix()));
 
 	//texture
