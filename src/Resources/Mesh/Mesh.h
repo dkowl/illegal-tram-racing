@@ -3,11 +3,13 @@
 #include <assimp/scene.h>
 #include <glm/detail/type_vec3.hpp>
 
+#include "../MeshLayout/MeshLayout.h"
+
 class Track;
-class MeshLayout;
 
 class Mesh
 {
+	const MeshLayout &layout;
 	unsigned int vertCount;
 
 	std::vector<float> arrayBufferData;
@@ -25,7 +27,7 @@ public:
 	Mesh(aiMesh *aiMesh, const MeshLayout &layout);
 
 	const unsigned& Vao() const;
-	const unsigned& ElementCount() const;
+	unsigned ElementCount() const;
 
 private:
 	void AddSingleVertexData(const int &vertexId, const glm::vec3 &position, const glm::vec2 &uv);

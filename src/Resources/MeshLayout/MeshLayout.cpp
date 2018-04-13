@@ -30,6 +30,11 @@ const VertexAttribute& MeshLayout::Attribute(unsigned id) const
 	return attributes[id];
 }
 
+void* MeshLayout::AttributeOffset(unsigned id) const
+{
+	return offsets[id];
+}
+
 MeshLayout::AttributeValues MeshLayout::AllValues(aiMesh* aiMesh) const
 {
 	AttributeValues result;
@@ -49,6 +54,7 @@ void MeshLayout::CalculateStrideAndSize()
 	size = 0;
 	for(auto&& i : attributes)
 	{
+		offsets.push_back(reinterpret_cast<void*>(stride));
 		stride += i.Size() * sizeof(float);
 		size += i.Size();
 	}

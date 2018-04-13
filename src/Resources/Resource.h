@@ -7,7 +7,7 @@ class Resource
 	std::unique_ptr<T> instances[unsigned int(TEnum::COUNT)];
 
 public:
-	const std::unique_ptr<T>& Get(TEnum id)
+	const std::unique_ptr<T>& Get(TEnum id) const
 	{
 		return instances[int(id)];
 	}

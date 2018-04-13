@@ -8,6 +8,7 @@ public:
 	typedef std::vector<VertexAttribute::Values> AttributeValues;
 
 	std::vector<VertexAttribute> attributes;
+	std::vector<void*> offsets;
 	size_t stride;
 	unsigned int size;
 
@@ -18,6 +19,7 @@ public:
 	unsigned int Size() const;
 	unsigned int AttributeCount() const;
 	const VertexAttribute& Attribute(unsigned id) const;
+	void* AttributeOffset(unsigned id) const;
 	AttributeValues AllValues(aiMesh* aiMesh) const;
 
 private:
