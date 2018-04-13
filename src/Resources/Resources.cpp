@@ -16,16 +16,6 @@ void Resources::Initialize()
 	LoadTextures();
 }
 
-const std::unique_ptr<Mesh>& Resources::GetMesh(MeshId id) const
-{
-	return meshes[int(id)];
-}
-
-const std::unique_ptr<Texture>& Resources::GetTexture(TextureId id) const
-{
-	return textures[int(id)];
-}
-
 const std::unique_ptr<Track>& Resources::GetTrack() const
 {
 	return track;
@@ -68,7 +58,7 @@ void Resources::LoadMeshes()
 {
 	LoadPrimitiveMeshes();
 	LoadTram();
-	meshes[int(MeshId::TRACK)] = std::make_unique<Mesh>(*track);
+	Set(MeshId::TRACK, std::make_unique<Mesh>(*track));
 }
 
 void Resources::LoadPrimitiveMeshes()
@@ -124,7 +114,7 @@ void Resources::LoadPrimitiveMeshes()
 		20, 22, 23
 	};
 
-	meshes[int(MeshId::CUBE)] = std::make_unique<Mesh>(vertices, indices);
+	Set(MeshId::CUBE, std::make_unique<Mesh>(vertices, indices));
 
 	vertices = std::vector<float>{
 		-1, -1, 0,	0, 0,
@@ -138,7 +128,7 @@ void Resources::LoadPrimitiveMeshes()
 		0, 2, 3
 	};
 
-	meshes[int(MeshId::PLANE)] = std::make_unique<Mesh>(vertices, indices);
+	Set(MeshId::PLANE, std::make_unique<Mesh>(vertices, indices));
 }
 
 void Resources::LoadTram()
@@ -192,16 +182,23 @@ void Resources::LoadTram()
 	std::cout << "Vertices: " << mesh->mNumVertices << std::endl;
 	std::cout << "Triangles: " << mesh->mNumFaces << std::endl;
 
-	meshes[int(MeshId::TRAM)] = std::make_unique<Mesh>(mesh);
+	Set(MeshId::TRAM, std::make_unique<Mesh>(mesh));
 
 }
 
 void Resources::LoadTextures()
 {
-	textures[int(TextureId::CRATE)] = std::make_unique<Texture>("crate.jpg");
-	textures[int(TextureId::TRAM)] = std::make_unique<Texture>("tram.png");
-	textures[int(TextureId::TRACK)] = std::make_unique<Texture>("track.jpg");
-	textures[int(TextureId::SPEEDOMETER)] = std::make_unique<Texture>("speedometer.png");
-	textures[int(TextureId::SPEEDOMETER_TIP)] = std::make_unique<Texture>("speedometer_tip.png");
+	std::vector<std::pair<TextureId, std::string>> tuples{
+		{ TextureId::CRATE, "crate.jpg" },
+		{ TextureId::TRAM, "tram.png" },
+		{ TextureId::TRACK, "track.jpg" },
+		{ TextureId::SPEEDOMETER, "speedometer.png" },
+		{ TextureId::SPEEDOMETER_TIP, "speedometer_tip.png" },
+	};
+
+	for(auto&& i : tuples)
+	{
+		Set(i.first, std::make_unique<Texture>(i.second));
+	}
 }
 

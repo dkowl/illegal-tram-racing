@@ -29,24 +29,22 @@
 class Resources : 
 	public RESOURCE_BASE(ShaderSource),
 	public RESOURCE_BASE(MeshLayout),
-	public RESOURCE_BASE(ShaderProgram)
+	public RESOURCE_BASE(ShaderProgram),
+	public RESOURCE_BASE(Mesh),
+	public RESOURCE_BASE(Texture)
 {
 public:
 	USING_RESOURCE(ShaderSource)
 	USING_RESOURCE(MeshLayout)
 	USING_RESOURCE(ShaderProgram)
+	USING_RESOURCE(Mesh)
+	USING_RESOURCE(Texture)
 
 private:
-	std::unique_ptr<Mesh> meshes[int(MeshId::COUNT)];
-	std::unique_ptr<Texture> textures[int(TextureId::COUNT)];
-
 	std::unique_ptr<Track> track;
 public:
 	Resources();
 	void Initialize();
-
-	const std::unique_ptr<Mesh>& GetMesh(MeshId id) const;
-	const std::unique_ptr<Texture>& GetTexture(TextureId id) const;
 
 	const std::unique_ptr<Track>& GetTrack() const;
 

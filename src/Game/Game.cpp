@@ -217,8 +217,8 @@ void Game::DrawObject(int objectId)
 {
 	const auto& object = objects[objectId];
 	const auto& shaderProgram = resources.Get(object->GetShaderId())->GlId();
-	const auto& texture = resources.GetTexture(object->GetTextureId())->GlId();
-	const auto& mesh = resources.GetMesh(object->GetMeshId());
+	const auto& texture = resources.Get(object->GetTextureId())->GlId();
+	const auto& mesh = resources.Get(object->GetMeshId());
 
 	//shader
 	gl::glUseProgram(shaderProgram);
