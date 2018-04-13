@@ -1,13 +1,13 @@
 #include "MeshLayout.h"
 
-MeshLayout::MeshLayout(std::initializer_list<const VertexAttribute> initList)
+MeshLayout::MeshLayout(std::initializer_list<VertexAttribute> initList)
 {
 	attributes.reserve(initList.size());
 	for (auto&& i : initList)
 	{
-		attributes.push_back(std::ref(i));
+		attributes.push_back(i);
 	}
-	CalculateStride();
+	CalculateStrideAndSize();
 }
 
 size_t MeshLayout::Stride() const
@@ -15,11 +15,41 @@ size_t MeshLayout::Stride() const
 	return stride;
 }
 
-void MeshLayout::CalculateStride()
+unsigned MeshLayout::Size() const
 {
-	stride = 0;
+	return size;
+}
+
+unsigned MeshLayout::AttributeCount() const
+{
+	return attributes.size();
+}
+
+const VertexAttribute& MeshLayout::Attribute(unsigned id) const
+{
+	return attributes[id];
+}
+
+MeshLayout::AttributeValues MeshLayout::AllValues(aiMesh* aiMesh) const
+{
+	AttributeValues result;
+	result.reserve(AttributeCount());
+
 	for(auto&& i : attributes)
 	{
-		stride += i.get().Size();
+		result.push_back(i.GetValues(aiMesh));
+	}
+
+	return result;
+}
+
+void MeshLayout::CalculateStrideAndSize()
+{
+	stride = 0;
+	size = 0;
+	for(auto&& i : attributes)
+	{
+		stride += i.Size() * sizeof(float);
+		size += i.Size();
 	}
 }

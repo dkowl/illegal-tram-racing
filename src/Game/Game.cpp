@@ -35,6 +35,12 @@ float Game::AspectRatio()
 	return float(I().videoMode.width) / I().videoMode.height;
 }
 
+void Game::LogError(std::string errorMessage)
+{
+	std::cout << "FATAL ERROR: " << errorMessage << std::endl;
+	system("PAUSE");
+}
+
 void Game::Start()
 {
 

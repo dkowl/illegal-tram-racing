@@ -154,6 +154,7 @@
     <ClCompile Include="src\Resources\Shader\ShaderProgram.cpp" />
     <ClCompile Include="src\Resources\Shader\ShaderSource.cpp" />
     <ClCompile Include="src\Resources\Texture\Texture.cpp" />
+    <ClCompile Include="src\Resources\VertexAttribute\AiMeshDataSource.cpp" />
     <ClCompile Include="src\Resources\VertexAttribute\VertexAttribute.cpp" />
     <ClCompile Include="src\Utils.cpp" />
   </ItemGroup>

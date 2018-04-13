@@ -1,9 +1,14 @@
 #pragma once
+#include <vector>
+#include <assimp/scene.h>
 #include "AiMeshDataSource.h"
 
 class VertexAttribute
 {
+public:
+	typedef std::vector<std::vector<float>> Values;
 
+private:
 	unsigned size;
 	AiMeshDataSource aiMeshDataSource;
 
@@ -12,9 +17,13 @@ public:
 	unsigned Size() const;
 	AiMeshDataSource DataSource() const;
 
+	Values GetValues(aiMesh* aiMesh) const;
+
 	static const VertexAttribute 
 		POSITION, 
 		NORMAL, 
+		TANGENT,
+		BITANGENT,
 		UV, 
 		UV1, 
 		UV2, 

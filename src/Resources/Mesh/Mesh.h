@@ -22,7 +22,7 @@ public:
 	Mesh(std::vector<float> &vertices, std::vector<unsigned int> &triangles, std::vector<float> &uvs);
 	explicit Mesh(aiMesh *aiMesh);
 	explicit Mesh(const Track &track);
-	Mesh(aiMesh *aiMesh, MeshLayout layout);
+	Mesh(aiMesh *aiMesh, const MeshLayout &layout);
 
 	const unsigned& Vao() const;
 	const unsigned& ElementCount() const;

@@ -116,6 +116,9 @@
     <ClCompile Include="src\Resources\MeshLayout\MeshLayout.cpp">
       <Filter>Source Files\Resources\MeshLayout</Filter>
     </ClCompile>
+    <ClCompile Include="src\Resources\VertexAttribute\AiMeshDataSource.cpp">
+      <Filter>Source Files\Resources\VertexAttribute</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\Shaders\fragment_shader.glsl">

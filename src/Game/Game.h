@@ -42,15 +42,14 @@ public:
 	static float DeltaTime();
 	static Camera* MainCamera();
 	static float AspectRatio();
+	static void LogError(std::string errorMessage);
 
 	void Start();
 	void Stop();
 
-	template <class T, class P>
-	T* AddObject(P &buildParams);
+	template <class T, class P>	T* AddObject(P &buildParams);
 	std::unique_ptr<GameObject>& GetObject(std::string name);
-	template<typename T>
-	T* GetObject(std::string name);
+	template<typename T> T* GetObject(std::string name);
 
 private:
 	Game();

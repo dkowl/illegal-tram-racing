@@ -1,4 +1,6 @@
 #include "VertexAttribute.h"
+#include "../../Game/Game.h"
+
 
 const VertexAttribute VertexAttribute::POSITION(3, AiMeshDataSource(AiMeshDataSource::Type::POSITIONS));
 const VertexAttribute VertexAttribute::NORMAL(3, AiMeshDataSource(AiMeshDataSource::Type::NORMALS));
@@ -22,4 +24,30 @@ unsigned VertexAttribute::Size() const
 AiMeshDataSource VertexAttribute::DataSource() const
 {
 	return aiMeshDataSource;
+}
+
+std::vector<std::vector<float>> VertexAttribute::GetValues(aiMesh* aiMesh) const
+{
+	std::vector<std::vector<float>> result;
+	result.reserve(aiMesh->mNumVertices);
+
+	aiVector3D* vectors3D = aiMeshDataSource.GetVectors3D(aiMesh);
+	if(vectors3D != nullptr)
+	{
+		for (int i = 0; i < aiMesh->mNumVertices; i++) {
+			switch (size)
+			{
+			case 2:
+				result.push_back({ vectors3D[i].x, vectors3D[i].y });
+				break;
+			case 3:
+				result.push_back({ vectors3D[i].x, vectors3D[i].y, vectors3D[i].z });
+				break;
+			default:
+				Game::LogError("Invalid VertexAttribute size");
+			}
+		}
+	}
+	if (result.empty()) Game::LogError("Cannot find VertexAttribute values");
+	return result;
 }

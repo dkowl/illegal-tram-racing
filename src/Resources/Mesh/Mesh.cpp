@@ -111,8 +111,34 @@ Mesh::Mesh(const Track& track):
 	GenerateGlBuffers();
 }
 
-Mesh::Mesh(aiMesh* aiMesh, MeshLayout layout)
+Mesh::Mesh(aiMesh* aiMesh, const MeshLayout &layout):
+	vertCount(aiMesh->mNumVertices),
+	arrayBufferData(vertCount * layout.Size()),
+	elementBufferData(aiMesh->mNumFaces * 3)
 {
+	auto allValues = layout.AllValues(aiMesh);
+
+	for (int vertId = 0; vertId < vertCount; vertId++)
+	{
+		int currentIndexOffset = 0;
+		for (int attrId = 0; attrId < layout.AttributeCount(); attrId++)
+		{
+			for (int valueId = 0; valueId < layout.Attribute(attrId).Size(); valueId++)
+			{
+				arrayBufferData[vertId * layout.Size() + currentIndexOffset] = allValues[attrId][vertId][valueId];
+				currentIndexOffset++;
+			}
+		}
+	}
+
+	for (unsigned int i = 0; i < aiMesh->mNumFaces; i++)
+	{
+		elementBufferData[i * 3] = aiMesh->mFaces[i].mIndices[0];
+		elementBufferData[i * 3 + 1] = aiMesh->mFaces[i].mIndices[1];
+		elementBufferData[i * 3 + 2] = aiMesh->mFaces[i].mIndices[2];
+	}
+
+	GenerateGlBuffers();
 }
 
 

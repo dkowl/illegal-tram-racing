@@ -47,7 +47,7 @@ void Resources::LoadMeshLayouts()
 	Set(
 		MeshLayoutId::SIMPLE_TEXTURED, 
 		std::make_unique<MeshLayout>(
-			std::initializer_list<const VertexAttribute>({ 
+			std::initializer_list<VertexAttribute>({ 
 				VertexAttribute::POSITION, 
 				VertexAttribute::UV })
 			)
@@ -182,7 +182,7 @@ void Resources::LoadTram()
 	std::cout << "Vertices: " << mesh->mNumVertices << std::endl;
 	std::cout << "Triangles: " << mesh->mNumFaces << std::endl;
 
-	Set(MeshId::TRAM, std::make_unique<Mesh>(mesh));
+	Set(MeshId::TRAM, std::make_unique<Mesh>(mesh, *Get(MeshLayoutId::SIMPLE_TEXTURED)));
 
 }
 

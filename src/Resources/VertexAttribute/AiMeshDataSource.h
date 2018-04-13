@@ -1,4 +1,5 @@
 #pragma once
+#include <assimp/scene.h>
 
 class AiMeshDataSource
 {
@@ -11,20 +12,15 @@ private:
 
 public:
 	AiMeshDataSource(const Type &type, const unsigned &id = 0); 
+
+	aiVector3D* GetVectors3D(aiMesh* aiMesh) const;
 	
 	enum class Type {
-		BITANGETNTS,
 		COLORS,
 		NORMALS,
 		TANGENTS,
+		BITANGENTS,
 		UVS,
 		POSITIONS
 	};
 };
-
-inline AiMeshDataSource::AiMeshDataSource(const Type &type, const unsigned &id) :
-	type(type),
-	id(id)
-{
-
-}
