@@ -4,7 +4,7 @@
 #include "Camera.h"
 #include "../../Game/Game.h"
 #include "../../Game/Tram.h"
-
+#include "../../Utils.h"
 
 
 Screenshake::Screenshake():

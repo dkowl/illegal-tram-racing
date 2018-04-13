@@ -1,6 +1,7 @@
 #pragma once
 #include <memory>
 #include <string>
+#include "../glbinding.h"
 #include "Transform.h"
 #include "Camera/Camera.h"
 #include "../Resources/Mesh/Mesh.h"

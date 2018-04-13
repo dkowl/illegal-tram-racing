@@ -42,6 +42,12 @@
     <Filter Include="Source Files\Engine\UI">
       <UniqueIdentifier>{6b59698d-3b80-4c4d-a1a9-4dafcf1f1a3a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Resources\VertexAttribute">
+      <UniqueIdentifier>{2834fc63-d756-4852-87e3-5c067d8818c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Resources\MeshLayout">
+      <UniqueIdentifier>{3cd8771f-e547-4101-882d-9b3bc27f39b0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Constants.cpp">
@@ -103,6 +109,12 @@
     </ClCompile>
     <ClCompile Include="src\Engine\Camera\Camera.cpp">
       <Filter>Source Files\Engine\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Resources\VertexAttribute\VertexAttribute.cpp">
+      <Filter>Source Files\Resources\VertexAttribute</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Resources\MeshLayout\MeshLayout.cpp">
+      <Filter>Source Files\Resources\MeshLayout</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -188,6 +200,24 @@
     </ClInclude>
     <ClInclude Include="src\Engine\Camera\Screenshake.h">
       <Filter>Source Files\Engine\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Resources\Mesh\VertexData.h">
+      <Filter>Source Files\Resources\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Resources\VertexAttribute\VertexAttribute.h">
+      <Filter>Source Files\Resources\VertexAttribute</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Resources\VertexAttribute\AiMeshDataSource.h">
+      <Filter>Source Files\Resources\VertexAttribute</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Resources\MeshLayout\MeshLayout.h">
+      <Filter>Source Files\Resources\MeshLayout</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Resources\MeshLayout\MeshLayoutId.h">
+      <Filter>Source Files\Resources\MeshLayout</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Resources\Resource.h">
+      <Filter>Source Files\Resources</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

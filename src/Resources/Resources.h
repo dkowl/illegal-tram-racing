@@ -15,8 +15,13 @@
 #include "Shader/ShaderSourceId.h"
 #include "Shader/ShaderProgram.h"
 #include "Shader/ShaderProgramId.h"
+#include "MeshLayout/MeshLayout.h"
+#include "MeshLayout/MeshLayoutId.h"
+#include "../Game/Track.h"
+#include "Resource.h"
 
-class Resources
+class Resources : 
+	Resource<MeshLayout, MeshLayoutId, unsigned(MeshLayoutId::COUNT)>
 {
 	std::unique_ptr<ShaderSource> shaderSources[int(ShaderSourceId::COUNT)];
 	std::unique_ptr<ShaderProgram> shaderPrograms[int(ShaderProgramId::COUNT)];
@@ -42,6 +47,7 @@ private:
 
 	void LoadTracks();
 
+	void LoadMeshLayouts();
 	void LoadMeshes();
 	void LoadPrimitiveMeshes();
 	void LoadTram();

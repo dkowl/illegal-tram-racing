@@ -1,5 +1,6 @@
 #include "Tram.h"
 #include "Game.h"
+#include "Track.h"
 
 const float Tram::ACCELERATION = 5;
 const float Tram::MAX_SPEED = 50;
@@ -10,7 +11,7 @@ const float Tram::AXIS_DISTANCE = 8;
 const float Tram::SPEED_MULTIPLIER = 1;
 const float Tram::TURN_FRICTION_COEFF = 0.002;
 const float Tram::GRAVITY_CENTER_ANGLE = 40;
-const float Tram::MOMENT_OF_INERTIA = 10000;
+const float Tram::MOMENT_OF_INERTIA = 15;
 const float Tram::MASS = 90;
 const float Tram::GRAVITY = 9.8;
 const float Tram::ANGULAR_DRAG = 0.8;
@@ -36,20 +37,20 @@ void Tram::Update()
 	centrifugalForce = tramAngularVelocity * speed * speed;
 	//std::cout << "centrifugalForce: " << centrifugalForce << std::endl;
 
-	float currentGravityCenterAngle = GRAVITY_CENTER_ANGLE - superAngle;
+	float currentGravityCenterAngle = GRAVITY_CENTER_ANGLE - glm::abs(superAngle);
 	float gravityTorque = MASS * GRAVITY * glm::sin(glm::radians(currentGravityCenterAngle));
 	if (superAngle == 0) gravityTorque = 0;
 	else if (superAngle < 0) gravityTorque *= -1;
 	float centrifugalTorque = 2 * centrifugalForce * glm::cos(glm::radians(currentGravityCenterAngle));
 	std::cout << "gravityTorque: " << gravityTorque << "    centrifugalTorque: " << centrifugalTorque << std::endl;
 	rolloverTorque = centrifugalTorque - gravityTorque;
-	if(superAngle > 0 && rolloverTorque < 0) rolloverTorque *= 10;
-	if (superAngle < 0 && rolloverTorque > 0) rolloverTorque *= 10;
+	if(superAngle > 0 && rolloverTorque < 0) rolloverTorque *= 7;
+	if (superAngle < 0 && rolloverTorque > 0) rolloverTorque *= 7;
 
 	angularAcceleration = rolloverTorque / MOMENT_OF_INERTIA;
 	angularVelocity += angularAcceleration * deltaTime;
 	angularVelocity = Utils::SmoothStep(angularVelocity, 0.f, 1.f - ANGULAR_DRAG, deltaTime);
-	superAngle += angularVelocity;
+	superAngle += angularVelocity * deltaTime;
 	superAngle = glm::clamp(superAngle, -89.f, 89.f);
 	if (superAngle == 0 || superAngle == 89.f) angularVelocity = 0;
 	std::cout << "angularAcceleration: "<< angularAcceleration << "    angularVelocity: " << angularVelocity << "    superAngle: " << superAngle << std::endl;

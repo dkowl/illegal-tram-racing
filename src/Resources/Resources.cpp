@@ -60,6 +60,18 @@ void Resources::LoadTracks()
 	std::cout << "Track generated, segmentCount: " << track->SegmentCount() << std::endl;
 }
 
+void Resources::LoadMeshLayouts()
+{
+	Set(
+		MeshLayoutId::SIMPLE_TEXTURED, 
+		std::make_unique<MeshLayout>(
+			std::initializer_list<const VertexAttribute>({ 
+				VertexAttribute::POSITION, 
+				VertexAttribute::UV })
+			)
+		);
+}
+
 void Resources::LoadMeshes()
 {
 	LoadPrimitiveMeshes();

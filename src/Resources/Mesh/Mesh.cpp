@@ -6,7 +6,7 @@
 #include "../../glbinding.h"
 
 #include "../../Game/Track.h"
-#include "MeshLayout.h"
+#include "../MeshLayout/MeshLayout.h"
 
 Mesh::Mesh(std::vector<float>& vertices, std::vector<unsigned>& triangles) :
 	vertCount(vertices.size() / 3)

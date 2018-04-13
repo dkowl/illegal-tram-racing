@@ -148,11 +148,13 @@
     <ClCompile Include="src\Libraries\stb_image.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Resources\LocalizedText\LocalizedText.cpp" />
+    <ClCompile Include="src\Resources\MeshLayout\MeshLayout.cpp" />
     <ClCompile Include="src\Resources\Mesh\Mesh.cpp" />
     <ClCompile Include="src\Resources\Resources.cpp" />
     <ClCompile Include="src\Resources\Shader\ShaderProgram.cpp" />
     <ClCompile Include="src\Resources\Shader\ShaderSource.cpp" />
     <ClCompile Include="src\Resources\Texture\Texture.cpp" />
+    <ClCompile Include="src\Resources\VertexAttribute\VertexAttribute.cpp" />
     <ClCompile Include="src\Utils.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -175,8 +177,12 @@
     <ClInclude Include="src\glbinding.h" />
     <ClInclude Include="src\Libraries\stb_image.h" />
     <ClInclude Include="src\Resources\LocalizedText\LocalizedText.h" />
+    <ClInclude Include="src\Resources\MeshLayout\MeshLayout.h" />
+    <ClInclude Include="src\Resources\MeshLayout\MeshLayoutId.h" />
     <ClInclude Include="src\Resources\Mesh\Mesh.h" />
     <ClInclude Include="src\Resources\Mesh\MeshId.h" />
+    <ClInclude Include="src\Resources\Mesh\VertexData.h" />
+    <ClInclude Include="src\Resources\Resource.h" />
     <ClInclude Include="src\Resources\Resources.h" />
     <ClInclude Include="src\Resources\Shader\ShaderProgram.h" />
     <ClInclude Include="src\Resources\Shader\ShaderProgramId.h" />
@@ -184,6 +190,8 @@
     <ClInclude Include="src\Resources\Shader\ShaderSourceId.h" />
     <ClInclude Include="src\Resources\Texture\Texture.h" />
     <ClInclude Include="src\Resources\Texture\TextureId.h" />
+    <ClInclude Include="src\Resources\VertexAttribute\AiMeshDataSource.h" />
+    <ClInclude Include="src\Resources\VertexAttribute\VertexAttribute.h" />
     <ClInclude Include="src\Utils.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
