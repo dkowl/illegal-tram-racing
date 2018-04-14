@@ -3,8 +3,6 @@
 #include <string>
 #include "../glbinding.h"
 #include "Transform.h"
-#include "Camera/Camera.h"
-#include "../Resources/Mesh/Mesh.h"
 #include "../Resources/Mesh/MeshId.h"
 #include "../Resources/Shader/ShaderProgramId.h"
 #include "../Resources/Texture/TextureId.h"

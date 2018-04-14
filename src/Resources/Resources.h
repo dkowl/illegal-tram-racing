@@ -55,9 +55,9 @@ private:
 	void LoadTracks();
 
 	void LoadMeshLayouts();
+	void LoadMesh(std::string filename, MeshId id, MeshLayoutId layoutId);
 	void LoadMeshes();
 	void LoadPrimitiveMeshes();
-	void LoadTram();
 
 	void LoadTextures();
 };
