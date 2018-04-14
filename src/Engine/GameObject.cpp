@@ -4,7 +4,7 @@ GameObject::GameObject(const BuildParams &params):
 	name(params.name),
 	meshId(params.meshId),
 	shaderId(params.shaderId),
-	textureId(params.textureId),
+	textureIds(params.textureIds),
 	polygonMode(PolygonMode::FILL),
 	cameraType(params.camera)
 {
@@ -28,9 +28,14 @@ ShaderProgramId GameObject::GetShaderId() const
 	return shaderId;
 }
 
-TextureId GameObject::GetTextureId() const
+TextureId GameObject::GetTextureId(unsigned id) const
 {
-	return textureId;
+	return textureIds[id];
+}
+
+std::vector<TextureId> GameObject::GetTextureIds() const
+{
+	return textureIds;
 }
 
 void GameObject::SetPolygonMode(const PolygonMode &mode)
@@ -59,7 +64,7 @@ GameObject::BuildParams::BuildParams():
 	parentTransform(nullptr),
 	meshId(MeshId::CUBE),
 	shaderId(ShaderProgramId::MAIN),
-	textureId(TextureId::CRATE),
+	textureIds({ TextureId::CRATE }),
 	camera(CameraType::MAIN)
 {
 }

@@ -22,7 +22,7 @@ Sprite::BuildParams::operator GameObject::BuildParams() const
 	result.parentTransform = parentTransform;
 	result.meshId = MeshId::PLANE;
 	result.shaderId = ShaderProgramId::MAIN;
-	result.textureId = textureId;
+	result.textureIds = { textureId };
 	result.camera = CameraType::UI;
 	return result;
 }

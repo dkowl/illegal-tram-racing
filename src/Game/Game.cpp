@@ -165,7 +165,7 @@ void Game::InitializeObjects()
 	//Tram
 	p.name = "Tram";
 	p.meshId = MeshId::TRAM;
-	p.textureId = TextureId::TRAM;
+	p.textureIds = { TextureId::TRAM };
 	auto tramObject = AddObject<Tram>(p);
 	tramObject->GetTransform().SetLocalScale(glm::vec3(0.05f));
 	tramObject->Initialize();
@@ -173,7 +173,7 @@ void Game::InitializeObjects()
 	//Track
 	p.name = "Track";
 	p.meshId = MeshId::TRACK;
-	p.textureId = TextureId::TRACK;
+	p.textureIds = { TextureId::TRACK };
 	auto trackObject = AddObject<GameObject>(p);
 
 	//Speedometer
@@ -223,7 +223,7 @@ void Game::DrawObject(int objectId)
 {
 	const auto& object = objects[objectId];
 	const auto& shaderProgram = resources.Get(object->GetShaderId())->GlId();
-	const auto& texture = resources.Get(object->GetTextureId())->GlId();
+	const auto& textures = GetTextureGlIds(objectId);
 	const auto& mesh = resources.Get(object->GetMeshId());
 
 	//shader
@@ -238,9 +238,12 @@ void Game::DrawObject(int objectId)
 	const unsigned int projectionLocation = gl::glGetUniformLocation(resources.Get(ShaderProgramId::MAIN)->GlId(), "projection");
 	gl::glUniformMatrix4fv(projectionLocation, 1, gl::GL_FALSE, glm::value_ptr(GetCamera(object->Camera())->ProjectionMatrix()));
 
-	//texture
-	gl::glActiveTexture(gl::GLenum::GL_TEXTURE0);
-	gl::glBindTexture(gl::GLenum::GL_TEXTURE_2D, texture);
+	//textures
+	for (int i = 0; i < textures.size(); i++)
+	{
+		gl::glActiveTexture(gl::GLenum::GL_TEXTURE0 + i);
+		gl::glBindTexture(gl::GLenum::GL_TEXTURE_2D, textures[i]);
+	}
 
 	//mesh
 	gl::glBindVertexArray(mesh->Vao());
@@ -268,6 +271,22 @@ Camera* Game::GetCamera(CameraType type)
 	default:
 		return &mainCamera;
 	}
+}
+
+std::vector<unsigned> Game::GetTextureGlIds(const GameObject& object) const
+{
+	std::vector<unsigned> result;
+	auto textureIds = object.GetTextureIds();
+	for(auto&& i: textureIds)
+	{
+		result.push_back(resources.Get(i)->GlId());
+	}
+	return result;
+}
+
+std::vector<unsigned> Game::GetTextureGlIds(int objectId) const
+{
+	return GetTextureGlIds(*objects[objectId]);
 }
 
 

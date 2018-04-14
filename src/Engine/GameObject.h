@@ -1,5 +1,5 @@
 #pragma once
-#include <memory>
+#include <vector>
 #include <string>
 #include "../glbinding.h"
 #include "Transform.h"
@@ -19,7 +19,7 @@ protected:
 	Transform transform;
 	MeshId meshId;
 	ShaderProgramId shaderId;
-	TextureId textureId;
+	std::vector<TextureId> textureIds;
 	PolygonMode polygonMode;
 	CameraType cameraType;
 
@@ -31,7 +31,8 @@ public:
 	Transform& GetTransform();
 	MeshId GetMeshId() const;
 	ShaderProgramId GetShaderId() const;
-	TextureId GetTextureId() const;
+	TextureId GetTextureId(unsigned id) const;
+	std::vector<TextureId> GetTextureIds() const;
 
 	void SetPolygonMode(const PolygonMode &mode);
 	gl::GLenum GetPolygonMode() const;
@@ -50,7 +51,7 @@ public:
 		Transform* parentTransform;
 		MeshId meshId;
 		ShaderProgramId shaderId;
-		TextureId textureId;
+		std::vector<TextureId> textureIds;
 		CameraType camera;
 
 		BuildParams();

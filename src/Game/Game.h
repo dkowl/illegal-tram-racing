@@ -67,6 +67,9 @@ private:
 	void UpdateSpeedometer();
 
 	Camera* GetCamera(CameraType type);
+
+	std::vector<unsigned> GetTextureGlIds(const GameObject & object) const;
+	std::vector<unsigned> GetTextureGlIds(int objectId) const;
 };
 
 template <class T, class P>
