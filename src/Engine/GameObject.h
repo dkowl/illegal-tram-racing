@@ -1,12 +1,16 @@
 #pragma once
 #include <vector>
 #include <string>
+#include <map>
+
 #include "../glbinding.h"
+
 #include "Transform.h"
-#include "../Resources/Mesh/MeshId.h"
-#include "../Resources/Shader/ShaderProgramId.h"
-#include "../Resources/Texture/TextureId.h"
 #include "../Game/CameraType.h"
+#include "../Game/Game.h"
+#include "ComponentType.h"
+
+class Component;
 
 class GameObject
 {
@@ -14,46 +18,46 @@ public:
 	enum class PolygonMode;
 	struct BuildParams;
 
+private:
+	std::map<ComponentType, Component*> components;
+
 protected:
 	std::string name;
 	Transform transform;
-	MeshId meshId;
-	ShaderProgramId shaderId;
-	std::vector<TextureId> textureIds;
-	PolygonMode polygonMode;
 	CameraType cameraType;
 
 public:
 	explicit GameObject(const BuildParams &params);
 
+	template<typename T> void AddComponent(typename T::BuildParams p);
+	template<typename T> T* GetComponent();
+
 	virtual void Update();
 
 	Transform& GetTransform();
-	MeshId GetMeshId() const;
-	ShaderProgramId GetShaderId() const;
-	TextureId GetTextureId(unsigned id) const;
-	std::vector<TextureId> GetTextureIds() const;
-
-	void SetPolygonMode(const PolygonMode &mode);
-	gl::GLenum GetPolygonMode() const;
-
-	CameraType Camera() const;
-
-	enum class PolygonMode
-	{
-		FILL,
-		LINE
-	};	
+	CameraType Camera() const;	
 
 	struct BuildParams
 	{
 		std::string name;
 		Transform* parentTransform;
-		MeshId meshId;
-		ShaderProgramId shaderId;
-		std::vector<TextureId> textureIds;
 		CameraType camera;
 
 		BuildParams();
 	};
 };
+
+template<typename T>
+void GameObject::AddComponent(typename T::BuildParams p)
+{
+	p.gameObject = this;
+	T* component = Game::Components().AddComponent<T>(p);
+	components[T::Type()] = component;
+}
+
+template<typename T>
+T* GameObject::GetComponent()
+{
+	if (components.find(T::Type()) == components.end()) return nullptr;
+	return static_cast<T*>(components[T::Type()]);
+}

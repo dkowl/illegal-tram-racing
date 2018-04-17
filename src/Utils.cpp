@@ -76,4 +76,10 @@ namespace Utils
 		glm::vec3 cross = glm::cross(a, b);
 		return cross.y >= 0;
 	}
+
+	glm::vec3 RotateVec3(glm::vec3 v, glm::quat q)
+	{
+		glm::mat4 rotationMatrix = glm::mat4_cast(q);
+		return rotationMatrix * glm::vec4(v, 0);
+	}
 }

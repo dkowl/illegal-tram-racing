@@ -6,6 +6,6 @@ enum class MeshId
 	PLANE,
 	TRAM,
 	TRACK,
-	DRONE,
+	CABINET,
 	COUNT
 };

@@ -1,4 +1,5 @@
 #include "Transform.h"
+#include "../Game/Game.h"
 
 Transform::Transform():
 	localPosition(0, 0, 0),
@@ -104,7 +105,7 @@ void Transform::Update()
 {
 	if(parent != nullptr)
 	{
-		worldPosition = parent->worldPosition + localPosition;
+		worldPosition = parent->worldPosition + Utils::RotateVec3(localPosition, parent->worldRotation);
 		worldRotation = parent->worldRotation * localRotation;
 		worldScale = parent->worldScale * localScale;		
 	}

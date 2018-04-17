@@ -42,7 +42,7 @@ void Tram::Update()
 	if (superAngle == 0) gravityTorque = 0;
 	else if (superAngle < 0) gravityTorque *= -1;
 	float centrifugalTorque = 2 * centrifugalForce * glm::cos(glm::radians(currentGravityCenterAngle));
-	std::cout << "gravityTorque: " << gravityTorque << "    centrifugalTorque: " << centrifugalTorque << std::endl;
+	//std::cout << "gravityTorque: " << gravityTorque << "    centrifugalTorque: " << centrifugalTorque << std::endl;
 	rolloverTorque = centrifugalTorque - gravityTorque;
 	if(superAngle > 0 && rolloverTorque < 0) rolloverTorque *= 7;
 	if (superAngle < 0 && rolloverTorque > 0) rolloverTorque *= 7;
@@ -53,7 +53,7 @@ void Tram::Update()
 	superAngle += angularVelocity * deltaTime;
 	superAngle = glm::clamp(superAngle, -89.f, 89.f);
 	if (superAngle == 0 || superAngle == 89.f) angularVelocity = 0;
-	std::cout << "angularAcceleration: "<< angularAcceleration << "    angularVelocity: " << angularVelocity << "    superAngle: " << superAngle << std::endl;
+	//std::cout << "angularAcceleration: "<< angularAcceleration << "    angularVelocity: " << angularVelocity << "    superAngle: " << superAngle << std::endl;
 
 	
 

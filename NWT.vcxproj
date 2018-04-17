@@ -139,7 +139,10 @@
     <ClCompile Include="src\Engine\Camera\CameraPerspective.cpp" />
     <ClCompile Include="src\Engine\Camera\CameraUi.cpp" />
     <ClCompile Include="src\Engine\Camera\Screenshake.cpp" />
+    <ClCompile Include="src\Engine\Component.cpp" />
+    <ClCompile Include="src\Engine\Components\MeshComponent.cpp" />
     <ClCompile Include="src\Engine\GameObject.cpp" />
+    <ClCompile Include="src\Engine\Light\PbrLight.cpp" />
     <ClCompile Include="src\Engine\Transform.cpp" />
     <ClCompile Include="src\Engine\UI\Sprite.cpp" />
     <ClCompile Include="src\Game\Game.cpp" />
@@ -160,6 +163,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="res\Shaders\fragment_shader.glsl" />
+    <None Include="res\Shaders\pbr_fragment.glsl" />
+    <None Include="res\Shaders\pbr_vertex.glsl" />
     <None Include="res\Shaders\vertex_shader.glsl" />
   </ItemGroup>
   <ItemGroup>
@@ -168,7 +173,12 @@
     <ClInclude Include="src\Engine\Camera\CameraPerspective.h" />
     <ClInclude Include="src\Engine\Camera\CameraUi.h" />
     <ClInclude Include="src\Engine\Camera\Screenshake.h" />
+    <ClInclude Include="src\Engine\Component.h" />
+    <ClInclude Include="src\Engine\ComponentContainer.h" />
+    <ClInclude Include="src\Engine\Components\MeshComponent.h" />
+    <ClInclude Include="src\Engine\ComponentType.h" />
     <ClInclude Include="src\Engine\GameObject.h" />
+    <ClInclude Include="src\Engine\Light\PbrLight.h" />
     <ClInclude Include="src\Engine\Transform.h" />
     <ClInclude Include="src\Engine\UI\Sprite.h" />
     <ClInclude Include="src\Game\CameraType.h" />

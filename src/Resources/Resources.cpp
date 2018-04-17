@@ -112,7 +112,7 @@ void Resources::LoadMeshes()
 {
 	LoadPrimitiveMeshes();
 	LoadMesh("tramwaj.fbx", MeshId::TRAM, MeshLayoutId::SIMPLE_TEXTURED);
-	LoadMesh("drone.fbx", MeshId::DRONE, MeshLayoutId::SIMPLE_TEXTURED);
+	LoadMesh("cabinet.fbx", MeshId::CABINET, MeshLayoutId::SIMPLE_TEXTURED);
 	Set(MeshId::TRACK, std::make_unique<Mesh>(*track));
 }
 
@@ -194,6 +194,9 @@ void Resources::LoadTextures()
 		{ TextureId::TRACK, "track.jpg" },
 		{ TextureId::SPEEDOMETER, "speedometer.png" },
 		{ TextureId::SPEEDOMETER_TIP, "speedometer_tip.png" },
+		{ TextureId::CABINET_ALBEDO, "test/cabinet_Cabinet_AlbedoTransparency.png" },
+		{ TextureId::CABINET_METALLIC, "test/cabinet_Cabinet_MetallicSmoothness.png" },
+		{ TextureId::CABINET_NORMAL, "test/cabinet_Cabinet_Normal.png" }
 	};
 
 	for(auto&& i : tuples)

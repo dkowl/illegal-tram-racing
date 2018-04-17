@@ -48,6 +48,12 @@
     <Filter Include="Source Files\Resources\MeshLayout">
       <UniqueIdentifier>{3cd8771f-e547-4101-882d-9b3bc27f39b0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Engine\Light">
+      <UniqueIdentifier>{0357fd5e-9fb6-41f0-bca7-cc22b7099ff8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Components">
+      <UniqueIdentifier>{86119715-71ff-4af2-b98c-9e95c8220913}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Constants.cpp">
@@ -119,12 +125,27 @@
     <ClCompile Include="src\Resources\VertexAttribute\AiMeshDataSource.cpp">
       <Filter>Source Files\Resources\VertexAttribute</Filter>
     </ClCompile>
+    <ClCompile Include="src\Engine\Light\PbrLight.cpp">
+      <Filter>Source Files\Engine\Light</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Component.cpp">
+      <Filter>Source Files\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Components\MeshComponent.cpp">
+      <Filter>Source Files\Engine\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\Shaders\fragment_shader.glsl">
       <Filter>Resource Files\Shaders</Filter>
     </None>
     <None Include="res\Shaders\vertex_shader.glsl">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
+    <None Include="res\Shaders\pbr_fragment.glsl">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
+    <None Include="res\Shaders\pbr_vertex.glsl">
       <Filter>Resource Files\Shaders</Filter>
     </None>
   </ItemGroup>
@@ -221,6 +242,21 @@
     </ClInclude>
     <ClInclude Include="src\Resources\Resource.h">
       <Filter>Source Files\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Light\PbrLight.h">
+      <Filter>Source Files\Engine\Light</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Component.h">
+      <Filter>Source Files\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\ComponentType.h">
+      <Filter>Source Files\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Components\MeshComponent.h">
+      <Filter>Source Files\Engine\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\ComponentContainer.h">
+      <Filter>Source Files\Engine</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -8,17 +8,20 @@
 
 #include "../Engine/Transform.h"
 #include "../Resources/Resources.h"
-#include "../Engine/GameObject.h"
+#include "CameraType.h"
 #include "../Engine/Camera/CameraPerspective.h"
 #include "../Engine/Camera/CameraUi.h"
 #include "../Engine/Camera/Screenshake.h"
+#include "../Engine/ComponentContainer.h"
 
+class GameObject;
 
 class Game
 {
 	static Game *instance;
 
 	Resources resources;
+	ComponentContainer componentContainer;
 	sf::VideoMode videoMode;
 	sf::Window window;
 	CameraPerspective mainCamera;
@@ -39,6 +42,7 @@ public:
 	static void Initialize();
 	static Game& I();
 	static const Resources& Resources();
+	static ComponentContainer& Components();
 	static float DeltaTime();
 	static Camera* MainCamera();
 	static float AspectRatio();
@@ -50,6 +54,7 @@ public:
 	template <class T, class P>	T* AddObject(P &buildParams);
 	std::unique_ptr<GameObject>& GetObject(std::string name);
 	template<typename T> T* GetObject(std::string name);
+	Camera* GetCamera(CameraType type);
 
 private:
 	Game();
@@ -66,10 +71,6 @@ private:
 
 	void UpdateSpeedometer();
 
-	Camera* GetCamera(CameraType type);
-
-	std::vector<unsigned> GetTextureGlIds(const GameObject & object) const;
-	std::vector<unsigned> GetTextureGlIds(int objectId) const;
 };
 
 template <class T, class P>

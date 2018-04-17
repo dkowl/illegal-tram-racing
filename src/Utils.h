@@ -21,4 +21,6 @@ namespace Utils
 
 	float NormalizeAngle(float x, float base);
 	bool IsOnTheLeft(glm::vec3 a, glm::vec3 b);
+
+	glm::vec3 RotateVec3(glm::vec3 v, glm::quat q);
 }

@@ -1,6 +1,7 @@
 #include "Game.h"
 #include "../Engine/UI/Sprite.h"
 #include "Tram.h"
+#include "../Engine/Components/MeshComponent.h"
 
 Game* Game::instance = nullptr;
 
@@ -18,6 +19,11 @@ Game& Game::I()
 const Resources& Game::Resources()
 {
 	return I().resources;
+}
+
+ComponentContainer& Game::Components()
+{
+	return I().componentContainer;
 }
 
 float Game::DeltaTime()
@@ -114,9 +120,13 @@ void Game::Render()
 	const unsigned int mainTextureLocation = gl::glGetUniformLocation(resources.Get(ShaderProgramId::MAIN)->GlId(), "mainTexture");
 	gl::glUniform1i(mainTextureLocation, 0);
 
-	for (int i = 0; i < objects.size(); i++)
+	for (auto& object : objects)
 	{
-		DrawObject(i);
+		const auto meshComponent = object->GetComponent<MeshComponent>();
+		if(meshComponent != nullptr)
+		{
+			meshComponent->Render();
+		}
 	}
 	window.display();
 }
@@ -161,20 +171,38 @@ void Game::OpenWindow()
 
 void Game::InitializeObjects()
 {
-	GameObject::BuildParams p;
+	GameObject::BuildParams goParams;
+	MeshComponent::BuildParams meshParams;
 	//Tram
-	p.name = "Tram";
-	p.meshId = MeshId::TRAM;
-	p.textureIds = { TextureId::TRAM };
-	auto tramObject = AddObject<Tram>(p);
+	goParams.name = "Tram";
+	meshParams.meshId = MeshId::TRAM;
+	meshParams.textureIds = { TextureId::TRAM };
+	auto tramObject = AddObject<Tram>(goParams);
+	tramObject->AddComponent<MeshComponent>(meshParams);
 	tramObject->GetTransform().SetLocalScale(glm::vec3(0.05f));
 	tramObject->Initialize();
 
+	//Drone
+	goParams.name = "Cabinet";
+	meshParams.meshId = MeshId::CABINET;
+	meshParams.textureIds = { 
+		TextureId::CABINET_ALBEDO, 
+		TextureId::CABINET_METALLIC, 
+		TextureId::CABINET_NORMAL, 
+	};
+	auto cabinetObject = AddObject<GameObject>(goParams);
+	cabinetObject->AddComponent<MeshComponent>(meshParams);
+	//cabinetObject->GetTransform().SetLocalScale(glm::vec3(50));
+	cabinetObject->GetTransform().SetParent(&tramObject->GetTransform());
+	cabinetObject->GetTransform().SetLocalPosition(glm::vec3(5, 0, -2));
+	cabinetObject->GetTransform().Rotate(180, glm::vec3(0, 1, 0));
+
 	//Track
-	p.name = "Track";
-	p.meshId = MeshId::TRACK;
-	p.textureIds = { TextureId::TRACK };
-	auto trackObject = AddObject<GameObject>(p);
+	goParams.name = "Track";
+	meshParams.meshId = MeshId::TRACK;
+	meshParams.textureIds = { TextureId::TRACK };
+	auto trackObject = AddObject<GameObject>(goParams);
+	trackObject->AddComponent<MeshComponent>(meshParams);
 
 	//Speedometer
 	Sprite::BuildParams spriteP;
@@ -219,39 +247,6 @@ std::unique_ptr<GameObject>& Game::GetObject(std::string name)
 	return objects[objectIds[name]];
 }
 
-void Game::DrawObject(int objectId)
-{
-	const auto& object = objects[objectId];
-	const auto& shaderProgram = resources.Get(object->GetShaderId())->GlId();
-	const auto& textures = GetTextureGlIds(objectId);
-	const auto& mesh = resources.Get(object->GetMeshId());
-
-	//shader
-	gl::glUseProgram(shaderProgram);
-
-	const unsigned int modelLocation = gl::glGetUniformLocation(shaderProgram, "model");
-	gl::glUniformMatrix4fv(modelLocation, 1, gl::GL_FALSE, glm::value_ptr(object->GetTransform().ModelMatrix()));
-
-	const unsigned int viewLocation = gl::glGetUniformLocation(resources.Get(ShaderProgramId::MAIN)->GlId(), "view");
-	gl::glUniformMatrix4fv(viewLocation, 1, gl::GL_FALSE, glm::value_ptr(GetCamera(object->Camera())->ViewMatrix()));
-
-	const unsigned int projectionLocation = gl::glGetUniformLocation(resources.Get(ShaderProgramId::MAIN)->GlId(), "projection");
-	gl::glUniformMatrix4fv(projectionLocation, 1, gl::GL_FALSE, glm::value_ptr(GetCamera(object->Camera())->ProjectionMatrix()));
-
-	//textures
-	for (int i = 0; i < textures.size(); i++)
-	{
-		gl::glActiveTexture(gl::GLenum::GL_TEXTURE0 + i);
-		gl::glBindTexture(gl::GLenum::GL_TEXTURE_2D, textures[i]);
-	}
-
-	//mesh
-	gl::glBindVertexArray(mesh->Vao());
-
-	gl::glPolygonMode(gl::GLenum::GL_FRONT_AND_BACK, object->GetPolygonMode());
-	gl::glDrawElements(gl::GLenum::GL_TRIANGLES, mesh->ElementCount(), gl::GLenum::GL_UNSIGNED_INT, nullptr);
-}
-
 void Game::UpdateSpeedometer()
 {
 	auto& speedometerTip = GetObject("Speedometer_tip");
@@ -271,22 +266,6 @@ Camera* Game::GetCamera(CameraType type)
 	default:
 		return &mainCamera;
 	}
-}
-
-std::vector<unsigned> Game::GetTextureGlIds(const GameObject& object) const
-{
-	std::vector<unsigned> result;
-	auto textureIds = object.GetTextureIds();
-	for(auto&& i: textureIds)
-	{
-		result.push_back(resources.Get(i)->GlId());
-	}
-	return result;
-}
-
-std::vector<unsigned> Game::GetTextureGlIds(int objectId) const
-{
-	return GetTextureGlIds(*objects[objectId]);
 }
 
 
