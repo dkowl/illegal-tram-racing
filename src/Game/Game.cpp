@@ -199,11 +199,13 @@ void Game::InitializeObjects()
 	meshParams.meshId = MeshId::CABINET;
 	meshParams.textureIds = { 
 		TextureId::CABINET_ALBEDO, 
-		TextureId::CABINET_METALLIC, 
-		TextureId::CABINET_NORMAL, 
+		TextureId::CABINET_NORMAL,
+		TextureId::CABINET_METALLIC,
 	};
+	meshParams.shaderId = ShaderProgramId::PBR;
 	auto cabinetObject = AddObject<GameObject>(goParams);
 	cabinetObject->AddComponent<MeshComponent>(meshParams);
+	meshParams.shaderId = ShaderProgramId::MAIN;
 	//cabinetObject->GetTransform().SetLocalScale(glm::vec3(50));
 	cabinetObject->GetTransform().SetParent(&tramObject->GetTransform());
 	cabinetObject->GetTransform().SetLocalPosition(glm::vec3(5, 0, -2));

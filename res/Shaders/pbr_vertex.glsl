@@ -5,20 +5,26 @@ layout(location = 2) in vec3 aNormal;
 layout(location = 3) in vec3 aTangent;
 layout(location = 4) in vec3 aBitangent;
 
-out vec3 worldPos;
-out vec2 uv;
-out vec3 normal;
-out vec3 tangent;
-out vec3 bitangent;
+out vec3 WorldPos;
+out vec2 Uv;
+out mat3 TBN;
 
 uniform mat4 projection;
 uniform mat4 view;
 uniform mat4 model;
 
+vec3 toModelSpace(vec3 x) {
+	return normalize(vec3(model * vec4(x, 0.0)));
+}
+
 void main() {
 	WorldPos = vec3(model * vec4(aPos, 1.0));
 	Uv = aUv;
-	Normal = mat3(model) * aNormal;
+	TBN = mat3(
+		toModelSpace(aTangent),
+		toModelSpace(aBitangent),
+		toModelSpace(aNormal)
+		);
 
-	gl_Position = projection * view * vec4(worldPos, 1.0);
+	gl_Position = projection * view * vec4(WorldPos, 1.0);
 }

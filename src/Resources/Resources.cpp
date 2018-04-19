@@ -60,6 +60,18 @@ void Resources::LoadMeshLayouts()
 				VertexAttribute::UV })
 			)
 		);
+
+	Set(
+		MeshLayoutId::PBR,
+		std::make_unique<MeshLayout>(
+			std::initializer_list<VertexAttribute>({
+		VertexAttribute::POSITION,
+		VertexAttribute::UV,
+		VertexAttribute::NORMAL,
+		VertexAttribute::TANGENT,
+		VertexAttribute::BITANGENT })
+			)
+		);
 }
 
 void Resources::LoadMesh(std::string filename, MeshId id, MeshLayoutId layoutId)
@@ -120,7 +132,7 @@ void Resources::LoadMeshes()
 {
 	LoadPrimitiveMeshes();
 	LoadMesh("tramwaj.fbx", MeshId::TRAM, MeshLayoutId::SIMPLE_TEXTURED);
-	LoadMesh("cabinet.fbx", MeshId::CABINET, MeshLayoutId::SIMPLE_TEXTURED);
+	LoadMesh("cabinet.fbx", MeshId::CABINET, MeshLayoutId::PBR);
 	Set(MeshId::TRACK, std::make_unique<Mesh>(*track));
 }
 

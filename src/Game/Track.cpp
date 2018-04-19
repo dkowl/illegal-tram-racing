@@ -199,7 +199,7 @@ void Track::GenerateStraightSegment(float length)
 	{
 		AddSegment(deltaVector);
 	}
-	std::cout << "Straight segment generated!\n	length: " << length << "\n	segmentCount: " << segmentCount << "\n\n";
+	//std::cout << "Straight segment generated!\n	length: " << length << "\n	segmentCount: " << segmentCount << "\n\n";
 }
 
 void Track::GenerateTurnSegment(float totalAngle, float angularSpeed)
