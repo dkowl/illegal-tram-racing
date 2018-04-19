@@ -22,7 +22,7 @@ public:
 		std::vector<T*> result;
 		for(auto&& i: components[T::Type()])
 		{
-			result.push_back(i.get());
+			result.push_back(static_cast<T*>(i.get()));
 		}
 		return result;
 	}

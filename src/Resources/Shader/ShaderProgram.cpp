@@ -17,6 +17,12 @@ ShaderProgram::ShaderProgram(unsigned int vertexShader, unsigned int fragmentSha
 	else std::cout << "Shader program linked successfully\n";
 }
 
+void ShaderProgram::SetVec3(std::string name, glm::vec3 value) const
+{
+	const unsigned location = gl::glGetUniformLocation(glId, name.c_str());
+	gl::glUniform3f(location, value.x, value.y, value.z);
+}
+
 const unsigned& ShaderProgram::GlId() const
 {
 	return glId;

@@ -5,9 +5,11 @@ layout(location = 2) in vec3 aNormal;
 layout(location = 3) in vec3 aTangent;
 layout(location = 4) in vec3 aBitangent;
 
-out vec3 WorldPos;
-out vec2 Uv;
-out vec3 Normal;
+out vec3 worldPos;
+out vec2 uv;
+out vec3 normal;
+out vec3 tangent;
+out vec3 bitangent;
 
 uniform mat4 projection;
 uniform mat4 view;

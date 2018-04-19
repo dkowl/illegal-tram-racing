@@ -134,6 +134,9 @@
     <ClCompile Include="src\Engine\Components\MeshComponent.cpp">
       <Filter>Source Files\Engine\Components</Filter>
     </ClCompile>
+    <ClCompile Include="src\Engine\Light\DirectionalLight.cpp">
+      <Filter>Source Files\Engine\Light</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\Shaders\fragment_shader.glsl">
@@ -257,6 +260,9 @@
     </ClInclude>
     <ClInclude Include="src\Engine\ComponentContainer.h">
       <Filter>Source Files\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Light\DirectionalLight.h">
+      <Filter>Source Files\Engine\Light</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

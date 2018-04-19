@@ -9,8 +9,14 @@ protected:
 	GameObject* gameObject;
 
 public:
-	explicit Component(GameObject* gameObject = nullptr);
+	explicit Component(GameObject* gameObject);
 	virtual ~Component() = default;
+
+	Component(const Component& other) = delete;
+	void operator=(const Component& other) = delete;
+	Component(const Component&& other) = delete;
+	void operator=(const Component&& other) = delete;
+
 
 	virtual void Update();
 

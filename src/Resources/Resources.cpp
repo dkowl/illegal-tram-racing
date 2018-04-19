@@ -25,6 +25,8 @@ void Resources::CompileShaders()
 {
 	Set(ShaderSourceId::MAIN_VERTEX, std::make_unique<ShaderSource>("vertex_shader.glsl", gl::GLenum::GL_VERTEX_SHADER));
 	Set(ShaderSourceId::MAIN_FRAGMENT, std::make_unique<ShaderSource>("fragment_shader.glsl", gl::GLenum::GL_FRAGMENT_SHADER));
+	Set(ShaderSourceId::PBR_VERTEX, std::make_unique<ShaderSource>("pbr_vertex.glsl", gl::GLenum::GL_VERTEX_SHADER));
+	Set(ShaderSourceId::PBR_FRAGMENT, std::make_unique<ShaderSource>("pbr_fragment.glsl", gl::GLenum::GL_FRAGMENT_SHADER));
 }
 
 void Resources::LinkShaderPrograms()
@@ -34,6 +36,12 @@ void Resources::LinkShaderPrograms()
 			Get(ShaderSourceId::MAIN_VERTEX)->GlId(),
 			Get(ShaderSourceId::MAIN_FRAGMENT)->GlId()
 		));
+
+	Set(ShaderProgramId::PBR,
+		std::make_unique<ShaderProgram>(
+			Get(ShaderSourceId::PBR_VERTEX)->GlId(),
+			Get(ShaderSourceId::PBR_FRAGMENT)->GlId()
+			));
 }
 
 void Resources::LoadTracks()

@@ -3,5 +3,6 @@
 enum class ShaderProgramId
 {
 	MAIN,
+	PBR,
 	COUNT
 };

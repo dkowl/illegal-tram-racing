@@ -60,8 +60,12 @@ private:
 	Game();
 
 	void MainLoop();
+
 	void Update();
+
+	void ApplyPbrLights();
 	void Render();
+
 
 	void OpenWindow();
 	void InitializeObjects();

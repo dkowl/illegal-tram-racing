@@ -2,6 +2,8 @@
 #include "../Engine/UI/Sprite.h"
 #include "Tram.h"
 #include "../Engine/Components/MeshComponent.h"
+#include "../Engine/Light/PbrLight.h"
+#include "../Engine/Light/DirectionalLight.h"
 
 Game* Game::instance = nullptr;
 
@@ -111,6 +113,14 @@ void Game::Update()
 	clock.restart();
 }
 
+void Game::ApplyPbrLights()
+{
+	for(auto&& pbrLight : componentContainer.GetComponents<PbrLight>())
+	{
+		pbrLight->SetGlUniforms();
+	}
+}
+
 void Game::Render()
 {
 
@@ -119,6 +129,8 @@ void Game::Render()
 
 	const unsigned int mainTextureLocation = gl::glGetUniformLocation(resources.Get(ShaderProgramId::MAIN)->GlId(), "mainTexture");
 	gl::glUniform1i(mainTextureLocation, 0);
+
+	ApplyPbrLights();
 
 	for (auto& object : objects)
 	{
@@ -219,6 +231,13 @@ void Game::InitializeObjects()
 	spriteP.textureId = TextureId::SPEEDOMETER_TIP;
 	spriteP.zDepth = 0.05;
 	AddObject<Sprite>(spriteP);
+
+	//Sun
+	auto lightParams = DirectionalLight::MakeBuildParams(glm::vec3(1, -3, 1), glm::vec3(1), 10);
+	goParams.name = "Sun";
+	auto sunObject = AddObject<GameObject>(goParams);
+	sunObject->AddComponent<PbrLight>(lightParams);
+
 }
 
 void Game::HandleEvent(sf::Event event)

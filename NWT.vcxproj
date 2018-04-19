@@ -142,6 +142,7 @@
     <ClCompile Include="src\Engine\Component.cpp" />
     <ClCompile Include="src\Engine\Components\MeshComponent.cpp" />
     <ClCompile Include="src\Engine\GameObject.cpp" />
+    <ClCompile Include="src\Engine\Light\DirectionalLight.cpp" />
     <ClCompile Include="src\Engine\Light\PbrLight.cpp" />
     <ClCompile Include="src\Engine\Transform.cpp" />
     <ClCompile Include="src\Engine\UI\Sprite.cpp" />
@@ -178,6 +179,7 @@
     <ClInclude Include="src\Engine\Components\MeshComponent.h" />
     <ClInclude Include="src\Engine\ComponentType.h" />
     <ClInclude Include="src\Engine\GameObject.h" />
+    <ClInclude Include="src\Engine\Light\DirectionalLight.h" />
     <ClInclude Include="src\Engine\Light\PbrLight.h" />
     <ClInclude Include="src\Engine\Transform.h" />
     <ClInclude Include="src\Engine\UI\Sprite.h" />
