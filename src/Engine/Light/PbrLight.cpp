@@ -13,13 +13,18 @@ PbrLight::PbrLight(BuildParams p):
 	intensity(p.intensity),
 	attenuationFactor(p.attenuationFactor)
 {
+	gameObject->GetTransform().SetLocalPosition(p.position);
 }
 
-void PbrLight::SetGlUniforms()
+void PbrLight::SetGlUniforms() const
 {
 	auto& pbrShader = Game::Resources().Get(ShaderProgramId::PBR);
-	pbrShader->SetVec3("lightColor", color);
-	pbrShader->SetVec3("lightPosition", gameObject->GetTransform().Position());
+	std::cout << "LightColor is ";
+	Utils::DisplayVec3(color * intensity);
+	pbrShader->Use();
+	pbrShader->SetVec3("LightColor", color * intensity);
+	pbrShader->SetVec3("LightPosition", gameObject->GetTransform().Position());
+	pbrShader->SetFloat("AttenuationFactor", attenuationFactor);
 }
 
 PbrLight::BuildParams::BuildParams():

@@ -16,7 +16,9 @@ class ShaderProgram
 public:
 	ShaderProgram(unsigned int vertexShader, unsigned int fragmentShader);
 
+	void Use();
 	void SetVec3(std::string name, glm::vec3 value) const;
+	void SetFloat(std::string name, float value) const;
 
 	const unsigned int& GlId() const;
 

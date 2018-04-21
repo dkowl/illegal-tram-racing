@@ -18,7 +18,7 @@ public:
 
 	explicit PbrLight(BuildParams p);
 
-	void SetGlUniforms();
+	void SetGlUniforms() const;
 
 	struct BuildParams : Component::BuildParams
 	{

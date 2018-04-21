@@ -1,4 +1,5 @@
 #include "ShaderProgram.h"
+#include "../../Utils.h"
 
 ShaderProgram::ShaderProgram(unsigned int vertexShader, unsigned int fragmentShader)
 {
@@ -17,10 +18,23 @@ ShaderProgram::ShaderProgram(unsigned int vertexShader, unsigned int fragmentSha
 	else std::cout << "Shader program linked successfully\n";
 }
 
+void ShaderProgram::Use()
+{
+	gl::glUseProgram(glId);
+}
+
 void ShaderProgram::SetVec3(std::string name, glm::vec3 value) const
 {
-	const unsigned location = gl::glGetUniformLocation(glId, name.c_str());
+	const int location = gl::glGetUniformLocation(glId, name.c_str());
+	std::cout << "location " << location << " " << name << " is ";
+	Utils::DisplayVec3(value);
 	gl::glUniform3f(location, value.x, value.y, value.z);
+}
+
+void ShaderProgram::SetFloat(std::string name, float value) const
+{
+	const int location = gl::glGetUniformLocation(glId, name.c_str());
+	gl::glUniform1f(location, value);
 }
 
 const unsigned& ShaderProgram::GlId() const
