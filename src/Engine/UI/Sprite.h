@@ -1,7 +1,8 @@
 #pragma once
 #include "../GameObject.h"
+#include "../Components/MeshComponent.h"
 
-class Sprite : public GameObject
+class Sprite : public MeshComponent
 {
 public:
 	struct BuildParams;
@@ -10,16 +11,17 @@ private:
 	float zDepth;
 
 public:
-	explicit Sprite(const BuildParams &params);
+	explicit Sprite(const BuildParams &p);
 
-	struct BuildParams
+	static ComponentType Type();
+
+	struct BuildParams : Component::BuildParams
 	{
-		std::string name;
-		Transform* parentTransform;
 		TextureId textureId;
 		float zDepth;
 
 		BuildParams();
-		explicit operator GameObject::BuildParams() const;
 	};
+
+	static MeshComponent::BuildParams MeshBuildParams(const BuildParams& p);
 };

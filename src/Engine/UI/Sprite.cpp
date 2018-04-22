@@ -1,25 +1,31 @@
 #include "Sprite.h"
 
-Sprite::Sprite(const BuildParams &params):
-	GameObject(GameObject::BuildParams(params)),
-	zDepth(params.zDepth)
+Sprite::Sprite(const BuildParams& p):
+	MeshComponent(MeshBuildParams(p)),
+	zDepth(p.zDepth)
 {
-	transform.Move(glm::vec3(0, 0, zDepth));
+	gameObject->GetTransform().Move(glm::vec3(0, 0, zDepth));
 }
 
-Sprite::BuildParams::BuildParams()
+ComponentType Sprite::Type()
 {
-	name = "New sprite";
-	parentTransform = nullptr;
-	textureId = TextureId::CRATE;
-	zDepth = 0;
+	return ComponentType::SPRITE;
 }
 
-Sprite::BuildParams::operator GameObject::BuildParams() const
+Sprite::BuildParams::BuildParams():
+	textureId(TextureId::CRATE),
+	zDepth(0)	
 {
-	GameObject::BuildParams result;
-	result.name = name;
-	result.parentTransform = parentTransform;
-	result.camera = CameraType::UI;
+}
+
+MeshComponent::BuildParams Sprite::MeshBuildParams(const BuildParams& p)
+{
+	MeshComponent::BuildParams result;
+	result.gameObject = p.gameObject;
+	result.shaderId = ShaderProgramId::MAIN;
+	result.cameraType = CameraType::UI;
+	result.meshId = MeshId::PLANE;
+	result.textureIds = { p.textureId };
+
 	return result;
 }

@@ -140,7 +140,17 @@ void Game::Render()
 			meshComponent->Render();
 		}
 	}
+	RenderSprites();
+	
 	window.display();
+}
+
+void Game::RenderSprites()
+{
+	for(auto&& sprite : componentContainer.GetComponents<Sprite>())
+	{
+		sprite->Render();
+	}
 }
 
 void Game::Stop()
@@ -220,19 +230,22 @@ void Game::InitializeObjects()
 
 	//Speedometer
 	Sprite::BuildParams spriteP;
-	spriteP.name = "Speedometer";
+	goParams.name = "Speedometer";
 	spriteP.textureId = TextureId::SPEEDOMETER;
-	auto speedometer = AddObject<Sprite>(spriteP);
+	auto speedometer = AddObject<GameObject>(goParams);
 	speedometer->GetTransform().SetLocalPosition(glm::vec3(1*AspectRatio()-0.4, -1+0.4, 0));
 	speedometer->GetTransform().SetLocalScale(glm::vec3(0.33, 0.33, 1));
 	spriteP.zDepth = 0.1;
+	speedometer->AddComponent<Sprite>(spriteP);
 
 	//Speedometer tip
-	spriteP.name = "Speedometer_tip";
-	spriteP.parentTransform = &speedometer->GetTransform();
+	goParams.name = "Speedometer_tip";
+	goParams.parentTransform = &speedometer->GetTransform();
+	auto speedometerTip = AddObject<GameObject>(goParams);
+	goParams.parentTransform = nullptr;
 	spriteP.textureId = TextureId::SPEEDOMETER_TIP;
 	spriteP.zDepth = 0.05;
-	AddObject<Sprite>(spriteP);
+	speedometerTip->AddComponent<Sprite>(spriteP);
 
 	//Sun
 	auto lightParams = DirectionalLight::MakeBuildParams(glm::vec3(1, -3, 1), glm::vec3(1), 10);

@@ -3,5 +3,6 @@
 enum class ComponentType
 {
 	MESH,
-	LIGHT
+	LIGHT,
+	SPRITE
 };

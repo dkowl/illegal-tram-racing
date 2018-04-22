@@ -7,7 +7,8 @@ MeshComponent::MeshComponent(BuildParams p):
 	meshId(p.meshId),
 	shaderId(p.shaderId),
 	textureIds(p.textureIds),
-	polygonMode(p.polygonMode)
+	polygonMode(p.polygonMode),
+	cameraType(p.cameraType)
 {
 }
 
@@ -25,10 +26,10 @@ void MeshComponent::Render() const
 	gl::glUniformMatrix4fv(modelLocation, 1, gl::GL_FALSE, glm::value_ptr(object->GetTransform().ModelMatrix()));
 
 	const unsigned int viewLocation = gl::glGetUniformLocation(shaderProgram, "view");
-	gl::glUniformMatrix4fv(viewLocation, 1, gl::GL_FALSE, glm::value_ptr(Game::I().GetCamera(object->Camera())->ViewMatrix()));
+	gl::glUniformMatrix4fv(viewLocation, 1, gl::GL_FALSE, glm::value_ptr(Game::I().GetCamera(cameraType)->ViewMatrix()));
 
 	const unsigned int projectionLocation = gl::glGetUniformLocation(shaderProgram, "projection");
-	gl::glUniformMatrix4fv(projectionLocation, 1, gl::GL_FALSE, glm::value_ptr(Game::I().GetCamera(object->Camera())->ProjectionMatrix()));
+	gl::glUniformMatrix4fv(projectionLocation, 1, gl::GL_FALSE, glm::value_ptr(Game::I().GetCamera(cameraType)->ProjectionMatrix()));
 
 	//textures
 	for (int i = 0; i < textures.size(); i++)
@@ -88,6 +89,11 @@ gl::GLenum MeshComponent::GetPolygonMode() const
 	}
 }
 
+CameraType MeshComponent::GetCameraType() const
+{
+	return cameraType;
+}
+
 ComponentType MeshComponent::Type()
 {
 	return ComponentType::MESH;
@@ -97,6 +103,7 @@ MeshComponent::BuildParams::BuildParams():
 	meshId(MeshId::CUBE),
 	shaderId(ShaderProgramId::MAIN),
 	textureIds({TextureId::CRATE}),
-	polygonMode(PolygonMode::FILL)
+	polygonMode(PolygonMode::FILL),
+	cameraType(CameraType::MAIN)
 {
 }

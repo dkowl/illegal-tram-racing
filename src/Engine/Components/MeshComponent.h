@@ -5,6 +5,7 @@
 #include "../../Resources/Mesh/MeshId.h"
 #include "../../Resources/Shader/ShaderProgramId.h"
 #include "../../Resources/Texture/TextureId.h"
+#include "../../Game/CameraType.h"
 
 class MeshComponent : public Component
 {
@@ -15,6 +16,7 @@ class MeshComponent : public Component
 	ShaderProgramId shaderId;
 	std::vector<TextureId> textureIds;
 	PolygonMode polygonMode;
+	CameraType cameraType;
 
 public:
 	static ComponentType Type();
@@ -29,6 +31,7 @@ public:
 	TextureId GetTextureId(unsigned id) const;
 	const std::vector<TextureId>& GetTextureIds() const;
 	gl::GLenum GetPolygonMode() const;
+	CameraType GetCameraType() const;
 
 	enum class PolygonMode
 	{
@@ -42,6 +45,7 @@ public:
 		ShaderProgramId shaderId;
 		std::vector<TextureId> textureIds;
 		PolygonMode polygonMode;
+		CameraType cameraType;
 
 		BuildParams();
 	};

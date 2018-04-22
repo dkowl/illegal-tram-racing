@@ -1,8 +1,7 @@
 #include "GameObject.h"
 
 GameObject::GameObject(const BuildParams &params):
-	name(params.name),
-	cameraType(params.camera)
+	name(params.name)
 {
 	if(params.parentTransform != nullptr)
 	{
@@ -14,15 +13,9 @@ void GameObject::Update()
 {
 }
 
-CameraType GameObject::Camera() const
-{
-	return cameraType;
-}
-
 GameObject::BuildParams::BuildParams():
 	name("New object"),
-	parentTransform(nullptr),
-	camera(CameraType::MAIN)
+	parentTransform(nullptr)
 {
 }
 

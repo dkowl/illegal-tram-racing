@@ -65,6 +65,7 @@ private:
 
 	void ApplyPbrLights();
 	void Render();
+	void RenderSprites();
 
 
 	void OpenWindow();

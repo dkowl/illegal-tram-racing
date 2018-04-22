@@ -24,7 +24,6 @@ private:
 protected:
 	std::string name;
 	Transform transform;
-	CameraType cameraType;
 
 public:
 	explicit GameObject(const BuildParams &params);
@@ -41,7 +40,6 @@ public:
 	{
 		std::string name;
 		Transform* parentTransform;
-		CameraType camera;
 
 		BuildParams();
 	};
