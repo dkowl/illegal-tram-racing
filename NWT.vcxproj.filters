@@ -54,6 +54,9 @@
     <Filter Include="Source Files\Engine\Components">
       <UniqueIdentifier>{86119715-71ff-4af2-b98c-9e95c8220913}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Resources\Font">
+      <UniqueIdentifier>{135e14aa-2cb1-413a-92bd-04cbdc6ae987}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Constants.cpp">
@@ -136,6 +139,9 @@
     </ClCompile>
     <ClCompile Include="src\Engine\Light\DirectionalLight.cpp">
       <Filter>Source Files\Engine\Light</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Resources\Font\FntParser.cpp">
+      <Filter>Source Files\Resources\Font</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -263,6 +269,9 @@
     </ClInclude>
     <ClInclude Include="src\Engine\Light\DirectionalLight.h">
       <Filter>Source Files\Engine\Light</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Resources\Font\FntParser.h">
+      <Filter>Source Files\Resources\Font</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

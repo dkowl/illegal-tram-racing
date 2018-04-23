@@ -3,20 +3,24 @@
 #include "glbinding.h"
 
 #include "Game/Game.h"
-#include "Game/Track.h"
+
+#include "Resources/Font/FntParser.h"
 
 
 
 int main()
 {
-	glbinding::Binding::initialize(false);
-	Game::I().Start();
+	//glbinding::Binding::initialize(false);
+	//Game::I().Start();
 
+	FntParser::Value value("height=25");
+	std::cout
+		<< value.name << std::endl
+		<< value.stringValue << std::endl
+		<< value.intValue << std::endl;
+		
 
-	//Track track(1000);
-	//std::cout << "Track generated, segmentCount: " << track.SegmentCount() << std::endl;
-
-	//system("PAUSE");
+	system("PAUSE");
 
 	return 0;
 }

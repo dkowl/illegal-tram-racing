@@ -151,6 +151,7 @@
     <ClCompile Include="src\Game\Tram.cpp" />
     <ClCompile Include="src\Libraries\stb_image.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\Resources\Font\FntParser.cpp" />
     <ClCompile Include="src\Resources\LocalizedText\LocalizedText.cpp" />
     <ClCompile Include="src\Resources\MeshLayout\MeshLayout.cpp" />
     <ClCompile Include="src\Resources\Mesh\Mesh.cpp" />
@@ -189,6 +190,7 @@
     <ClInclude Include="src\Game\Tram.h" />
     <ClInclude Include="src\glbinding.h" />
     <ClInclude Include="src\Libraries\stb_image.h" />
+    <ClInclude Include="src\Resources\Font\FntParser.h" />
     <ClInclude Include="src\Resources\LocalizedText\LocalizedText.h" />
     <ClInclude Include="src\Resources\MeshLayout\MeshLayout.h" />
     <ClInclude Include="src\Resources\MeshLayout\MeshLayoutId.h" />
