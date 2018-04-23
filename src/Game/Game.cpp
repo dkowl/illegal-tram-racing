@@ -58,6 +58,16 @@ void Game::Start()
 	uiCamera.SetAspectRatio(AspectRatio());
 
 	resources.Initialize();
+	resources.MeshLayoutR::AddDynamic(std::make_unique<MeshLayout>(
+		std::initializer_list<VertexAttribute>({
+		VertexAttribute::POSITION,
+		VertexAttribute::UV })
+		),
+		"MeshLayout1"
+	);
+	auto test = resources.MeshLayoutR::GetDynamic("MeshLayout1");
+	std::cout << test->Size() << std::endl;
+	system("PAUSE");
 
 	InitializeObjects();
 	screenshake.Initialize();

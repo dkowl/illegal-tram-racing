@@ -24,7 +24,8 @@
 
 #define USING_RESOURCE(T) \
 	using RESOURCE_BASE(T)::Get;\
-	using RESOURCE_BASE(T)::Set;
+	using RESOURCE_BASE(T)::Set;\
+	using T ## R = RESOURCE_BASE(T); 
 
 class Resources : 
 	public RESOURCE_BASE(ShaderSource),
