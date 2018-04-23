@@ -1,10 +1,11 @@
 #include "FntParser.h"
 #include <sstream>
 #include <iostream>
+#include <fstream>
 #include <cctype>
 
 const char FntParser::Value::EQUAL = '=';
-const char FntParser::Value::QUOTE = '"';
+const char FntParser::QUOTE = '"';
 const char FntParser::Line::SEPARATOR = ' ';
 
 
@@ -34,6 +35,43 @@ void FntParser::Value::Display() const
 		<< intValue << std::endl;
 }
 
+FntParser::FntParser(const std::string& filepath)
+{
+	std::ifstream file(filepath);
+	if(!file.good())
+	{
+		std::cout << "FntParser: wrong file " << filepath << std::endl;
+		return;
+	}
+	std::istream& istream(file);
+	std::string stringLine;
+	while(std::getline(istream, stringLine))
+	{
+		Line line(stringLine);
+		if(line.name == "char")
+		{
+			chars.emplace_back(std::move(line));
+		}
+		else if(line.name == "kerning")
+		{
+			kernings.emplace_back(std::move(line));
+		}
+	}
+}
+
+void FntParser::Display() const
+{
+	for(auto&& i : chars)
+	{
+		i.Display();
+	}
+
+	for(auto&& i : kernings)
+	{
+		i.Display();
+	}
+}
+
 std::string FntParser::ReadUntil(int& i, const std::string& s, const char& c)
 {
 	std::string result;
@@ -48,8 +86,10 @@ std::string FntParser::ReadUntil(int& i, const std::string& s, const char& c)
 std::string FntParser::ReadUntilWhitespace(int& i, const std::string& s)
 {
 	std::string result;
-	while (!std::isspace(s[i]) && i < s.size())
+	bool isInQuote = false;
+	while ((!std::isspace(s[i]) || isInQuote) && i < s.size())
 	{
+		if (s[i] == QUOTE) isInQuote = !isInQuote;
 		result += s[i];
 		i++;
 	}
@@ -72,9 +112,9 @@ void FntParser::Line::AddValue(Value&& value)
 	values[value.name] = std::move(value);
 }
 
-void FntParser::Line::Display()
+void FntParser::Line::Display() const
 {
-	std::cout << "name: " << name;
+	std::cout << "name: " << name << std::endl;
 	for(auto&& i : values)
 	{
 		std::cout << "	" << i.first << ": " << i.second.intValue << std::endl;
